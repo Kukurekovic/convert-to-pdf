@@ -1,30 +1,152 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { useState } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert, Image, ScrollView } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import * as ImagePicker from 'expo-image-picker';
+import DocumentScanner from 'react-native-document-scanner-plugin';
+import useDocumentStore from '../store/useDocumentStore';
+import { RF, RS } from '../utils/responsive';
+import { theme } from '../theme/theme';
+import CameraView from '../components/CameraView';
+import ImageEditor from '../components/ImageEditor';
+import PDFPreview from '../components/PDFPreview';
 
 export default function ConvertScreen() {
-  const handlePress = (source) => {
-    console.log(`${source} button pressed`);
+  const [showCamera, setShowCamera] = useState(false);
+  const [showEditor, setShowEditor] = useState(false);
+  const [showPreview, setShowPreview] = useState(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+
+  const images = useDocumentStore((state) => state.images);
+  const addImage = useDocumentStore((state) => state.addImage);
+  const updateImage = useDocumentStore((state) => state.updateImage);
+  const clearImages = useDocumentStore((state) => state.clearImages);
+
+  const handleCameraPress = () => {
+    setShowCamera(true);
+  };
+
+  const handleCameraCapture = (photo) => {
+    setShowCamera(false);
+    addImage(photo);
+  };
+
+  const handleGalleryPress = async () => {
+    try {
+      const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+      if (!permissionResult.granted) {
+        Alert.alert('Permission Required', 'Please grant access to your photo library.');
+        return;
+      }
+
+      const result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ['images'],
+        allowsMultipleSelection: true,
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        result.assets.forEach(asset => {
+          addImage({
+            uri: asset.uri,
+            width: asset.width,
+            height: asset.height,
+          });
+        });
+      }
+    } catch (error) {
+      console.error('Error picking images:', error);
+      Alert.alert('Error', 'Failed to pick images from gallery');
+    }
+  };
+
+  const handleScanDocument = async () => {
+    try {
+      const { scannedImages } = await DocumentScanner.scanDocument({
+        maxNumDocuments: 10,
+        letUserAdjustCrop: true,
+      });
+
+      if (scannedImages && scannedImages.length > 0) {
+        scannedImages.forEach(uri => {
+          addImage({ uri });
+        });
+      }
+    } catch (error) {
+      console.error('Error scanning document:', error);
+      if (error.message !== 'User cancelled') {
+        Alert.alert('Error', 'Failed to scan document');
+      }
+    }
+  };
+
+  const handleEditImage = (index) => {
+    setSelectedImageIndex(index);
+    setShowEditor(true);
+  };
+
+  const handleSaveEdit = (updatedImage) => {
+    updateImage(selectedImageIndex, updatedImage);
+    setShowEditor(false);
+  };
+
+  const handleGeneratePDF = () => {
+    if (images.length === 0) {
+      Alert.alert('No Images', 'Please add at least one image to generate a PDF');
+      return;
+    }
+    setShowPreview(true);
+  };
+
+  const handleClosePreview = () => {
+    setShowPreview(false);
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>Convert to PDF</Text>
-        <Text style={styles.subtitle}>Choose a source to convert your files!</Text>
+        <Text style={styles.subtitle}>Choose a source to scan or select images</Text>
+
+        {images.length > 0 && (
+          <View style={styles.imagesPreview}>
+            <View style={styles.previewHeader}>
+              <Text style={styles.previewTitle}>{images.length} image{images.length > 1 ? 's' : ''} selected</Text>
+              <TouchableOpacity onPress={clearImages}>
+                <Text style={styles.clearText}>Clear all</Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.previewScroll}>
+              {images.map((img, index) => (
+                <TouchableOpacity key={index} onPress={() => handleEditImage(index)} style={styles.previewImage}>
+                  <Image source={{ uri: img.uri }} style={styles.thumbnail} />
+                  <View style={styles.imageNumber}>
+                    <Text style={styles.imageNumberText}>{index + 1}</Text>
+                  </View>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+            <TouchableOpacity style={styles.generateButton} onPress={handleGeneratePDF}>
+              <Text style={styles.generateButtonText}>Generate PDF</Text>
+            </TouchableOpacity>
+          </View>
+        )}
 
         <View style={styles.buttonContainer}>
           <View style={styles.row}>
             <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#3b82f6' }]}
-              onPress={() => handlePress('Camera')}
+              style={[styles.button, { backgroundColor: theme.colors.primary }]}
+              onPress={handleCameraPress}
             >
+              <Text style={styles.buttonIcon}>📷</Text>
               <Text style={styles.buttonText}>Camera</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={[styles.button, { backgroundColor: '#a855f7' }]}
-              onPress={() => handlePress('Gallery')}
+              onPress={handleGalleryPress}
             >
+              <Text style={styles.buttonIcon}>🖼️</Text>
               <Text style={styles.buttonText}>Gallery</Text>
             </TouchableOpacity>
           </View>
@@ -32,36 +154,50 @@ export default function ConvertScreen() {
           <View style={styles.row}>
             <TouchableOpacity
               style={[styles.button, { backgroundColor: '#22c55e' }]}
-              onPress={() => handlePress('Files')}
+              onPress={handleScanDocument}
             >
-              <Text style={styles.buttonText}>Files</Text>
+              <Text style={styles.buttonIcon}>📄</Text>
+              <Text style={styles.buttonText}>Scan Doc</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#06b6d4' }]}
-              onPress={() => handlePress('iCloud')}
+              style={[styles.button, { backgroundColor: '#06b6d4', opacity: 0.5 }]}
+              disabled
             >
+              <Text style={styles.buttonIcon}>☁️</Text>
               <Text style={styles.buttonText}>iCloud</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.row}>
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#f97316' }]}
-              onPress={() => handlePress('URL Link')}
-            >
-              <Text style={styles.buttonText}>URL Link</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#ec4899' }]}
-              onPress={() => handlePress('Other App')}
-            >
-              <Text style={styles.buttonText}>Other App</Text>
+              <Text style={styles.comingSoon}>Coming Soon</Text>
             </TouchableOpacity>
           </View>
         </View>
       </View>
+
+      <Modal visible={showCamera} animationType="slide" presentationStyle="fullScreen">
+        <CameraView
+          onCapture={handleCameraCapture}
+          onClose={() => setShowCamera(false)}
+        />
+      </Modal>
+
+      <Modal visible={showEditor} animationType="slide" presentationStyle="fullScreen">
+        {showEditor && (
+          <ImageEditor
+            image={images[selectedImageIndex]}
+            onSave={handleSaveEdit}
+            onCancel={() => setShowEditor(false)}
+          />
+        )}
+      </Modal>
+
+      <Modal visible={showPreview} animationType="slide" presentationStyle="fullScreen">
+        {showPreview && (
+          <PDFPreview
+            images={images}
+            onClose={handleClosePreview}
+            onEdit={handleEditImage}
+          />
+        )}
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -69,23 +205,83 @@ export default function ConvertScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: theme.colors.background,
   },
   content: {
     flex: 1,
-    paddingHorizontal: 24,
-    paddingVertical: 32,
+    paddingHorizontal: RS(24),
+    paddingVertical: RS(32),
   },
   title: {
-    fontSize: 30,
+    fontSize: RF(30),
     fontWeight: 'bold',
-    color: '#1f2937',
-    marginBottom: 8,
+    color: theme.colors.text,
+    marginBottom: RS(8),
   },
   subtitle: {
-    fontSize: 16,
-    color: '#6b7280',
-    marginBottom: 32,
+    fontSize: RF(16),
+    color: theme.colors.textLight,
+    marginBottom: RS(16),
+  },
+  imagesPreview: {
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radius.lg,
+    padding: RS(12),
+    marginBottom: RS(16),
+  },
+  previewHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: RS(12),
+  },
+  previewTitle: {
+    fontSize: RF(14),
+    fontWeight: '600',
+    color: theme.colors.text,
+  },
+  clearText: {
+    fontSize: RF(14),
+    color: theme.colors.danger,
+    fontWeight: '600',
+  },
+  previewScroll: {
+    marginBottom: RS(12),
+  },
+  previewImage: {
+    marginRight: RS(8),
+    position: 'relative',
+  },
+  thumbnail: {
+    width: RS(80),
+    height: RS(100),
+    borderRadius: theme.radius.md,
+    backgroundColor: theme.colors.border,
+  },
+  imageNumber: {
+    position: 'absolute',
+    bottom: RS(4),
+    right: RS(4),
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    paddingVertical: RS(2),
+    paddingHorizontal: RS(6),
+    borderRadius: theme.radius.sm,
+  },
+  imageNumberText: {
+    fontSize: RF(10),
+    color: theme.colors.white,
+    fontWeight: '600',
+  },
+  generateButton: {
+    backgroundColor: theme.colors.primary,
+    paddingVertical: RS(12),
+    borderRadius: theme.radius.md,
+    alignItems: 'center',
+  },
+  generateButtonText: {
+    fontSize: RF(16),
+    fontWeight: '700',
+    color: theme.colors.white,
   },
   buttonContainer: {
     flex: 1,
@@ -94,19 +290,29 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 16,
+    marginBottom: RS(16),
   },
   button: {
     flex: 1,
-    height: 120,
-    borderRadius: 16,
+    height: RS(120),
+    borderRadius: theme.radius.xl,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 8,
+    marginHorizontal: RS(8),
+    ...theme.shadows.md,
+  },
+  buttonIcon: {
+    fontSize: RF(32),
+    marginBottom: RS(8),
   },
   buttonText: {
-    color: '#ffffff',
-    fontSize: 18,
+    color: theme.colors.white,
+    fontSize: RF(18),
     fontWeight: '600',
+  },
+  comingSoon: {
+    fontSize: RF(10),
+    color: theme.colors.white,
+    marginTop: RS(4),
   },
 });

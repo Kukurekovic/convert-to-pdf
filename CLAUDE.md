@@ -10,6 +10,13 @@ This is a React Native Expo app for converting files to PDF. The app uses Expo D
 - **React Navigation** with bottom tabs
 - **NativeWind v2** for styling (Tailwind CSS 3.3.2)
 
+The project uses a custom **responsive layout system** located in:
+
+- `utils/responsive.js`
+- `theme/theme.js`
+
+Claude Code **must always use these utilities** for sizing, spacing, fonts, colors, and layout-related values.
+
 ## Development Commands
 
 ### Start Development Server
@@ -45,14 +52,19 @@ Note: The `LANG=en_US.UTF-8` prefix is required to avoid Unicode normalization e
 
 ```
 .
-├── App.js                  # Root component with navigation setup
+├── App.js
 ├── screens/
-│   ├── ConvertScreen.js    # Main screen with 6 conversion source buttons
-│   ├── HistoryScreen.js    # Conversion history
-│   └── SettingsScreen.js   # App settings
-├── app.json                # Expo configuration
-├── babel.config.js         # Babel with NativeWind plugin
-└── tailwind.config.js      # Tailwind CSS configuration
+│   ├── ConvertScreen.js
+│   ├── HistoryScreen.js
+│   └── SettingsScreen.js
+├── utils/
+│   └── responsive.js
+├── theme/
+│   └── theme.js
+├── app.json
+├── babel.config.js
+└── tailwind.config.js
+
 ```
 
 ## Architecture
@@ -67,21 +79,54 @@ Tab bar colors:
 - Active: `#3b82f6` (blue-500)
 - Inactive: `#9ca3af` (gray-400)
 
-### Styling Approach
-The app uses **React Native StyleSheet** for most styling rather than NativeWind classes. This is because NativeWind v2 has limited support for certain Tailwind classes in React Native.
+### Responsive Design & Theming Rules
+(MANDATORY FOR CLAUDE CODE)
 
-**Important**: When adding new components:
-- Use `StyleSheet.create()` for layouts and colors
-- Inline styles work well for one-off color variations
-- NativeWind classes work for basic utilities (flex-1, padding, etc.) but not for colors or complex layouts
-- Always use `SafeAreaView` from `react-native-safe-area-context` for proper iOS safe area handling
+All UI development must use:
+
+utils/responsive.js
+theme/theme.js
+
+UI Element Type → Recommended Unit
+UI Element Type	Unit / Helper
+Overall Layout	flex, plus wp(), hp() only when needed
+Width / Height	wp(), hp()
+Fonts	RF()
+Padding / Margin	RS()
+Border Radius	RS()
+Icons	RS()
+Images	imgSize() or wp()
+General Spacing	RS()
+
+Claude Code must:
+Never hard-code pixel values (width: 40, padding: 12, etc.)
+Never use Tailwind for spacing/sizing/fonts/colors
+
+Always import:
+import { wp, hp, RF, RS, imgSize } from '../utils/responsive';
+import { theme } from '../theme/theme';
+
+Colors, spacing, typography must come from theme.js.
+
+### Styling Approach
+Primary styling method: React Native StyleSheet
+
+NativeWind v2 allowed only for:
+flex utilities (flex-1, items-center, etc.)
+basic layout helpers
+
+Do not use Tailwind spacing/colors
+Always wrap screens with SafeAreaView from react-native-safe-area-context
 
 ### Convert Screen Pattern
 [ConvertScreen.js](screens/ConvertScreen.js) demonstrates the recommended pattern:
-- 6 large touchable buttons in a 2x3 grid
-- Each button uses `TouchableOpacity` with inline `backgroundColor`
-- Rows use `flexDirection: 'row'` with `flex: 1` on buttons for equal width
-- Each button is 120px tall with 16px border radius
+6 large buttons (2 × 3 grid)
+Button layout/sizes:
+height with hp()
+spacing & radius with RS()
+icon with RS()
+
+Colors must come from theme.js
 
 ## iOS-Specific Notes
 

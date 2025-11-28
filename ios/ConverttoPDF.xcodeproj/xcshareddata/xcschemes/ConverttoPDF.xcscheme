@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "8Converttopdf.app"
-               BlueprintName = "8Converttopdf"
-               ReferencedContainer = "container:8Converttopdf.xcodeproj">
+               BuildableName = "ConverttoPDF.app"
+               BlueprintName = "ConverttoPDF"
+               ReferencedContainer = "container:ConverttoPDF.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "8ConverttopdfTests.xctest"
-               BlueprintName = "8ConverttopdfTests"
-               ReferencedContainer = "container:8Converttopdf.xcodeproj">
+               BuildableName = "ConverttoPDFTests.xctest"
+               BlueprintName = "ConverttoPDFTests"
+               ReferencedContainer = "container:ConverttoPDF.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "8Converttopdf.app"
-            BlueprintName = "8Converttopdf"
-            ReferencedContainer = "container:8Converttopdf.xcodeproj">
+            BuildableName = "ConverttoPDF.app"
+            BlueprintName = "ConverttoPDF"
+            ReferencedContainer = "container:ConverttoPDF.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "8Converttopdf.app"
-            BlueprintName = "8Converttopdf"
-            ReferencedContainer = "container:8Converttopdf.xcodeproj">
+            BuildableName = "ConverttoPDF.app"
+            BlueprintName = "ConverttoPDF"
+            ReferencedContainer = "container:ConverttoPDF.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

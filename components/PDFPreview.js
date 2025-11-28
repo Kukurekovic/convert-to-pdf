@@ -1,0 +1,295 @@
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+  Dimensions,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { wp, hp, RF, RS } from '../utils/responsive';
+import { theme } from '../theme/theme';
+import { generatePDF, sharePDF } from '../utils/pdfUtils';
+import useDocumentStore from '../store/useDocumentStore';
+
+const { width: SCREEN_WIDTH } = Dimensions.get('window');
+const THUMBNAIL_WIDTH = (SCREEN_WIDTH - RS(48)) / 3;
+
+const PDFPreview = ({ images, onClose, onEdit }) => {
+  const [isSaving, setIsSaving] = useState(false);
+  const [isSharing, setIsSharing] = useState(false);
+  const addPDF = useDocumentStore((state) => state.addPDF);
+  const clearImages = useDocumentStore((state) => state.clearImages);
+
+  const handleSave = async () => {
+    setIsSaving(true);
+    try {
+      const pdf = await generatePDF(images, {
+        fileName: `document_${Date.now()}`,
+        quality: 'high',
+      });
+
+      addPDF(pdf);
+      clearImages();
+
+      Alert.alert(
+        'Success',
+        'PDF saved successfully!',
+        [{ text: 'OK', onPress: onClose }]
+      );
+    } catch (error) {
+      console.error('Error saving PDF:', error);
+      Alert.alert('Error', 'Failed to save PDF. Please try again.');
+    }
+    setIsSaving(false);
+  };
+
+  const handleSaveAndShare = async () => {
+    setIsSharing(true);
+    try {
+      const pdf = await generatePDF(images, {
+        fileName: `document_${Date.now()}`,
+        quality: 'high',
+      });
+
+      addPDF(pdf);
+      clearImages();
+
+      await sharePDF(pdf.uri);
+      onClose();
+    } catch (error) {
+      console.error('Error saving and sharing PDF:', error);
+      Alert.alert('Error', 'Failed to save and share PDF. Please try again.');
+    }
+    setIsSharing(false);
+  };
+
+  const handleRemoveImage = (index) => {
+    Alert.alert(
+      'Remove Page',
+      'Are you sure you want to remove this page?',
+      [
+        { text: 'Cancel', style: 'cancel' },
+        {
+          text: 'Remove',
+          style: 'destructive',
+          onPress: () => {
+            const removeImage = useDocumentStore.getState().removeImage;
+            removeImage(index);
+            if (images.length === 1) {
+              onClose();
+            }
+          },
+        },
+      ]
+    );
+  };
+
+  return (
+    <SafeAreaView style={styles.container} edges={['bottom']}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={onClose} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Cancel</Text>
+        </TouchableOpacity>
+        <Text style={styles.headerTitle}>PDF Preview</Text>
+        <View style={styles.placeholder} />
+      </View>
+
+      <View style={styles.info}>
+        <Text style={styles.infoText}>
+          {images.length} page{images.length > 1 ? 's' : ''}
+        </Text>
+      </View>
+
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollContent}
+      >
+        <View style={styles.pagesGrid}>
+          {images.map((image, index) => (
+            <View key={index} style={styles.pageItem}>
+              <TouchableOpacity
+                onPress={() => onEdit(index)}
+                style={styles.pageThumbnail}
+              >
+                <Image
+                  source={{ uri: image.uri }}
+                  style={styles.thumbnailImage}
+                  resizeMode="cover"
+                />
+                <View style={styles.pageNumber}>
+                  <Text style={styles.pageNumberText}>{index + 1}</Text>
+                </View>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.removeButton}
+                onPress={() => handleRemoveImage(index)}
+              >
+                <Text style={styles.removeButtonText}>✕</Text>
+              </TouchableOpacity>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+
+      <View style={styles.footer}>
+        <TouchableOpacity
+          style={[styles.saveButton, styles.saveOnlyButton]}
+          onPress={handleSave}
+          disabled={isSaving || isSharing}
+        >
+          {isSaving ? (
+            <ActivityIndicator color={theme.colors.white} />
+          ) : (
+            <Text style={styles.saveButtonText}>Save PDF</Text>
+          )}
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.saveButton}
+          onPress={handleSaveAndShare}
+          disabled={isSaving || isSharing}
+        >
+          {isSharing ? (
+            <ActivityIndicator color={theme.colors.white} />
+          ) : (
+            <Text style={styles.saveButtonText}>Save & Share</Text>
+          )}
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
+  );
+};
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.background,
+  },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingTop: RS(50),
+    paddingHorizontal: RS(16),
+    paddingBottom: RS(12),
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.border,
+    backgroundColor: theme.colors.white,
+  },
+  headerButton: {
+    paddingVertical: RS(8),
+    paddingHorizontal: RS(12),
+  },
+  headerButtonText: {
+    fontSize: RF(16),
+    fontWeight: '600',
+    color: theme.colors.text,
+  },
+  headerTitle: {
+    fontSize: RF(18),
+    fontWeight: '700',
+    color: theme.colors.text,
+  },
+  placeholder: {
+    width: RS(60),
+  },
+  info: {
+    paddingHorizontal: RS(16),
+    paddingVertical: RS(12),
+    backgroundColor: theme.colors.surface,
+  },
+  infoText: {
+    fontSize: RF(14),
+    color: theme.colors.textLight,
+    textAlign: 'center',
+  },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    padding: RS(16),
+  },
+  pagesGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: RS(12),
+  },
+  pageItem: {
+    width: THUMBNAIL_WIDTH,
+    marginBottom: RS(12),
+  },
+  pageThumbnail: {
+    width: THUMBNAIL_WIDTH,
+    height: THUMBNAIL_WIDTH * 1.4,
+    backgroundColor: theme.colors.surface,
+    borderRadius: theme.radius.md,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  thumbnailImage: {
+    width: '100%',
+    height: '100%',
+  },
+  pageNumber: {
+    position: 'absolute',
+    bottom: RS(8),
+    right: RS(8),
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    paddingVertical: RS(4),
+    paddingHorizontal: RS(8),
+    borderRadius: theme.radius.sm,
+  },
+  pageNumberText: {
+    fontSize: RF(12),
+    fontWeight: '600',
+    color: theme.colors.white,
+  },
+  removeButton: {
+    position: 'absolute',
+    top: RS(4),
+    right: RS(4),
+    width: RS(24),
+    height: RS(24),
+    backgroundColor: theme.colors.danger,
+    borderRadius: theme.radius.full,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  removeButtonText: {
+    fontSize: RF(16),
+    color: theme.colors.white,
+    fontWeight: '700',
+  },
+  footer: {
+    flexDirection: 'row',
+    gap: RS(12),
+    paddingHorizontal: RS(16),
+    paddingVertical: RS(16),
+    borderTopWidth: 1,
+    borderTopColor: theme.colors.border,
+    backgroundColor: theme.colors.white,
+  },
+  saveButton: {
+    flex: 1,
+    backgroundColor: theme.colors.primary,
+    paddingVertical: RS(16),
+    borderRadius: theme.radius.md,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  saveOnlyButton: {
+    backgroundColor: theme.colors.secondary,
+  },
+  saveButtonText: {
+    fontSize: RF(16),
+    fontWeight: '700',
+    color: theme.colors.white,
+  },
+});
+
+export default PDFPreview;

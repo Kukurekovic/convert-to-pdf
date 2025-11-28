@@ -31,7 +31,7 @@ extensions.configure(com.facebook.react.ReactSettingsExtension) { ex ->
 }
 expoAutolinking.useExpoModules()
 
-rootProject.name = 'Convert to PDF'
+rootProject.name = '8_Convert_to_pdf'
 
 expoAutolinking.useExpoVersionCatalog()
 

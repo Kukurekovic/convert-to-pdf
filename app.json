@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "8_Convert_to_pdf",
+    "name": "Convert to PDF",
     "slug": "8_Convert_to_pdf",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -11,13 +11,36 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.converttopdf.app"
+      "bundleIdentifier": "com.converttopdf.app",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app needs camera access to scan documents and convert them to PDF.",
+        "NSPhotoLibraryUsageDescription": "This app needs access to your photos to convert images to PDF.",
+        "NSPhotoLibraryAddUsageDescription": "This app needs permission to save PDFs to your photo library."
+      }
     },
     "android": {
-      "package": "com.converttopdf.app"
+      "package": "com.converttopdf.app",
+      "permissions": [
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "plugins": [
-      "expo-dev-client"
+      "expo-dev-client",
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "This app needs camera access to scan documents and convert them to PDF.",
+          "enableMicrophonePermission": false
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "This app needs access to your photos to convert images to PDF."
+        }
+      ]
     ]
   }
 }
