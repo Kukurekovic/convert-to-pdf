@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "8_Convert_to_pdf",
+    "slug": "8_Convert_to_pdf",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.converttopdf.app"
+    },
+    "android": {
+      "package": "com.converttopdf.app"
+    },
+    "plugins": [
+      "expo-dev-client"
+    ]
+  }
+}
