@@ -11,6 +11,7 @@ import ImageEditor from '../components/ImageEditor';
 import PDFPreview from '../components/PDFPreview';
 import type { ConvertScreenProps } from '../types/navigation';
 import type { ImageAsset } from '../types/document';
+import { getImageDimensions } from '../utils/imageUtils';
 
 export default function ConvertScreen({}: ConvertScreenProps) {
   const [showCamera, setShowCamera] = useState<boolean>(false);
@@ -70,9 +71,21 @@ export default function ConvertScreen({}: ConvertScreenProps) {
       });
 
       if (scannedImages && scannedImages.length > 0) {
-        scannedImages.forEach(uri => {
-          addImage({ uri });
-        });
+        // Process images sequentially to populate dimensions
+        for (const uri of scannedImages) {
+          try {
+            const dimensions = await getImageDimensions(uri);
+            addImage({
+              uri,
+              width: dimensions.width,
+              height: dimensions.height
+            });
+          } catch (error) {
+            console.error('Failed to get dimensions for scanned image:', error);
+            // Add image without dimensions - PDF generation will handle fallback
+            addImage({ uri });
+          }
+        }
       }
     } catch (error: any) {
       console.error('Error scanning document:', error);

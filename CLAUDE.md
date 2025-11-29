@@ -204,25 +204,57 @@ export default Component;
 
 ## PDF Generation
 
+### Orientation-Aware PDF Generation
+The app implements **automatic page orientation matching** where each PDF page rotates to match its image orientation (portrait/landscape). This prevents image cropping while filling entire pages.
+
+**Implementation** ([utils/pdfUtils.ts](utils/pdfUtils.ts)):
+- Uses CSS `@page` named pages (`@page portrait` and `@page landscape`) with different A4 dimensions
+- Portrait pages: 595px × 842px (8.27" × 11.69" at 72 DPI)
+- Landscape pages: 842px × 595px (297mm × 210mm at 72 DPI)
+- Images use `object-fit: contain` to preserve aspect ratio without cropping
+- Orientation detected via `detectOrientation(width, height)` helper (width > height = landscape)
+
+### Image Dimension Detection
+All images must have dimensions before PDF generation. The app handles three image sources:
+
+1. **Camera** ([components/CameraView.tsx](components/CameraView.tsx)): Provides `width` and `height` automatically
+2. **Gallery** ([screens/ConvertScreen.tsx](screens/ConvertScreen.tsx)): Provides dimensions via `expo-image-picker`
+3. **Document Scanner** ([screens/ConvertScreen.tsx](screens/ConvertScreen.tsx)): Uses `getImageDimensions()` to detect dimensions
+
+**Dimension Detection Utility** ([utils/imageUtils.ts](utils/imageUtils.ts)):
+```typescript
+export const getImageDimensions = async (uri: string): Promise<{ width: number; height: number }> => {
+  const result = await ImageManipulator.manipulateAsync(uri, [], {
+    compress: 1,
+    format: ImageManipulator.SaveFormat.JPEG
+  });
+  return { width: result.width, height: result.height };
+};
+```
+
+**Why**: `expo-image-manipulator` returns dimensions even with empty actions array. This works for all image sources including document scanner images that lack metadata.
+
 ### Image Embedding
 **CRITICAL**: Images must be converted to base64 before PDF generation.
 
-The PDF generator in [utils/pdfUtils.ts](utils/pdfUtils.ts) uses this pattern:
+The PDF generator processes images with orientation detection:
 ```typescript
-// Convert images to base64 for embedding in HTML
-const imageDataPromises = images.map(async (img) => {
-  const base64 = await FileSystem.readAsStringAsync(img.uri, {
-    encoding: FileSystem.EncodingType.Base64,
-  });
-  return `data:image/jpeg;base64,${base64}`;
-});
-
-const imageData = await Promise.all(imageDataPromises);
+const processedImages = await Promise.all(
+  images.map(img => getImageOrientation(img))
+);
+// Returns: { base64Data: string, orientation: 'portrait' | 'landscape' }
 ```
 
 **Why**: Local file URIs (`file:///...`) cannot be used directly in HTML for PDF generation. They must be embedded as base64 data URIs to render correctly in the generated PDF.
 
 **Do not**: Use `img.uri` directly in HTML `<img src="${img.uri}">` - this will show broken images/question marks.
+
+### PDF Generation Behavior
+- **Portrait images** → Portrait PDF pages (595 × 842 px)
+- **Landscape images** → Landscape PDF pages (842 × 595 px)
+- **No cropping**: Full image content preserved via `object-fit: contain`
+- **Minimal white space**: Pages sized to match image orientation
+- **Fallback**: If dimensions unavailable, defaults to portrait A4 (595 × 842)
 
 ## State Management
 

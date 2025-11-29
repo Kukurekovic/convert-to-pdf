@@ -132,3 +132,17 @@ export const cleanupTempImages = async (imageUris: string[]): Promise<void> => {
     console.error('Error cleaning up temp images:', error);
   }
 };
+
+export const getImageDimensions = async (uri: string): Promise<{ width: number; height: number }> => {
+  try {
+    // Use ImageManipulator with empty actions to get dimensions without modifications
+    const result = await ImageManipulator.manipulateAsync(uri, [], {
+      compress: 1,
+      format: ImageManipulator.SaveFormat.JPEG
+    });
+    return { width: result.width, height: result.height };
+  } catch (error) {
+    console.error('Error getting image dimensions:', error);
+    throw error;
+  }
+};
