@@ -57,13 +57,25 @@ const getImageOrientation = async (
   }
 };
 
+const generateDefaultFileName = (): string => {
+  const now = new Date();
+  const month = now.toLocaleString('en-US', { month: 'short' });
+  const day = String(now.getDate()).padStart(2, '0');
+  const year = now.getFullYear();
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+
+  return `Doc ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
+};
+
 export const generatePDF = async (
   images: ImageAsset[],
   options: PDFGenerationOptions = {}
 ): Promise<PDFDocument> => {
   try {
     const {
-      fileName = `document_${Date.now()}`,
+      fileName = generateDefaultFileName(),
     } = options;
 
     // Process all images with orientation detection
@@ -256,23 +268,9 @@ export const formatFileSize = (bytes: number): string => {
 
 export const formatDate = (timestamp: number): string => {
   const date = new Date(timestamp);
-  const now = new Date();
-  const diff = now.getTime() - date.getTime();
+  const month = date.toLocaleString('en-US', { month: 'short' });
+  const day = String(date.getDate()).padStart(2, '0');
+  const year = date.getFullYear();
 
-  const seconds = Math.floor(diff / 1000);
-  const minutes = Math.floor(seconds / 60);
-  const hours = Math.floor(minutes / 60);
-  const days = Math.floor(hours / 24);
-
-  if (days > 7) {
-    return date.toLocaleDateString();
-  } else if (days > 0) {
-    return `${days} day${days > 1 ? 's' : ''} ago`;
-  } else if (hours > 0) {
-    return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-  } else if (minutes > 0) {
-    return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-  } else {
-    return 'Just now';
-  }
+  return `${month} ${day}, ${year}`;
 };

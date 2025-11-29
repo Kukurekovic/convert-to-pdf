@@ -105,7 +105,7 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
             name: filename.replace('.pdf', ''),
             uri,
             size: info.exists && 'size' in info ? info.size : 0,
-            createdAt: info.exists && 'modificationTime' in info ? info.modificationTime : Date.now(),
+            createdAt: info.exists && 'modificationTime' in info ? info.modificationTime * 1000 : Date.now(),
             thumbnail: null,
           };
         })

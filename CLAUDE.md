@@ -256,6 +256,19 @@ const processedImages = await Promise.all(
 - **Minimal white space**: Pages sized to match image orientation
 - **Fallback**: If dimensions unavailable, defaults to portrait A4 (595 × 842)
 
+### PDF Naming Convention
+PDFs are automatically named with a human-readable timestamp format to help users identify when documents were created.
+
+**Filename Format**: `Doc [Month] [Day], [Year] [Hour]:[Minute]:[Second]`
+- Example: `Doc Nov 29, 2025 18:02:45`
+
+**Implementation** ([utils/pdfUtils.ts](utils/pdfUtils.ts)):
+- Uses `generateDefaultFileName()` helper function
+- Includes seconds to ensure uniqueness when multiple PDFs are created quickly
+- Format matches the date display in HistoryScreen for consistency
+
+**Date Display Format**: The `formatDate()` function displays dates as `Nov 29, 2025` throughout the app for consistency with filenames.
+
 ## State Management
 
 ### Zustand Store
@@ -280,6 +293,8 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
 - `addImage`, `removeImage`, `updateImage`, `clearImages`
 - `addPDF`, `removePDF`, `clearAllPDFs`, `loadPDFs`
 - `updateSettings`
+
+**Important**: When loading PDFs from storage in `loadPDFs()`, the `modificationTime` from FileSystem is in **seconds** and must be converted to milliseconds by multiplying by 1000 before storing in `createdAt` (which expects milliseconds like `Date.now()`).
 
 ## iOS-Specific Notes
 

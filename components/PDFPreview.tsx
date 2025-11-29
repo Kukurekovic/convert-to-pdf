@@ -36,7 +36,6 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit }) => {
     setIsSaving(true);
     try {
       const pdf = await generatePDF(images, {
-        fileName: `document_${Date.now()}`,
         quality: 'high',
       });
 
@@ -59,7 +58,6 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit }) => {
     setIsSharing(true);
     try {
       const pdf = await generatePDF(images, {
-        fileName: `document_${Date.now()}`,
         quality: 'high',
       });
 
