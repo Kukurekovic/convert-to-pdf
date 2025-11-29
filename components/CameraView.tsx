@@ -7,32 +7,40 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
-import { Camera, useCameraDevices, useFrameProcessor } from 'react-native-vision-camera';
+import { Camera, useCameraDevices } from 'react-native-vision-camera';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { wp, hp, RF, RS } from '../utils/responsive';
+import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
+import type { ImageAsset } from '../types/document';
 
-const CameraView = ({ onCapture, onClose }) => {
-  const [hasPermission, setHasPermission] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isTakingPhoto, setIsTakingPhoto] = useState(false);
-  const camera = useRef(null);
+interface CameraViewProps {
+  onCapture: (image: ImageAsset) => void;
+  onClose: () => void;
+}
+
+const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose }) => {
+  const [hasPermission, setHasPermission] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isTakingPhoto, setIsTakingPhoto] = useState<boolean>(false);
+  const camera = useRef<Camera>(null);
   const devices = useCameraDevices();
-  const device = devices.back;
+  const device = Array.isArray(devices)
+    ? devices.find(d => d.position === 'back')
+    : (devices as any)?.back;
 
   useEffect(() => {
     checkPermissions();
   }, []);
 
-  const checkPermissions = async () => {
+  const checkPermissions = async (): Promise<void> => {
     try {
       const cameraPermission = await Camera.getCameraPermissionStatus();
 
       if (cameraPermission === 'not-determined') {
         const newCameraPermission = await Camera.requestCameraPermission();
-        setHasPermission(newCameraPermission === 'authorized');
+        setHasPermission(newCameraPermission === 'granted');
       } else {
-        setHasPermission(cameraPermission === 'authorized');
+        setHasPermission(cameraPermission === 'granted');
       }
     } catch (error) {
       console.error('Error checking permissions:', error);
@@ -41,14 +49,13 @@ const CameraView = ({ onCapture, onClose }) => {
     setIsLoading(false);
   };
 
-  const takePhoto = async () => {
+  const takePhoto = async (): Promise<void> => {
     if (!camera.current) return;
 
     setIsTakingPhoto(true);
     try {
       const photo = await camera.current.takePhoto({
         flash: 'off',
-        qualityPrioritization: 'quality',
       });
 
       const uri = `file://${photo.path}`;

@@ -10,18 +10,25 @@ import {
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { wp, hp, RF, RS } from '../utils/responsive';
+import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import { rotateImage, flipImage, applyFilter } from '../utils/imageUtils';
+import type { ImageAsset, FilterType, FlipDirection } from '../types/document';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
-const ImageEditor = ({ image, onSave, onCancel }) => {
-  const [currentUri, setCurrentUri] = useState(image.uri);
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [activeFilter, setActiveFilter] = useState(null);
+interface ImageEditorProps {
+  image: ImageAsset;
+  onSave: (image: ImageAsset) => void;
+  onCancel: () => void;
+}
 
-  const handleRotate = async (degrees) => {
+const ImageEditor: React.FC<ImageEditorProps> = ({ image, onSave, onCancel }) => {
+  const [currentUri, setCurrentUri] = useState<string>(image.uri);
+  const [isProcessing, setIsProcessing] = useState<boolean>(false);
+  const [activeFilter, setActiveFilter] = useState<FilterType | null>(null);
+
+  const handleRotate = async (degrees: number): Promise<void> => {
     setIsProcessing(true);
     try {
       const newUri = await rotateImage(currentUri, degrees);
@@ -32,7 +39,7 @@ const ImageEditor = ({ image, onSave, onCancel }) => {
     setIsProcessing(false);
   };
 
-  const handleFlip = async (direction) => {
+  const handleFlip = async (direction: FlipDirection): Promise<void> => {
     setIsProcessing(true);
     try {
       const newUri = await flipImage(currentUri, direction);
@@ -43,7 +50,7 @@ const ImageEditor = ({ image, onSave, onCancel }) => {
     setIsProcessing(false);
   };
 
-  const handleFilter = async (filterType) => {
+  const handleFilter = async (filterType: FilterType): Promise<void> => {
     setIsProcessing(true);
     try {
       const newUri = await applyFilter(currentUri, filterType);
@@ -55,7 +62,7 @@ const ImageEditor = ({ image, onSave, onCancel }) => {
     setIsProcessing(false);
   };
 
-  const handleSave = () => {
+  const handleSave = (): void => {
     onSave({ ...image, uri: currentUri });
   };
 

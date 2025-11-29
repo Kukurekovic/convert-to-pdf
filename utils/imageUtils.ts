@@ -1,7 +1,8 @@
 import * as ImageManipulator from 'expo-image-manipulator';
 import * as FileSystem from 'expo-file-system/legacy';
+import type { FilterType, FlipDirection, CropData } from '../types/document';
 
-export const rotateImage = async (uri, degrees) => {
+export const rotateImage = async (uri: string, degrees: number): Promise<string> => {
   try {
     const manipResult = await ImageManipulator.manipulateAsync(
       uri,
@@ -15,7 +16,7 @@ export const rotateImage = async (uri, degrees) => {
   }
 };
 
-export const flipImage = async (uri, direction = 'horizontal') => {
+export const flipImage = async (uri: string, direction: FlipDirection = 'horizontal'): Promise<string> => {
   try {
     const manipResult = await ImageManipulator.manipulateAsync(
       uri,
@@ -29,7 +30,7 @@ export const flipImage = async (uri, direction = 'horizontal') => {
   }
 };
 
-export const cropImage = async (uri, cropData) => {
+export const cropImage = async (uri: string, cropData: CropData): Promise<string> => {
   try {
     const manipResult = await ImageManipulator.manipulateAsync(
       uri,
@@ -43,9 +44,9 @@ export const cropImage = async (uri, cropData) => {
   }
 };
 
-export const applyFilter = async (uri, filterType) => {
+export const applyFilter = async (uri: string, filterType: FilterType): Promise<string> => {
   try {
-    const actions = [];
+    const actions: ImageManipulator.Action[] = [];
 
     switch (filterType) {
       case 'grayscale':
@@ -60,8 +61,13 @@ export const applyFilter = async (uri, filterType) => {
         // High contrast black and white
         actions.push({ resize: { width: 1000 } });
         break;
-      default:
+      case 'original':
+        // No filter applied
         break;
+      default:
+        // Exhaustive check - TypeScript will error if new FilterType is added
+        const _exhaustiveCheck: never = filterType;
+        return _exhaustiveCheck;
     }
 
     const manipResult = await ImageManipulator.manipulateAsync(
@@ -76,7 +82,7 @@ export const applyFilter = async (uri, filterType) => {
   }
 };
 
-export const resizeImage = async (uri, width, height) => {
+export const resizeImage = async (uri: string, width: number, height: number): Promise<string> => {
   try {
     const manipResult = await ImageManipulator.manipulateAsync(
       uri,
@@ -90,7 +96,7 @@ export const resizeImage = async (uri, width, height) => {
   }
 };
 
-export const getImageInfo = async (uri) => {
+export const getImageInfo = async (uri: string): Promise<FileSystem.FileInfo> => {
   try {
     const info = await FileSystem.getInfoAsync(uri);
     return info;
@@ -100,10 +106,10 @@ export const getImageInfo = async (uri) => {
   }
 };
 
-export const saveImageToCache = async (uri) => {
+export const saveImageToCache = async (uri: string): Promise<string> => {
   try {
     const filename = `${Date.now()}.jpg`;
-    const newPath = `${FileSystem.cacheDirectory}${filename}`;
+    const newPath = `${FileSystem.cacheDirectory ?? ''}${filename}`;
     await FileSystem.copyAsync({
       from: uri,
       to: newPath,
@@ -115,10 +121,10 @@ export const saveImageToCache = async (uri) => {
   }
 };
 
-export const cleanupTempImages = async (imageUris) => {
+export const cleanupTempImages = async (imageUris: string[]): Promise<void> => {
   try {
     for (const uri of imageUris) {
-      if (uri.includes(FileSystem.cacheDirectory)) {
+      if (uri.includes(FileSystem.cacheDirectory ?? '')) {
         await FileSystem.deleteAsync(uri, { idempotent: true });
       }
     }

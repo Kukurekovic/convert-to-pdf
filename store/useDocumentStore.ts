@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import * as FileSystem from 'expo-file-system/legacy';
+import type { DocumentStoreState, AppSettings } from '../types/store';
+import type { ImageAsset, PDFDocument } from '../types/document';
 
-const useDocumentStore = create((set, get) => ({
+const useDocumentStore = create<DocumentStoreState>((set, get) => ({
   // Current session images
   images: [],
   currentImageIndex: 0,
@@ -17,29 +19,29 @@ const useDocumentStore = create((set, get) => ({
   },
 
   // Actions for images
-  addImage: (image) => set((state) => ({
+  addImage: (image: ImageAsset) => set((state) => ({
     images: [...state.images, image]
   })),
 
-  removeImage: (index) => set((state) => ({
+  removeImage: (index: number) => set((state) => ({
     images: state.images.filter((_, i) => i !== index),
     currentImageIndex: Math.min(state.currentImageIndex, state.images.length - 2)
   })),
 
-  updateImage: (index, updatedImage) => set((state) => ({
+  updateImage: (index: number, updatedImage: ImageAsset) => set((state) => ({
     images: state.images.map((img, i) => i === index ? updatedImage : img)
   })),
 
   clearImages: () => set({ images: [], currentImageIndex: 0 }),
 
-  setCurrentImageIndex: (index) => set({ currentImageIndex: index }),
+  setCurrentImageIndex: (index: number) => set({ currentImageIndex: index }),
 
   // Actions for PDFs
-  addPDF: (pdf) => set((state) => ({
+  addPDF: (pdf: PDFDocument) => set((state) => ({
     savedPDFs: [pdf, ...state.savedPDFs]
   })),
 
-  removePDF: async (id) => {
+  removePDF: async (id: string) => {
     const state = get();
     const pdf = state.savedPDFs.find(p => p.id === id);
 
@@ -82,7 +84,7 @@ const useDocumentStore = create((set, get) => ({
 
   loadPDFs: async () => {
     try {
-      const documentsDir = `${FileSystem.documentDirectory}pdfs/`;
+      const documentsDir = `${FileSystem.documentDirectory ?? ''}pdfs/`;
       const dirInfo = await FileSystem.getInfoAsync(documentsDir);
 
       if (!dirInfo.exists) {
@@ -94,7 +96,7 @@ const useDocumentStore = create((set, get) => ({
       const pdfFiles = files.filter(f => f.endsWith('.pdf'));
 
       const pdfs = await Promise.all(
-        pdfFiles.map(async (filename) => {
+        pdfFiles.map(async (filename): Promise<PDFDocument> => {
           const uri = `${documentsDir}${filename}`;
           const info = await FileSystem.getInfoAsync(uri);
 
@@ -102,8 +104,8 @@ const useDocumentStore = create((set, get) => ({
             id: filename.replace('.pdf', ''),
             name: filename.replace('.pdf', ''),
             uri,
-            size: info.size,
-            createdAt: info.modificationTime,
+            size: info.exists && 'size' in info ? info.size : 0,
+            createdAt: info.exists && 'modificationTime' in info ? info.modificationTime : Date.now(),
             thumbnail: null,
           };
         })
@@ -116,7 +118,7 @@ const useDocumentStore = create((set, get) => ({
   },
 
   // Settings actions
-  updateSettings: (newSettings) => set((state) => ({
+  updateSettings: (newSettings: Partial<AppSettings>) => set((state) => ({
     settings: { ...state.settings, ...newSettings }
   })),
 }));

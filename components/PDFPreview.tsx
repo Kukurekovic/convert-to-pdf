@@ -11,21 +11,28 @@ import {
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { wp, hp, RF, RS } from '../utils/responsive';
+import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import { generatePDF, sharePDF } from '../utils/pdfUtils';
 import useDocumentStore from '../store/useDocumentStore';
+import type { ImageAsset } from '../types/document';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const THUMBNAIL_WIDTH = (SCREEN_WIDTH - RS(48)) / 3;
 
-const PDFPreview = ({ images, onClose, onEdit }) => {
-  const [isSaving, setIsSaving] = useState(false);
-  const [isSharing, setIsSharing] = useState(false);
+interface PDFPreviewProps {
+  images: ImageAsset[];
+  onClose: () => void;
+  onEdit: (index: number) => void;
+}
+
+const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit }) => {
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [isSharing, setIsSharing] = useState<boolean>(false);
   const addPDF = useDocumentStore((state) => state.addPDF);
   const clearImages = useDocumentStore((state) => state.clearImages);
 
-  const handleSave = async () => {
+  const handleSave = async (): Promise<void> => {
     setIsSaving(true);
     try {
       const pdf = await generatePDF(images, {
@@ -48,7 +55,7 @@ const PDFPreview = ({ images, onClose, onEdit }) => {
     setIsSaving(false);
   };
 
-  const handleSaveAndShare = async () => {
+  const handleSaveAndShare = async (): Promise<void> => {
     setIsSharing(true);
     try {
       const pdf = await generatePDF(images, {
@@ -68,7 +75,7 @@ const PDFPreview = ({ images, onClose, onEdit }) => {
     setIsSharing(false);
   };
 
-  const handleRemoveImage = (index) => {
+  const handleRemoveImage = (index: number): void => {
     Alert.alert(
       'Remove Page',
       'Are you sure you want to remove this page?',

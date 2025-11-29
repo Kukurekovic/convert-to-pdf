@@ -9,28 +9,30 @@ import { theme } from '../theme/theme';
 import CameraView from '../components/CameraView';
 import ImageEditor from '../components/ImageEditor';
 import PDFPreview from '../components/PDFPreview';
+import type { ConvertScreenProps } from '../types/navigation';
+import type { ImageAsset } from '../types/document';
 
-export default function ConvertScreen() {
-  const [showCamera, setShowCamera] = useState(false);
-  const [showEditor, setShowEditor] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+export default function ConvertScreen({}: ConvertScreenProps) {
+  const [showCamera, setShowCamera] = useState<boolean>(false);
+  const [showEditor, setShowEditor] = useState<boolean>(false);
+  const [showPreview, setShowPreview] = useState<boolean>(false);
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
 
   const images = useDocumentStore((state) => state.images);
   const addImage = useDocumentStore((state) => state.addImage);
   const updateImage = useDocumentStore((state) => state.updateImage);
   const clearImages = useDocumentStore((state) => state.clearImages);
 
-  const handleCameraPress = () => {
+  const handleCameraPress = (): void => {
     setShowCamera(true);
   };
 
-  const handleCameraCapture = (photo) => {
+  const handleCameraCapture = (photo: ImageAsset): void => {
     setShowCamera(false);
     addImage(photo);
   };
 
-  const handleGalleryPress = async () => {
+  const handleGalleryPress = async (): Promise<void> => {
     try {
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
@@ -60,7 +62,7 @@ export default function ConvertScreen() {
     }
   };
 
-  const handleScanDocument = async () => {
+  const handleScanDocument = async (): Promise<void> => {
     try {
       const { scannedImages } = await DocumentScanner.scanDocument({
         maxNumDocuments: 10,
@@ -72,7 +74,7 @@ export default function ConvertScreen() {
           addImage({ uri });
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error scanning document:', error);
       if (error.message !== 'User cancelled') {
         Alert.alert('Error', 'Failed to scan document');
@@ -80,17 +82,17 @@ export default function ConvertScreen() {
     }
   };
 
-  const handleEditImage = (index) => {
+  const handleEditImage = (index: number): void => {
     setSelectedImageIndex(index);
     setShowEditor(true);
   };
 
-  const handleSaveEdit = (updatedImage) => {
+  const handleSaveEdit = (updatedImage: ImageAsset): void => {
     updateImage(selectedImageIndex, updatedImage);
     setShowEditor(false);
   };
 
-  const handleGeneratePDF = () => {
+  const handleGeneratePDF = (): void => {
     if (images.length === 0) {
       Alert.alert('No Images', 'Please add at least one image to generate a PDF');
       return;
@@ -98,7 +100,7 @@ export default function ConvertScreen() {
     setShowPreview(true);
   };
 
-  const handleClosePreview = () => {
+  const handleClosePreview = (): void => {
     setShowPreview(false);
   };
 
@@ -180,9 +182,9 @@ export default function ConvertScreen() {
       </Modal>
 
       <Modal visible={showEditor} animationType="slide" presentationStyle="fullScreen">
-        {showEditor && (
+        {showEditor && images[selectedImageIndex] && (
           <ImageEditor
-            image={images[selectedImageIndex]}
+            image={images[selectedImageIndex]!}
             onSave={handleSaveEdit}
             onCancel={() => setShowEditor(false)}
           />

@@ -3,22 +3,24 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import useDocumentStore from '../store/useDocumentStore';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
+import type { SettingsScreenProps } from '../types/navigation';
+import type { PDFQuality } from '../types/document';
 
-export default function SettingsScreen() {
+export default function SettingsScreen({}: SettingsScreenProps) {
   const settings = useDocumentStore((state) => state.settings);
   const updateSettings = useDocumentStore((state) => state.updateSettings);
   const clearAllPDFs = useDocumentStore((state) => state.clearAllPDFs);
   const savedPDFs = useDocumentStore((state) => state.savedPDFs);
 
-  const handleToggleAutoEnhance = (value) => {
+  const handleToggleAutoEnhance = (value: boolean): void => {
     updateSettings({ autoEnhance: value });
   };
 
-  const handleQualityChange = (quality) => {
+  const handleQualityChange = (quality: PDFQuality): void => {
     updateSettings({ defaultQuality: quality });
   };
 
-  const handleClearCache = () => {
+  const handleClearCache = (): void => {
     Alert.alert(
       'Clear Cache',
       'Are you sure you want to clear all cached data?',
@@ -35,7 +37,7 @@ export default function SettingsScreen() {
     );
   };
 
-  const handleClearHistory = () => {
+  const handleClearHistory = (): void => {
     if (savedPDFs.length === 0) {
       Alert.alert('No History', 'There are no PDFs to delete');
       return;

@@ -7,15 +7,18 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
+  type ListRenderItem,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import useDocumentStore from '../store/useDocumentStore';
 import { sharePDF, formatFileSize, formatDate } from '../utils/pdfUtils';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
+import type { HistoryScreenProps } from '../types/navigation';
+import type { PDFDocument } from '../types/document';
 
-export default function HistoryScreen() {
-  const [isLoading, setIsLoading] = useState(true);
+export default function HistoryScreen({}: HistoryScreenProps) {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const savedPDFs = useDocumentStore((state) => state.savedPDFs);
   const loadPDFs = useDocumentStore((state) => state.loadPDFs);
   const removePDF = useDocumentStore((state) => state.removePDF);
@@ -25,13 +28,13 @@ export default function HistoryScreen() {
     loadPDFsFromStorage();
   }, []);
 
-  const loadPDFsFromStorage = async () => {
+  const loadPDFsFromStorage = async (): Promise<void> => {
     setIsLoading(true);
     await loadPDFs();
     setIsLoading(false);
   };
 
-  const handleSharePDF = async (pdf) => {
+  const handleSharePDF = async (pdf: PDFDocument): Promise<void> => {
     try {
       await sharePDF(pdf.uri);
     } catch (error) {
@@ -40,7 +43,7 @@ export default function HistoryScreen() {
     }
   };
 
-  const handleDeletePDF = (pdf) => {
+  const handleDeletePDF = (pdf: PDFDocument): void => {
     Alert.alert(
       'Delete PDF',
       `Are you sure you want to delete "${pdf.name}"?`,
@@ -57,7 +60,7 @@ export default function HistoryScreen() {
     );
   };
 
-  const handleClearAll = () => {
+  const handleClearAll = (): void => {
     if (savedPDFs.length === 0) return;
 
     Alert.alert(
@@ -76,7 +79,7 @@ export default function HistoryScreen() {
     );
   };
 
-  const renderPDFItem = ({ item }) => (
+  const renderPDFItem: ListRenderItem<PDFDocument> = ({ item }) => (
     <View style={styles.pdfItem}>
       <View style={styles.pdfInfo}>
         <View style={styles.pdfIcon}>

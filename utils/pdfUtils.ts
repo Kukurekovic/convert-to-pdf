@@ -1,15 +1,33 @@
 import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
+import type { ImageAsset, PDFDocument, PDFGenerationOptions } from '../types/document';
 
-export const generatePDF = async (images, options = {}) => {
+export const generatePDF = async (
+  images: ImageAsset[],
+  options: PDFGenerationOptions = {}
+): Promise<PDFDocument> => {
   try {
     const {
       fileName = `document_${Date.now()}`,
-      quality = 'high',
     } = options;
 
-    // Create HTML content with images
+    // Convert images to base64 for embedding in HTML
+    const imageDataPromises = images.map(async (img) => {
+      try {
+        const base64 = await FileSystem.readAsStringAsync(img.uri, {
+          encoding: FileSystem.EncodingType.Base64,
+        });
+        return `data:image/jpeg;base64,${base64}`;
+      } catch (error) {
+        console.error('Error reading image:', error);
+        return '';
+      }
+    });
+
+    const imageData = await Promise.all(imageDataPromises);
+
+    // Create HTML content with base64 images
     const htmlContent = `
       <!DOCTYPE html>
       <html>
@@ -43,9 +61,9 @@ export const generatePDF = async (images, options = {}) => {
           </style>
         </head>
         <body>
-          ${images.map(img => `
+          ${imageData.map(data => `
             <div class="page">
-              <img src="${img.uri}" alt="Document Page" />
+              <img src="${data}" alt="Document Page" />
             </div>
           `).join('')}
         </body>
@@ -80,7 +98,7 @@ export const generatePDF = async (images, options = {}) => {
       id: fileName,
       name: fileName,
       uri: finalUri,
-      size: fileInfo.size,
+      size: fileInfo.exists && 'size' in fileInfo ? fileInfo.size : 0,
       createdAt: Date.now(),
       pageCount: images.length,
     };
@@ -90,7 +108,7 @@ export const generatePDF = async (images, options = {}) => {
   }
 };
 
-export const sharePDF = async (uri) => {
+export const sharePDF = async (uri: string): Promise<void> => {
   try {
     const isAvailable = await Sharing.isAvailableAsync();
 
@@ -109,7 +127,7 @@ export const sharePDF = async (uri) => {
   }
 };
 
-export const deletePDF = async (uri) => {
+export const deletePDF = async (uri: string): Promise<void> => {
   try {
     await FileSystem.deleteAsync(uri, { idempotent: true });
   } catch (error) {
@@ -118,7 +136,7 @@ export const deletePDF = async (uri) => {
   }
 };
 
-export const getPDFInfo = async (uri) => {
+export const getPDFInfo = async (uri: string): Promise<FileSystem.FileInfo> => {
   try {
     const info = await FileSystem.getInfoAsync(uri);
     return info;
@@ -128,20 +146,20 @@ export const getPDFInfo = async (uri) => {
   }
 };
 
-export const formatFileSize = (bytes) => {
+export const formatFileSize = (bytes: number): string => {
   if (bytes === 0) return '0 Bytes';
 
   const k = 1024;
   const sizes = ['Bytes', 'KB', 'MB', 'GB'];
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
+  return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i]!;
 };
 
-export const formatDate = (timestamp) => {
+export const formatDate = (timestamp: number): string => {
   const date = new Date(timestamp);
   const now = new Date();
-  const diff = now - date;
+  const diff = now.getTime() - date.getTime();
 
   const seconds = Math.floor(diff / 1000);
   const minutes = Math.floor(seconds / 60);

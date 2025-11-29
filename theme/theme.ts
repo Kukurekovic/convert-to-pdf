@@ -1,9 +1,10 @@
-// src/theme/theme.js
-// Light-mode theme compatible with NativeWind + responsive.js
+// theme/theme.ts
+// Light-mode theme compatible with NativeWind + responsive.ts
 
 import { RF, RS } from '../utils/responsive';
+import type { Theme } from '../types/theme';
 
-const theme = {
+const theme: Theme = {
   // 🎨 COLOR PALETTE (Light mode only)
   colors: {
     primary: '#3E7BFA',
@@ -58,7 +59,7 @@ const theme = {
     full: 9999,
   },
 
-  // ☁ Shadows (compatible with NativeWind’s shadow classes)
+  // ☁ Shadows (compatible with NativeWind's shadow classes)
   shadows: {
     light: {
       shadowColor: '#000000',
