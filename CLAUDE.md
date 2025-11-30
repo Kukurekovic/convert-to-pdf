@@ -67,7 +67,6 @@ Note: The `LANG=en_US.UTF-8` prefix is required to avoid Unicode normalization e
 │   ├── HistoryScreen.tsx
 │   └── SettingsScreen.tsx
 ├── components/
-│   ├── CameraView.tsx
 │   ├── ImageEditor.tsx
 │   └── PDFPreview.tsx
 ├── store/
@@ -91,6 +90,8 @@ Note: The `LANG=en_US.UTF-8` prefix is required to avoid Unicode normalization e
 ├── babel.config.js
 └── tailwind.config.js
 ```
+
+**Note**: `CameraView.tsx` component has been removed. The app no longer includes a camera feature.
 
 ## Architecture
 
@@ -150,14 +151,26 @@ Do not use Tailwind spacing/colors
 Always wrap screens with SafeAreaView from react-native-safe-area-context
 
 ### Convert Screen Pattern
-[ConvertScreen.tsx](screens/ConvertScreen.tsx) demonstrates the recommended pattern:
-6 large buttons (2 × 3 grid)
-Button layout/sizes:
-- height with hp()
-- spacing & radius with RS()
-- icon with RS()
+[ConvertScreen.tsx](screens/ConvertScreen.tsx) demonstrates the recommended pattern with multiple input methods organized in rows of 2 buttons each.
 
-Colors must come from theme.ts
+**Button Grid Layout** (6 buttons total):
+- Row 1: **Files** (blue) + **Gallery** (purple)
+- Row 2: **Scan Doc** (green) + **Cloud** (cyan)
+- Row 3: **URL Link** (orange) + **Other Apps** (red)
+
+Button styling requirements:
+- height with `hp()` or `RS()`
+- spacing & radius with `RS()`
+- icon with `RS()`
+- colors must come from `theme.ts` or use hex values for specific branding
+
+**Input Methods**:
+1. **Files** - Uses `expo-document-picker` to select images from device file system
+2. **Gallery** - Uses `expo-image-picker` to select from photo library
+3. **Scan Doc** - Uses `react-native-document-scanner-plugin` for document scanning
+4. **Cloud** - Uses `expo-document-picker` to access cloud storage services (iCloud Drive, Google Drive, Microsoft OneDrive, Dropbox)
+5. **URL Link** - Downloads images from URLs using `expo-file-system` (`File.downloadFileAsync()`)
+6. **Other Apps** - Shows instructional modal about share sheet (informational only)
 
 ## TypeScript
 
@@ -215,11 +228,12 @@ The app implements **automatic page orientation matching** where each PDF page r
 - Orientation detected via `detectOrientation(width, height)` helper (width > height = landscape)
 
 ### Image Dimension Detection
-All images must have dimensions before PDF generation. The app handles three image sources:
+All images must have dimensions before PDF generation. The app handles four image sources:
 
-1. **Camera** ([components/CameraView.tsx](components/CameraView.tsx)): Provides `width` and `height` automatically
-2. **Gallery** ([screens/ConvertScreen.tsx](screens/ConvertScreen.tsx)): Provides dimensions via `expo-image-picker`
+1. **Gallery** ([screens/ConvertScreen.tsx](screens/ConvertScreen.tsx)): Provides dimensions via `expo-image-picker`
+2. **Files** ([screens/ConvertScreen.tsx](screens/ConvertScreen.tsx)): Uses `getImageDimensions()` from `expo-document-picker` results
 3. **Document Scanner** ([screens/ConvertScreen.tsx](screens/ConvertScreen.tsx)): Uses `getImageDimensions()` to detect dimensions
+4. **URL Download** ([screens/ConvertScreen.tsx](screens/ConvertScreen.tsx)): Uses `getImageDimensions()` after downloading with `File.downloadFileAsync()`
 
 **Dimension Detection Utility** ([utils/imageUtils.ts](utils/imageUtils.ts)):
 ```typescript
@@ -305,6 +319,17 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
 ## Android-Specific Notes
 
 1. **Package Name**: `com.converttopdf.app` (set in [app.json](app.json))
+2. **SDK Configuration**: The `android/local.properties` file is required and contains the Android SDK path:
+   ```properties
+   sdk.dir=/Users/markokukurekovic/Library/Android/sdk
+   ```
+   - This file is machine-specific and is excluded from version control via [.gitignore](.gitignore)
+   - Common SDK location on macOS: `~/Library/Android/sdk`
+   - If missing, builds will fail with "SDK location not found" error
+3. **USB Installation**: When installing via USB (`npx expo run:android --device`), ensure device settings allow USB installation:
+   - Enable **"Install via USB"** in Developer Options
+   - Enable **"USB debugging (Security settings)"** if available
+   - Some manufacturers (Xiaomi/MIUI, Samsung) require additional security permissions
 
 ## Known Compatibility Issues
 
@@ -319,3 +344,59 @@ The [babel.config.js](babel.config.js) includes the NativeWind plugin:
 plugins: ['nativewind/babel']
 ```
 This is required for NativeWind v2. Do not remove.
+
+## File System API
+
+The app uses the **modern expo-file-system API** (Expo SDK 54+):
+
+### Imports
+```typescript
+import { File, Paths } from 'expo-file-system';
+```
+
+### Key Changes from Legacy API
+- **Use `Paths.cache`** instead of `FileSystem.cacheDirectory`
+- **Use `Paths.document`** instead of `FileSystem.documentDirectory`
+- **Use `File.downloadFileAsync(url, destination)`** instead of `FileSystem.downloadAsync()`
+- The new API uses `Paths.cache` (Directory object) as destination, not string URIs
+
+### Example: Downloading Files
+```typescript
+const downloadedFile = await File.downloadFileAsync(url, Paths.cache);
+// Returns a File object with .uri property
+const imageUri = downloadedFile.uri;
+```
+
+**Do not use**:
+- `FileSystem.downloadAsync()` (legacy, deprecated)
+- `FileSystem.cacheDirectory` (string-based, old API)
+
+## Image Import Methods
+
+### Files Button (Document Picker)
+Uses `expo-document-picker` for accessing files from anywhere on the device:
+```typescript
+const result = await DocumentPicker.getDocumentAsync({
+  type: 'image/*',
+  multiple: true,
+  copyToCacheDirectory: true,
+});
+```
+
+**Why expo-document-picker?** Provides access to:
+- Files app on iOS
+- Downloads folder
+- Cloud storage providers (Google Drive, Dropbox, etc.)
+- Any file location accessible to the system
+
+**Difference from Gallery**: Gallery (`expo-image-picker`) only accesses the photo library, while Files accesses the entire file system.
+
+### URL Download
+Downloads images from URLs and adds them to the conversion queue:
+- Validates URL format (must start with `http://` or `https://`)
+- Downloads using `File.downloadFileAsync()` to cache directory
+- Detects dimensions using `getImageDimensions()`
+- Provides success/error feedback via alerts
+
+### Other Apps (Share Sheet)
+Currently **informational only** - shows a modal with instructions on how to share files from other apps. Does not implement actual share extension functionality (would require native configuration).

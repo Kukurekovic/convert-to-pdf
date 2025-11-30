@@ -24,19 +24,31 @@ interface PDFPreviewProps {
   images: ImageAsset[];
   onClose: () => void;
   onEdit: (index: number) => void;
+  filename?: string;
+  quality?: number;
 }
 
-const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit }) => {
+const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filename, quality = 0.8 }) => {
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const addPDF = useDocumentStore((state) => state.addPDF);
   const clearImages = useDocumentStore((state) => state.clearImages);
 
+  // Map numeric quality to PDFQuality type
+  const getQualityString = (numericQuality: number): 'low' | 'medium' | 'high' => {
+    if (numericQuality <= 0.3) return 'low';
+    if (numericQuality <= 0.6) return 'medium';
+    return 'high';
+  };
+
+  const pdfQuality = getQualityString(quality);
+
   const handleSave = async (): Promise<void> => {
     setIsSaving(true);
     try {
       const pdf = await generatePDF(images, {
-        quality: 'high',
+        fileName: filename,
+        quality: pdfQuality,
       });
 
       addPDF(pdf);
@@ -58,7 +70,8 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit }) => {
     setIsSharing(true);
     try {
       const pdf = await generatePDF(images, {
-        quality: 'high',
+        fileName: filename,
+        quality: pdfQuality,
       });
 
       addPDF(pdf);
