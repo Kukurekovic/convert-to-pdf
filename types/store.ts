@@ -20,6 +20,9 @@ export interface DocumentStoreState {
 
   addPDF: (pdf: PDFDocument) => void;
   removePDF: (id: string) => Promise<void>;
+  renamePDF: (id: string, newName: string) => void;
+  reorderPages: (id: string, newPageOrder: string[]) => void;
+  deletePages: (id: string, pageIndicesToDelete: number[]) => void;
   clearAllPDFs: () => Promise<void>;
   loadPDFs: () => Promise<void>;
 

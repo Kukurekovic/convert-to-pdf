@@ -50,9 +50,16 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
         // Delete the PDF file
         await FileSystem.deleteAsync(pdf.uri, { idempotent: true });
 
-        // Delete thumbnail if exists
+        // Delete main thumbnail if exists
         if (pdf.thumbnail) {
           await FileSystem.deleteAsync(pdf.thumbnail, { idempotent: true });
+        }
+
+        // Delete all page thumbnails if they exist
+        if (pdf.pageThumbnails) {
+          for (const pageThumb of pdf.pageThumbnails) {
+            await FileSystem.deleteAsync(pageThumb, { idempotent: true });
+          }
         }
       } catch (error) {
         console.error('Error deleting PDF:', error);
@@ -64,6 +71,34 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
     }));
   },
 
+  renamePDF: (id: string, newName: string) => set((state) => ({
+    savedPDFs: state.savedPDFs.map(p =>
+      p.id === id ? { ...p, name: newName } : p
+    )
+  })),
+
+  reorderPages: (id: string, newPageOrder: string[]) => set((state) => ({
+    savedPDFs: state.savedPDFs.map(p =>
+      p.id === id ? { ...p, pageThumbnails: newPageOrder } : p
+    )
+  })),
+
+  deletePages: (id: string, pageIndicesToDelete: number[]) => set((state) => ({
+    savedPDFs: state.savedPDFs.map(p => {
+      if (p.id === id && p.pageThumbnails) {
+        const newPageThumbnails = p.pageThumbnails.filter(
+          (_, index) => !pageIndicesToDelete.includes(index)
+        );
+        return {
+          ...p,
+          pageThumbnails: newPageThumbnails,
+          thumbnail: newPageThumbnails.length > 0 ? newPageThumbnails[0] : p.thumbnail
+        };
+      }
+      return p;
+    })
+  })),
+
   clearAllPDFs: async () => {
     const state = get();
 
@@ -73,6 +108,11 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
         await FileSystem.deleteAsync(pdf.uri, { idempotent: true });
         if (pdf.thumbnail) {
           await FileSystem.deleteAsync(pdf.thumbnail, { idempotent: true });
+        }
+        if (pdf.pageThumbnails) {
+          for (const pageThumb of pdf.pageThumbnails) {
+            await FileSystem.deleteAsync(pageThumb, { idempotent: true });
+          }
         }
       } catch (error) {
         console.error('Error deleting PDF:', error);
@@ -100,11 +140,25 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
           const uri = `${documentsDir}${filename}`;
           const info = await FileSystem.getInfoAsync(uri);
 
-          // Check for thumbnail file
+          // Check for thumbnail file (backward compatibility)
           const baseFilename = filename.replace('.pdf', '');
           const thumbnailUri = `${documentsDir}${baseFilename}_thumb.jpg`;
           const thumbnailInfo = await FileSystem.getInfoAsync(thumbnailUri);
           const thumbnail = thumbnailInfo.exists ? thumbnailUri : null;
+
+          // Check for page thumbnails (new multi-page format)
+          const pageThumbnails: string[] = [];
+          let pageNum = 1;
+          while (true) {
+            const pageThumbUri = `${documentsDir}${baseFilename}_page${pageNum}_thumb.jpg`;
+            const pageThumbInfo = await FileSystem.getInfoAsync(pageThumbUri);
+            if (pageThumbInfo.exists) {
+              pageThumbnails.push(pageThumbUri);
+              pageNum++;
+            } else {
+              break;
+            }
+          }
 
           return {
             id: baseFilename,
@@ -113,6 +167,7 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
             size: info.exists && 'size' in info ? info.size : 0,
             createdAt: info.exists && 'modificationTime' in info ? info.modificationTime * 1000 : Date.now(),
             thumbnail,
+            pageThumbnails: pageThumbnails.length > 0 ? pageThumbnails : undefined,
           };
         })
       );

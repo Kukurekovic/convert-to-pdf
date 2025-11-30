@@ -6,6 +6,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import ConvertScreen from './screens/ConvertScreen';
 import HistoryScreen from './screens/HistoryScreen';
 import PDFDetailScreen from './screens/PDFDetailScreen';
+import ManagePagesScreen from './screens/ManagePagesScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import type { RootTabParamList, HistoryStackParamList } from './types/navigation';
 
@@ -22,6 +23,7 @@ function HistoryNavigator() {
     >
       <HistoryStack.Screen name="HistoryList" component={HistoryScreen} />
       <HistoryStack.Screen name="PDFDetail" component={PDFDetailScreen} />
+      <HistoryStack.Screen name="ManagePages" component={ManagePagesScreen} />
     </HistoryStack.Navigator>
   );
 }

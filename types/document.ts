@@ -11,7 +11,8 @@ export interface PDFDocument {
   size: number;
   createdAt: number;
   pageCount?: number;
-  thumbnail?: string | null;
+  thumbnail?: string | null; // First page thumbnail (backward compatibility)
+  pageThumbnails?: string[]; // Array of all page thumbnails
 }
 
 export type PDFQuality = 'low' | 'medium' | 'high';

@@ -204,19 +204,30 @@ export const generatePDF = async (
     // Get file info
     const fileInfo = await FileSystem.getInfoAsync(finalUri);
 
-    // Generate thumbnail from first processed image
+    // Generate thumbnails for all pages
     let thumbnailUri: string | null = null;
+    const pageThumbnails: string[] = [];
+
     try {
-      if (processedImages.length > 0 && processedImages[0]) {
-        thumbnailUri = await generateThumbnail(
-          processedImages[0].base64Data,
-          fileName
-        );
+      for (let i = 0; i < processedImages.length; i++) {
+        const img = processedImages[i];
+        if (img) {
+          const pageFileName = `${fileName}_page${i + 1}`;
+          const pageThumbUri = await generateThumbnail(
+            img.base64Data,
+            pageFileName
+          );
+          pageThumbnails.push(pageThumbUri);
+
+          // Keep first page as main thumbnail for backward compatibility
+          if (i === 0) {
+            thumbnailUri = pageThumbUri;
+          }
+        }
       }
     } catch (error) {
-      console.error('Error generating thumbnail:', error);
+      console.error('Error generating thumbnails:', error);
       // Don't fail PDF generation if thumbnail creation fails
-      thumbnailUri = null;
     }
 
     return {
@@ -227,6 +238,7 @@ export const generatePDF = async (
       createdAt: Date.now(),
       pageCount: images.length,
       thumbnail: thumbnailUri,
+      pageThumbnails: pageThumbnails.length > 0 ? pageThumbnails : undefined,
     };
   } catch (error) {
     console.error('Error generating PDF:', error);

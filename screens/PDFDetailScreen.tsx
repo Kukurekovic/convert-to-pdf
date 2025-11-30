@@ -1,14 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
   TouchableOpacity,
   StyleSheet,
   Alert,
-  ScrollView,
   ActivityIndicator,
   Image,
   Dimensions,
+  FlatList,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+  Modal,
+  TextInput,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -24,10 +28,18 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
   const { pdfId } = route.params;
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [showRenameModal, setShowRenameModal] = useState<boolean>(false);
+  const [newFileName, setNewFileName] = useState<string>('');
+  const flatListRef = useRef<FlatList>(null);
   const savedPDFs = useDocumentStore((state) => state.savedPDFs);
   const removePDF = useDocumentStore((state) => state.removePDF);
+  const renamePDF = useDocumentStore((state) => state.renamePDF);
 
   const pdf = savedPDFs.find((p) => p.id === pdfId);
+  const pageThumbnails = pdf?.pageThumbnails ?? (pdf?.thumbnail ? [pdf.thumbnail] : []);
+  const totalPages = pageThumbnails.length;
 
   useEffect(() => {
     if (!pdf) {
@@ -71,6 +83,61 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
     );
   };
 
+  const handleScroll = (event: NativeSyntheticEvent<NativeScrollEvent>): void => {
+    const offsetX = event.nativeEvent.contentOffset.x;
+    const pageIndex = Math.round(offsetX / SCREEN_WIDTH);
+    setCurrentPage(pageIndex + 1);
+  };
+
+  const goToPage = (pageNumber: number): void => {
+    if (pageNumber < 1 || pageNumber > totalPages) return;
+    flatListRef.current?.scrollToIndex({ index: pageNumber - 1, animated: true });
+  };
+
+  const goToPreviousPage = (): void => {
+    if (currentPage > 1) {
+      goToPage(currentPage - 1);
+    }
+  };
+
+  const goToNextPage = (): void => {
+    if (currentPage < totalPages) {
+      goToPage(currentPage + 1);
+    }
+  };
+
+  const handleMenuOption = (option: 'rename' | 'manage'): void => {
+    setShowMenu(false);
+    if (option === 'rename') {
+      setNewFileName(pdf?.name || '');
+      setShowRenameModal(true);
+    } else {
+      navigation.navigate('ManagePages', { pdfId });
+    }
+  };
+
+  const handleCancelRename = (): void => {
+    setShowRenameModal(false);
+    setNewFileName('');
+  };
+
+  const handleSaveRename = (): void => {
+    if (!pdf) return;
+
+    const trimmedName = newFileName.trim();
+
+    // Validate that the name is not empty
+    if (!trimmedName) {
+      Alert.alert('Invalid Name', 'Please enter a valid filename.');
+      return;
+    }
+
+    // Save the new name
+    renamePDF(pdf.id, trimmedName);
+    setShowRenameModal(false);
+    setNewFileName('');
+  };
+
   if (!pdf) {
     return (
       <SafeAreaView style={styles.container}>
@@ -97,25 +164,145 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
         <Text style={styles.headerTitle} numberOfLines={1}>
           {pdf.name}
         </Text>
-        <View style={styles.placeholder} />
+        <TouchableOpacity
+          onPress={() => setShowMenu(true)}
+          style={styles.menuButton}
+        >
+          <MaterialIcons
+            name="more-vert"
+            size={RS(24)}
+            color={theme.colors.text}
+          />
+        </TouchableOpacity>
       </View>
 
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.scrollContent}>
-        {pdf.thumbnail ? (
-          <View style={styles.pdfPreview}>
-            <Image
-              source={{ uri: pdf.thumbnail }}
-              style={styles.previewImage}
-              resizeMode="contain"
-            />
+      <Modal
+        visible={showMenu}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowMenu(false)}
+      >
+        <TouchableOpacity
+          style={styles.menuOverlay}
+          activeOpacity={1}
+          onPress={() => setShowMenu(false)}
+        >
+          <View style={styles.menuContainer}>
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => handleMenuOption('rename')}
+            >
+              <MaterialIcons name="edit" size={RS(20)} color={theme.colors.text} />
+              <Text style={styles.menuItemText}>Rename document</Text>
+            </TouchableOpacity>
+            <View style={styles.menuDivider} />
+            <TouchableOpacity
+              style={styles.menuItem}
+              onPress={() => handleMenuOption('manage')}
+            >
+              <MaterialIcons name="reorder" size={RS(20)} color={theme.colors.text} />
+              <Text style={styles.menuItemText}>Manage pages</Text>
+            </TouchableOpacity>
           </View>
-        ) : (
-          <View style={styles.noPreviewContainer}>
-            <MaterialIcons name="picture-as-pdf" size={RS(64)} color={theme.colors.textLight} />
-            <Text style={styles.noPreviewText}>No preview available</Text>
-          </View>
-        )}
-      </ScrollView>
+        </TouchableOpacity>
+      </Modal>
+
+      <Modal
+        visible={showRenameModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowRenameModal(false)}
+      >
+        <TouchableOpacity
+          style={styles.renameOverlay}
+          activeOpacity={1}
+          onPress={() => setShowRenameModal(false)}
+        >
+          <TouchableOpacity activeOpacity={1} onPress={() => {}}>
+            <View style={styles.renameModalContainer}>
+              <Text style={styles.renameModalTitle}>Rename Document</Text>
+              <TextInput
+                style={styles.renameInput}
+                value={newFileName}
+                onChangeText={setNewFileName}
+                placeholder="Enter new name"
+                placeholderTextColor={theme.colors.textLight}
+                autoFocus
+              />
+              <View style={styles.renameButtonContainer}>
+                <TouchableOpacity
+                  style={[styles.renameButton, styles.cancelButton]}
+                  onPress={handleCancelRename}
+                >
+                  <Text style={styles.cancelButtonText}>Cancel</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={[styles.renameButton, styles.saveButton]}
+                  onPress={handleSaveRename}
+                >
+                  <Text style={styles.saveButtonText}>Save</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </TouchableOpacity>
+        </TouchableOpacity>
+      </Modal>
+
+      {totalPages > 0 ? (
+        <>
+          {totalPages > 1 && (
+            <View style={styles.paginationIndicator}>
+              <TouchableOpacity
+                onPress={goToPreviousPage}
+                style={styles.chevronButton}
+              >
+                <MaterialIcons
+                  name="chevron-left"
+                  size={RS(28)}
+                  color={currentPage > 1 ? theme.colors.primary : theme.colors.textLight}
+                />
+              </TouchableOpacity>
+              <Text style={styles.paginationText}>
+                {currentPage}/{totalPages}
+              </Text>
+              <TouchableOpacity
+                onPress={goToNextPage}
+                style={styles.chevronButton}
+              >
+                <MaterialIcons
+                  name="chevron-right"
+                  size={RS(28)}
+                  color={currentPage < totalPages ? theme.colors.primary : theme.colors.textLight}
+                />
+              </TouchableOpacity>
+            </View>
+          )}
+          <FlatList
+            ref={flatListRef}
+            data={pageThumbnails}
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onScroll={handleScroll}
+            scrollEventThrottle={16}
+            keyExtractor={(_item, index) => `page-${index}`}
+            renderItem={({ item }) => (
+              <View style={styles.pageContainer}>
+                <Image
+                  source={{ uri: item }}
+                  style={styles.previewImage}
+                  resizeMode="contain"
+                />
+              </View>
+            )}
+          />
+        </>
+      ) : (
+        <View style={styles.noPreviewContainer}>
+          <MaterialIcons name="picture-as-pdf" size={RS(64)} color={theme.colors.textLight} />
+          <Text style={styles.noPreviewText}>No preview available</Text>
+        </View>
+      )}
 
       <View style={styles.footer}>
         <TouchableOpacity
@@ -183,27 +370,73 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginHorizontal: RS(8),
   },
-  placeholder: {
-    width: RS(40),
+  menuButton: {
+    padding: RS(8),
   },
-  scrollView: {
+  menuOverlay: {
     flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-end',
+    paddingTop: RS(60),
+    paddingRight: RS(16),
   },
-  scrollContent: {
-    padding: RS(16),
-  },
-  pdfPreview: {
+  menuContainer: {
     backgroundColor: theme.colors.white,
-    borderRadius: theme.radius.lg,
-    padding: RS(16),
-    marginBottom: RS(16),
+    borderRadius: theme.radius.md,
+    minWidth: RS(200),
+    ...theme.shadows.lg,
+  },
+  menuItem: {
+    flexDirection: 'row',
     alignItems: 'center',
-    ...theme.shadows.md,
+    paddingVertical: RS(14),
+    paddingHorizontal: RS(16),
+    gap: RS(12),
+  },
+  menuItemText: {
+    fontSize: RF(16),
+    fontWeight: '500',
+    color: theme.colors.text,
+  },
+  menuDivider: {
+    height: 1,
+    backgroundColor: theme.colors.border,
+  },
+  paginationIndicator: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: RS(12),
+    paddingHorizontal: RS(16),
+    backgroundColor: theme.colors.white,
+    borderBottomWidth: 1,
+    borderBottomColor: theme.colors.border,
+    gap: RS(16),
+  },
+  chevronButton: {
+    padding: RS(4),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  paginationText: {
+    fontSize: RF(14),
+    fontWeight: '600',
+    color: theme.colors.text,
+    minWidth: RS(50),
+    textAlign: 'center',
+  },
+  pageContainer: {
+    width: SCREEN_WIDTH,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: theme.colors.background,
+    padding: RS(16),
   },
   previewImage: {
-    width: SCREEN_WIDTH - RS(64),
-    height: (SCREEN_WIDTH - RS(64)) * 1.4,
-    borderRadius: theme.radius.md,
+    width: SCREEN_WIDTH - RS(32),
+    height: '100%',
   },
   noPreviewContainer: {
     flex: 1,
@@ -250,5 +483,66 @@ const styles = StyleSheet.create({
   },
   deleteButtonText: {
     color: theme.colors.danger,
+  },
+  renameOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: RS(20),
+  },
+  renameModalContainer: {
+    backgroundColor: theme.colors.white,
+    borderRadius: theme.radius.lg,
+    padding: RS(24),
+    width: SCREEN_WIDTH - RS(48),
+    maxWidth: RS(400),
+    ...theme.shadows.lg,
+  },
+  renameModalTitle: {
+    fontSize: RF(20),
+    fontWeight: '700',
+    color: theme.colors.text,
+    marginBottom: RS(16),
+    textAlign: 'center',
+  },
+  renameInput: {
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    borderRadius: theme.radius.md,
+    paddingHorizontal: RS(16),
+    paddingVertical: RS(12),
+    fontSize: RF(16),
+    color: theme.colors.text,
+    marginBottom: RS(20),
+  },
+  renameButtonContainer: {
+    flexDirection: 'row',
+    gap: RS(12),
+  },
+  renameButton: {
+    flex: 1,
+    paddingVertical: RS(12),
+    borderRadius: theme.radius.md,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cancelButton: {
+    backgroundColor: theme.colors.surface,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+  },
+  cancelButtonText: {
+    fontSize: RF(16),
+    fontWeight: '600',
+    color: theme.colors.text,
+  },
+  saveButton: {
+    backgroundColor: theme.colors.primary,
+  },
+  saveButtonText: {
+    fontSize: RF(16),
+    fontWeight: '600',
+    color: theme.colors.white,
   },
 });

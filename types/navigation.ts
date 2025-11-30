@@ -11,6 +11,7 @@ export type RootTabParamList = {
 export type HistoryStackParamList = {
   HistoryList: undefined;
   PDFDetail: { pdfId: string };
+  ManagePages: { pdfId: string };
 };
 
 export type ConvertScreenProps = BottomTabScreenProps<RootTabParamList, 'Convert'>;
@@ -23,6 +24,11 @@ export type HistoryListScreenProps = CompositeScreenProps<
 
 export type PDFDetailScreenProps = CompositeScreenProps<
   NativeStackScreenProps<HistoryStackParamList, 'PDFDetail'>,
+  BottomTabScreenProps<RootTabParamList>
+>;
+
+export type ManagePagesScreenProps = CompositeScreenProps<
+  NativeStackScreenProps<HistoryStackParamList, 'ManagePages'>,
   BottomTabScreenProps<RootTabParamList>
 >;
 
