@@ -2,7 +2,7 @@ import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import type { ImageAsset, PDFDocument, PDFGenerationOptions } from '../types/document';
-import { getImageDimensions } from './imageUtils';
+import { getImageDimensions, generateThumbnail } from './imageUtils';
 
 interface ImageWithOrientation {
   base64Data: string;
@@ -204,6 +204,21 @@ export const generatePDF = async (
     // Get file info
     const fileInfo = await FileSystem.getInfoAsync(finalUri);
 
+    // Generate thumbnail from first processed image
+    let thumbnailUri: string | null = null;
+    try {
+      if (processedImages.length > 0 && processedImages[0]) {
+        thumbnailUri = await generateThumbnail(
+          processedImages[0].base64Data,
+          fileName
+        );
+      }
+    } catch (error) {
+      console.error('Error generating thumbnail:', error);
+      // Don't fail PDF generation if thumbnail creation fails
+      thumbnailUri = null;
+    }
+
     return {
       id: fileName,
       name: fileName,
@@ -211,6 +226,7 @@ export const generatePDF = async (
       size: fileInfo.exists && 'size' in fileInfo ? fileInfo.size : 0,
       createdAt: Date.now(),
       pageCount: images.length,
+      thumbnail: thumbnailUri,
     };
   } catch (error) {
     console.error('Error generating PDF:', error);

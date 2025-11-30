@@ -146,3 +146,54 @@ export const getImageDimensions = async (uri: string): Promise<{ width: number; 
     throw error;
   }
 };
+
+/**
+ * Generates a thumbnail from base64 image data
+ * @param base64Data - Base64-encoded image data (with or without data URI prefix)
+ * @param fileName - Name for the thumbnail file (without extension)
+ * @returns URI of saved thumbnail file
+ */
+export const generateThumbnail = async (
+  base64Data: string,
+  fileName: string
+): Promise<string> => {
+  try {
+    // Remove data URI prefix if present (data:image/jpeg;base64,...)
+    const base64Only = base64Data.includes(',')
+      ? base64Data.split(',')[1]!
+      : base64Data;
+
+    // Create temporary file from base64
+    const tempUri = `${FileSystem.cacheDirectory ?? ''}temp_${Date.now()}.jpg`;
+    await FileSystem.writeAsStringAsync(tempUri, base64Only, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+
+    // Resize to max 800px width while preserving aspect ratio
+    const result = await ImageManipulator.manipulateAsync(
+      tempUri,
+      [{ resize: { width: 800 } }],
+      {
+        compress: 0.7,
+        format: ImageManipulator.SaveFormat.JPEG
+      }
+    );
+
+    // Move to final location in pdfs directory
+    const pdfsDir = `${FileSystem.documentDirectory ?? ''}pdfs/`;
+    const thumbnailUri = `${pdfsDir}${fileName}_thumb.jpg`;
+
+    await FileSystem.moveAsync({
+      from: result.uri,
+      to: thumbnailUri,
+    });
+
+    // Clean up temp file if it still exists
+    await FileSystem.deleteAsync(tempUri, { idempotent: true });
+
+    return thumbnailUri;
+  } catch (error) {
+    console.error('Error generating thumbnail:', error);
+    throw error;
+  }
+};

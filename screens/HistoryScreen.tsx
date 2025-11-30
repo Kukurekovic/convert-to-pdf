@@ -7,21 +7,22 @@ import {
   StyleSheet,
   Alert,
   ActivityIndicator,
+  Image,
   type ListRenderItem,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialIcons } from '@expo/vector-icons';
 import useDocumentStore from '../store/useDocumentStore';
-import { sharePDF, formatFileSize, formatDate } from '../utils/pdfUtils';
+import { formatFileSize, formatDate } from '../utils/pdfUtils';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
-import type { HistoryScreenProps } from '../types/navigation';
+import type { HistoryListScreenProps } from '../types/navigation';
 import type { PDFDocument } from '../types/document';
 
-export default function HistoryScreen({}: HistoryScreenProps) {
+export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const savedPDFs = useDocumentStore((state) => state.savedPDFs);
   const loadPDFs = useDocumentStore((state) => state.loadPDFs);
-  const removePDF = useDocumentStore((state) => state.removePDF);
   const clearAllPDFs = useDocumentStore((state) => state.clearAllPDFs);
 
   useEffect(() => {
@@ -32,32 +33,6 @@ export default function HistoryScreen({}: HistoryScreenProps) {
     setIsLoading(true);
     await loadPDFs();
     setIsLoading(false);
-  };
-
-  const handleSharePDF = async (pdf: PDFDocument): Promise<void> => {
-    try {
-      await sharePDF(pdf.uri);
-    } catch (error) {
-      console.error('Error sharing PDF:', error);
-      Alert.alert('Error', 'Failed to share PDF');
-    }
-  };
-
-  const handleDeletePDF = (pdf: PDFDocument): void => {
-    Alert.alert(
-      'Delete PDF',
-      `Are you sure you want to delete "${pdf.name}"?`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete',
-          style: 'destructive',
-          onPress: async () => {
-            await removePDF(pdf.id);
-          },
-        },
-      ]
-    );
   };
 
   const handleClearAll = (): void => {
@@ -79,41 +54,46 @@ export default function HistoryScreen({}: HistoryScreenProps) {
     );
   };
 
+  const handlePDFPress = (pdf: PDFDocument): void => {
+    navigation.navigate('PDFDetail', { pdfId: pdf.id });
+  };
+
   const renderPDFItem: ListRenderItem<PDFDocument> = ({ item }) => (
-    <View style={styles.pdfItem}>
-      <View style={styles.pdfInfo}>
+    <TouchableOpacity
+      style={styles.pdfItem}
+      onPress={() => handlePDFPress(item)}
+      activeOpacity={0.7}
+    >
+      {item.thumbnail ? (
+        <Image
+          source={{ uri: item.thumbnail }}
+          style={styles.pdfThumbnail}
+          resizeMode="cover"
+        />
+      ) : (
         <View style={styles.pdfIcon}>
           <Text style={styles.pdfIconText}>PDF</Text>
         </View>
-        <View style={styles.pdfDetails}>
-          <Text style={styles.pdfName} numberOfLines={1}>
-            {item.name}
+      )}
+      <View style={styles.pdfDetails}>
+        <Text style={styles.pdfName} numberOfLines={1}>
+          {item.name}
+        </Text>
+        <Text style={styles.pdfMeta}>
+          {formatFileSize(item.size)} · {formatDate(item.createdAt)}
+        </Text>
+        {item.pageCount && (
+          <Text style={styles.pdfPages}>
+            {item.pageCount} page{item.pageCount > 1 ? 's' : ''}
           </Text>
-          <Text style={styles.pdfMeta}>
-            {formatFileSize(item.size)} · {formatDate(item.createdAt)}
-          </Text>
-          {item.pageCount && (
-            <Text style={styles.pdfPages}>
-              {item.pageCount} page{item.pageCount > 1 ? 's' : ''}
-            </Text>
-          )}
-        </View>
+        )}
       </View>
-      <View style={styles.pdfActions}>
-        <TouchableOpacity
-          style={styles.actionButton}
-          onPress={() => handleSharePDF(item)}
-        >
-          <Text style={styles.actionButtonText}>Share</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.actionButton, styles.deleteButton]}
-          onPress={() => handleDeletePDF(item)}
-        >
-          <Text style={[styles.actionButtonText, styles.deleteButtonText]}>Delete</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+      <MaterialIcons
+        name="chevron-right"
+        size={RS(24)}
+        color={theme.colors.textLight}
+      />
+    </TouchableOpacity>
   );
 
   const renderEmptyState = () => (
@@ -193,15 +173,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   pdfItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: theme.colors.white,
     borderRadius: theme.radius.lg,
     padding: RS(16),
     marginBottom: RS(12),
     ...theme.shadows.md,
-  },
-  pdfInfo: {
-    flexDirection: 'row',
-    marginBottom: RS(12),
   },
   pdfIcon: {
     width: RS(50),
@@ -216,6 +194,13 @@ const styles = StyleSheet.create({
     fontSize: RF(12),
     fontWeight: '700',
     color: theme.colors.white,
+  },
+  pdfThumbnail: {
+    width: RS(50),
+    height: RS(60),
+    borderRadius: theme.radius.md,
+    marginRight: RS(12),
+    backgroundColor: theme.colors.surface,
   },
   pdfDetails: {
     flex: 1,
@@ -235,30 +220,6 @@ const styles = StyleSheet.create({
   pdfPages: {
     fontSize: RF(12),
     color: theme.colors.textLight,
-  },
-  pdfActions: {
-    flexDirection: 'row',
-    gap: RS(8),
-  },
-  actionButton: {
-    flex: 1,
-    backgroundColor: theme.colors.primary,
-    paddingVertical: RS(10),
-    borderRadius: theme.radius.md,
-    alignItems: 'center',
-  },
-  deleteButton: {
-    backgroundColor: theme.colors.surface,
-    borderWidth: 1,
-    borderColor: theme.colors.danger,
-  },
-  actionButtonText: {
-    fontSize: RF(14),
-    fontWeight: '600',
-    color: theme.colors.white,
-  },
-  deleteButtonText: {
-    color: theme.colors.danger,
   },
   emptyState: {
     flex: 1,

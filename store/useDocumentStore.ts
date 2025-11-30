@@ -100,13 +100,19 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
           const uri = `${documentsDir}${filename}`;
           const info = await FileSystem.getInfoAsync(uri);
 
+          // Check for thumbnail file
+          const baseFilename = filename.replace('.pdf', '');
+          const thumbnailUri = `${documentsDir}${baseFilename}_thumb.jpg`;
+          const thumbnailInfo = await FileSystem.getInfoAsync(thumbnailUri);
+          const thumbnail = thumbnailInfo.exists ? thumbnailUri : null;
+
           return {
-            id: filename.replace('.pdf', ''),
-            name: filename.replace('.pdf', ''),
+            id: baseFilename,
+            name: baseFilename,
             uri,
             size: info.exists && 'size' in info ? info.size : 0,
             createdAt: info.exists && 'modificationTime' in info ? info.modificationTime * 1000 : Date.now(),
-            thumbnail: null,
+            thumbnail,
           };
         })
       );

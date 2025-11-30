@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { File, Paths } from 'expo-file-system';
@@ -250,7 +251,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
         <Text style={styles.title}>Convert to PDF</Text>
-        <Text style={styles.subtitle}>Choose a source to scan or select images</Text>
+        
 
         <View style={styles.buttonContainer}>
           <View style={styles.row}>
@@ -258,7 +259,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
               style={[styles.button, { backgroundColor: theme.colors.primary }]}
               onPress={handleFilesPress}
             >
-              <Text style={styles.buttonIcon}>📁</Text>
+              <MaterialIcons name="folder" size={RS(48)} color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Files</Text>
             </TouchableOpacity>
 
@@ -266,7 +267,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
               style={[styles.button, { backgroundColor: '#a855f7' }]}
               onPress={handleGalleryPress}
             >
-              <Text style={styles.buttonIcon}>🖼️</Text>
+              <MaterialIcons name="collections" size={RS(48)} color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Gallery</Text>
             </TouchableOpacity>
           </View>
@@ -276,7 +277,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
               style={[styles.button, { backgroundColor: '#22c55e' }]}
               onPress={handleScanDocument}
             >
-              <Text style={styles.buttonIcon}>📄</Text>
+              <MaterialIcons name="document-scanner" size={RS(48)} color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Scan Doc</Text>
             </TouchableOpacity>
 
@@ -284,7 +285,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
               style={[styles.button, { backgroundColor: '#06b6d4' }]}
               onPress={handleCloudPress}
             >
-              <Text style={styles.buttonIcon}>☁️</Text>
+              <MaterialIcons name="cloud" size={RS(48)} color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Cloud</Text>
             </TouchableOpacity>
           </View>
@@ -294,7 +295,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
               style={[styles.button, { backgroundColor: '#f59e0b' }]}
               onPress={handleURLPress}
             >
-              <Text style={styles.buttonIcon}>🔗</Text>
+              <MaterialIcons name="link" size={RS(48)} color="white" style={styles.icon} />
               <Text style={styles.buttonText}>URL Link</Text>
             </TouchableOpacity>
 
@@ -302,7 +303,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
               style={[styles.button, { backgroundColor: '#ef4444' }]}
               onPress={handleOtherAppsPress}
             >
-              <Text style={styles.buttonIcon}>📲</Text>
+              <MaterialIcons name="apps" size={RS(48)} color="white" style={styles.icon} />
               <Text style={styles.buttonText}>Other Apps</Text>
             </TouchableOpacity>
           </View>
@@ -397,6 +398,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.text,
     marginBottom: RS(8),
+    textAlign: 'center',
   },
   subtitle: {
     fontSize: RF(16),
@@ -421,8 +423,7 @@ const styles = StyleSheet.create({
     marginHorizontal: RS(8),
     ...theme.shadows.md,
   },
-  buttonIcon: {
-    fontSize: RF(32),
+  icon: {
     marginBottom: RS(8),
   },
   buttonText: {
