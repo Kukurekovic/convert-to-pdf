@@ -8,6 +8,8 @@ import {
   Alert,
   ActivityIndicator,
   Image,
+  TextInput,
+  Modal,
   type ListRenderItem,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -21,8 +23,13 @@ import { theme } from '../theme/theme';
 import type { HistoryListScreenProps } from '../types/navigation';
 import type { PDFDocument } from '../types/document';
 
+type SortOption = 'name-asc' | 'name-desc' | 'date-oldest' | 'date-newest' | 'size-smallest' | 'size-largest';
+
 export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [sortBy, setSortBy] = useState<SortOption>('date-newest');
+  const [showSortMenu, setShowSortMenu] = useState<boolean>(false);
   const savedPDFs = useDocumentStore((state) => state.savedPDFs);
   const loadPDFs = useDocumentStore((state) => state.loadPDFs);
   const clearAllPDFs = useDocumentStore((state) => state.clearAllPDFs);
@@ -36,6 +43,54 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
     setIsLoading(true);
     await loadPDFs();
     setIsLoading(false);
+  };
+
+  const sortPDFs = (pdfs: PDFDocument[]): PDFDocument[] => {
+    const sorted = [...pdfs];
+    switch (sortBy) {
+      case 'name-asc':
+        return sorted.sort((a, b) => a.name.localeCompare(b.name));
+      case 'name-desc':
+        return sorted.sort((a, b) => b.name.localeCompare(a.name));
+      case 'date-oldest':
+        return sorted.sort((a, b) => a.createdAt - b.createdAt);
+      case 'date-newest':
+        return sorted.sort((a, b) => b.createdAt - a.createdAt);
+      case 'size-smallest':
+        return sorted.sort((a, b) => a.size - b.size);
+      case 'size-largest':
+        return sorted.sort((a, b) => b.size - a.size);
+      default:
+        return sorted;
+    }
+  };
+
+  const filteredPDFs = sortPDFs(
+    savedPDFs.filter((pdf) =>
+      pdf.name.toLowerCase().includes(searchQuery.toLowerCase())
+    )
+  );
+
+  const handleSortSelect = (option: SortOption): void => {
+    setSortBy(option);
+    setShowSortMenu(false);
+  };
+
+  const getSortLabel = (option: SortOption): string => {
+    switch (option) {
+      case 'name-asc':
+        return 'Name (A-Z)';
+      case 'name-desc':
+        return 'Name (Z-A)';
+      case 'date-oldest':
+        return 'Date (Oldest)';
+      case 'date-newest':
+        return 'Date (Newest)';
+      case 'size-smallest':
+        return 'Size (Smallest)';
+      case 'size-largest':
+        return 'Size (Largest)';
+    }
   };
 
   const handleClearAll = (): void => {
@@ -175,18 +230,92 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
           )}
         </View>
 
+        {savedPDFs.length > 0 && (
+          <View style={styles.searchContainer}>
+            <View style={styles.searchInputWrapper}>
+              <MaterialIcons
+                name="search"
+                size={RS(20)}
+                color={theme.colors.textLight}
+                style={styles.searchIcon}
+              />
+              <TextInput
+                style={styles.searchInput}
+                placeholder="Search PDFs..."
+                placeholderTextColor={theme.colors.textLight}
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+              />
+              {searchQuery.length > 0 && (
+                <TouchableOpacity onPress={() => setSearchQuery('')}>
+                  <MaterialIcons
+                    name="close"
+                    size={RS(20)}
+                    color={theme.colors.textLight}
+                  />
+                </TouchableOpacity>
+              )}
+            </View>
+            <TouchableOpacity
+              style={styles.sortButton}
+              onPress={() => setShowSortMenu(true)}
+            >
+              <MaterialIcons
+                name="sort"
+                size={RS(24)}
+                color={theme.colors.text}
+              />
+            </TouchableOpacity>
+          </View>
+        )}
+
+        <Modal
+          visible={showSortMenu}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setShowSortMenu(false)}
+        >
+          <TouchableOpacity
+            style={styles.modalOverlay}
+            activeOpacity={1}
+            onPress={() => setShowSortMenu(false)}
+          >
+            <View style={styles.sortMenu}>
+              <Text style={styles.sortMenuTitle}>Sort by</Text>
+              {(['name-asc', 'name-desc', 'date-oldest', 'date-newest', 'size-smallest', 'size-largest'] as SortOption[]).map((option) => (
+                <TouchableOpacity
+                  key={option}
+                  style={styles.sortMenuItem}
+                  onPress={() => handleSortSelect(option)}
+                >
+                  <Text style={styles.sortMenuItemText}>
+                    {getSortLabel(option)}
+                  </Text>
+                  {sortBy === option && (
+                    <MaterialIcons
+                      name="check"
+                      size={RS(20)}
+                      color={theme.colors.primary}
+                    />
+                  )}
+                </TouchableOpacity>
+              ))}
+            </View>
+          </TouchableOpacity>
+        </Modal>
+
         {isLoading ? (
           <View style={styles.loadingContainer}>
             <ActivityIndicator size="large" color={theme.colors.primary} />
           </View>
         ) : (
           <FlatList
-            data={savedPDFs}
+            data={filteredPDFs}
             renderItem={renderPDFItem}
             keyExtractor={(item) => item.id}
             contentContainerStyle={[
               styles.listContent,
-              savedPDFs.length === 0 && styles.listContentEmpty,
+              filteredPDFs.length === 0 && styles.listContentEmpty,
             ]}
             ListEmptyComponent={renderEmptyState}
           />
@@ -322,5 +451,68 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.danger,
     borderTopRightRadius: theme.radius.lg,
     borderBottomRightRadius: theme.radius.lg,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: RS(16),
+    paddingVertical: RS(12),
+    gap: RS(12),
+  },
+  searchInputWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: theme.colors.white,
+    borderRadius: theme.radius.lg,
+    paddingHorizontal: RS(12),
+    paddingVertical: RS(10),
+    ...theme.shadows.light,
+  },
+  searchIcon: {
+    marginRight: RS(8),
+  },
+  searchInput: {
+    flex: 1,
+    fontSize: RF(14),
+    color: theme.colors.text,
+  },
+  sortButton: {
+    backgroundColor: theme.colors.white,
+    borderRadius: theme.radius.lg,
+    padding: RS(10),
+    ...theme.shadows.light,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  sortMenu: {
+    backgroundColor: theme.colors.white,
+    borderRadius: theme.radius.lg,
+    padding: RS(16),
+    width: '80%',
+    maxWidth: RS(300),
+    ...theme.shadows.lg,
+  },
+  sortMenuTitle: {
+    fontSize: RF(18),
+    fontWeight: '600',
+    color: theme.colors.text,
+    marginBottom: RS(16),
+  },
+  sortMenuItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: RS(12),
+    paddingHorizontal: RS(8),
+    borderRadius: theme.radius.md,
+  },
+  sortMenuItemText: {
+    fontSize: RF(16),
+    color: theme.colors.text,
   },
 });

@@ -15,7 +15,7 @@ export interface PDFDocument {
   pageThumbnails?: string[]; // Array of all page thumbnails
 }
 
-export type PDFQuality = 'low' | 'medium' | 'high';
+export type PDFQuality = number | 'low' | 'medium' | 'high' | 'best';
 
 export interface PDFGenerationOptions {
   fileName?: string;

@@ -2,7 +2,7 @@
   "expo": {
     "name": "Convert to PDF",
     "slug": "8_Convert_to_pdf",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
     "splash": {
@@ -21,9 +21,11 @@
     "android": {
       "package": "com.converttopdf.app",
       "permissions": [
-        "CAMERA",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE"
+        "android.permission.CAMERA",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
       ]
     },
     "plugins": [
@@ -41,6 +43,11 @@
           "photosPermission": "This app needs access to your photos to convert images to PDF."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "49aea286-eca5-4410-86c9-39e12dba122e"
+      }
+    }
   }
 }

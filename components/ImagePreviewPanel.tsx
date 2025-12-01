@@ -52,7 +52,7 @@ export default function ImagePreviewPanel({
 }: ImagePreviewPanelProps) {
   const [slideAnim] = useState(new Animated.Value(1));
   const [filename, setFilename] = useState('');
-  const [selectedQuality, setSelectedQuality] = useState<number>(0.8);
+  const [selectedQuality, setSelectedQuality] = useState<number>(0.6); // Default to Medium quality
   const [previousVisible, setPreviousVisible] = useState(false);
 
   useEffect(() => {

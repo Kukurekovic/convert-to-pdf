@@ -197,3 +197,76 @@ export const generateThumbnail = async (
     throw error;
   }
 };
+
+/**
+ * Compresses an image with specified quality
+ * @param uri - URI of the image to compress
+ * @param quality - Compression quality (0.3-1.0, where 1.0 is best quality)
+ * @returns URI of the compressed image
+ */
+export const compressImage = async (
+  uri: string,
+  quality: number
+): Promise<string> => {
+  try {
+    const result = await ImageManipulator.manipulateAsync(
+      uri,
+      [], // No transformations, just compress
+      {
+        compress: quality,
+        format: ImageManipulator.SaveFormat.JPEG
+      }
+    );
+    return result.uri;
+  } catch (error) {
+    console.error('Error compressing image:', error);
+    throw error;
+  }
+};
+
+/**
+ * Optimizes an image for PDF generation by applying compression and resolution scaling
+ * @param uri - URI of the image to optimize
+ * @param quality - Compression quality (0.3-1.0, where 1.0 is best quality)
+ * @param maxWidth - Maximum width in pixels (default: 1240px for 200 DPI A4)
+ * @param maxHeight - Maximum height in pixels (default: 1754px for 200 DPI A4)
+ * @returns Object containing optimized image URI and dimensions
+ */
+export const optimizeForPDF = async (
+  uri: string,
+  quality: number,
+  maxWidth: number = 1240,  // 200 DPI for A4 portrait
+  maxHeight: number = 1754   // 200 DPI for A4 landscape
+): Promise<{ uri: string; width: number; height: number }> => {
+  try {
+    // Get current dimensions
+    const { width, height } = await getImageDimensions(uri);
+
+    // Calculate scaling if needed
+    const actions: ImageManipulator.Action[] = [];
+    if (width > maxWidth || height > maxHeight) {
+      const scale = Math.min(maxWidth / width, maxHeight / height);
+      const targetWidth = Math.floor(width * scale);
+      actions.push({ resize: { width: targetWidth } });
+    }
+
+    // Apply resize + compression
+    const result = await ImageManipulator.manipulateAsync(
+      uri,
+      actions,
+      {
+        compress: quality,
+        format: ImageManipulator.SaveFormat.JPEG
+      }
+    );
+
+    return {
+      uri: result.uri,
+      width: result.width,
+      height: result.height
+    };
+  } catch (error) {
+    console.error('Error optimizing image for PDF:', error);
+    throw error;
+  }
+};

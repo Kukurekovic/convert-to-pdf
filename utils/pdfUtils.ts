@@ -2,7 +2,7 @@ import * as Print from 'expo-print';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import type { ImageAsset, PDFDocument, PDFGenerationOptions } from '../types/document';
-import { getImageDimensions, generateThumbnail } from './imageUtils';
+import { generateThumbnail, optimizeForPDF } from './imageUtils';
 
 interface ImageWithOrientation {
   base64Data: string;
@@ -14,45 +14,29 @@ const detectOrientation = (width: number, height: number): 'portrait' | 'landsca
 };
 
 const getImageOrientation = async (
-  image: ImageAsset
+  image: ImageAsset,
+  quality: number = 0.6  // Default to Medium quality
 ): Promise<ImageWithOrientation> => {
-  // Get dimensions from metadata or fetch them
-  let width = image.width;
-  let height = image.height;
-
-  // Fallback dimension detection for images without metadata
-  if (!width || !height) {
-    try {
-      const dimensions = await getImageDimensions(image.uri);
-      width = dimensions.width;
-      height = dimensions.height;
-    } catch (error) {
-      console.warn('Failed to get image dimensions, defaulting to portrait', error);
-      // Default to portrait A4 aspect ratio (210mm × 297mm)
-      width = 595;
-      height = 842;
-    }
-  }
-
-  // Safety check for invalid dimensions
-  if (!width || !height || width <= 0 || height <= 0) {
-    console.warn('Invalid dimensions detected, using default portrait');
-    width = 595;
-    height = 842;
-  }
-
-  // Convert image to base64
   try {
-    const base64 = await FileSystem.readAsStringAsync(image.uri, {
+    // Optimize image (compress + downscale)
+    const optimized = await optimizeForPDF(
+      image.uri,
+      quality,
+      1240,  // 200 DPI for A4 portrait (595px @ 72 DPI * 2.08)
+      1754   // 200 DPI for A4 landscape
+    );
+
+    // Read optimized image as base64
+    const base64 = await FileSystem.readAsStringAsync(optimized.uri, {
       encoding: FileSystem.EncodingType.Base64,
     });
 
     return {
       base64Data: `data:image/jpeg;base64,${base64}`,
-      orientation: detectOrientation(width, height),
+      orientation: detectOrientation(optimized.width, optimized.height),
     };
   } catch (error) {
-    console.error('Error reading image file:', error);
+    console.error('Error processing image:', error);
     throw new Error(`Failed to process image: ${error instanceof Error ? error.message : 'Unknown error'}`);
   }
 };
@@ -76,11 +60,19 @@ export const generatePDF = async (
   try {
     const {
       fileName = generateDefaultFileName(),
+      quality: qualityOption,
     } = options;
 
-    // Process all images with orientation detection
+    // Convert quality option to numeric value (default to 0.6 = Medium)
+    const quality = typeof qualityOption === 'number' ? qualityOption
+                  : qualityOption === 'low' ? 0.3
+                  : qualityOption === 'high' ? 0.8
+                  : qualityOption === 'best' ? 1.0
+                  : 0.6; // medium (default)
+
+    // Process all images with compression and orientation detection
     const processedImages = await Promise.all(
-      images.map(img => getImageOrientation(img))
+      images.map(img => getImageOrientation(img, quality))
     );
 
     // A4 dimensions at 72 DPI (points): 595px × 842px (8.27" × 11.69")
