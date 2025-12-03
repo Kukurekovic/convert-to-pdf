@@ -8,6 +8,7 @@ import HistoryScreen from './screens/HistoryScreen';
 import PDFDetailScreen from './screens/PDFDetailScreen';
 import ManagePagesScreen from './screens/ManagePagesScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import { theme } from './theme/theme';
 import type { RootTabParamList, HistoryStackParamList } from './types/navigation';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -34,8 +35,8 @@ export default function App() {
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: '#3b82f6',
-          tabBarInactiveTintColor: '#9ca3af',
+          tabBarActiveTintColor: theme.colors.primary,
+          tabBarInactiveTintColor: theme.colors.textLight,
         }}
       >
         <Tab.Screen

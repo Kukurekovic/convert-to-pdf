@@ -7,7 +7,7 @@ import type { Theme } from '../types/theme';
 const theme: Theme = {
   // 🎨 COLOR PALETTE (Light mode only)
   colors: {
-    primary: '#3E7BFA',
+    primary: '#6366F1',
     primaryDark: '#2F5FCC',
     primaryLight: '#AECBFF',
 

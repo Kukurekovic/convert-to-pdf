@@ -20,7 +20,6 @@ export default function ConvertScreen({}: ConvertScreenProps) {
   const [showEditor, setShowEditor] = useState<boolean>(false);
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [showPreviewPanel, setShowPreviewPanel] = useState<boolean>(false);
-  const [showOtherAppsModal, setShowOtherAppsModal] = useState<boolean>(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [pdfFilename, setPdfFilename] = useState<string>('');
   const [pdfQuality, setPdfQuality] = useState<number>(0.8);
@@ -200,8 +199,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
                   Alert.alert('Success', 'Image downloaded successfully');
                 }
               } catch (error) {
-                console.error('Error downloading image from URL:', error);
-                Alert.alert('Error', 'Failed to download the image. Please check the URL and try again.');
+                Alert.alert('Invalid URL', 'Please check the URL and try again.');
               }
             } else {
               Alert.alert('Invalid Input', 'Please enter a valid URL');
@@ -213,101 +211,62 @@ export default function ConvertScreen({}: ConvertScreenProps) {
     );
   };
 
-  const handleCloudPress = async (): Promise<void> => {
-    try {
-      const result = await DocumentPicker.getDocumentAsync({
-        type: 'image/*',
-        multiple: true,
-        copyToCacheDirectory: true,
-      });
-
-      if (!result.canceled) {
-        for (const asset of result.assets) {
-          try {
-            const dimensions = await getImageDimensions(asset.uri);
-            addImage({
-              uri: asset.uri,
-              width: dimensions.width,
-              height: dimensions.height,
-            });
-          } catch (error) {
-            console.error('Failed to get dimensions for cloud file:', error);
-            addImage({ uri: asset.uri });
-          }
-        }
-        setShowPreviewPanel(true);
-      }
-    } catch (error) {
-      console.error('Error picking files from cloud:', error);
-      Alert.alert('Error', 'Failed to pick files from cloud storage');
-    }
-  };
-
-  const handleOtherAppsPress = (): void => {
-    setShowOtherAppsModal(true);
-  };
-
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
-        <Text style={styles.title}>Convert to PDF</Text>
-        
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Convert to PDF</Text>
+        </View>
+
+        <View style={styles.topSpacer} />
 
         <View style={styles.buttonContainer}>
           <View style={styles.row}>
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: theme.colors.primary }]}
-              onPress={handleFilesPress}
-            >
-              <MaterialIcons name="folder" size={RS(48)} color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Files</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#a855f7' }]}
-              onPress={handleGalleryPress}
-            >
-              <MaterialIcons name="collections" size={RS(48)} color="white" style={styles.icon} />
+            <View style={styles.buttonWrapper}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleGalleryPress}
+              >
+                <MaterialIcons name="collections" size={RS(48)} color={theme.colors.primary} />
+              </TouchableOpacity>
               <Text style={styles.buttonText}>Gallery</Text>
-            </TouchableOpacity>
+            </View>
+
+            <View style={styles.buttonWrapper}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleScanDocument}
+              >
+                <MaterialIcons name="camera-alt" size={RS(48)} color={theme.colors.primary} />
+              </TouchableOpacity>
+              <Text style={styles.buttonText}>Camera</Text>
+            </View>
           </View>
 
           <View style={styles.row}>
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#22c55e' }]}
-              onPress={handleScanDocument}
-            >
-              <MaterialIcons name="document-scanner" size={RS(48)} color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Scan Doc</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonWrapper}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleFilesPress}
+              >
+                <MaterialIcons name="folder" size={RS(48)} color={theme.colors.primary} />
+              </TouchableOpacity>
+              <Text style={styles.buttonText}>Files</Text>
+            </View>
 
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#06b6d4' }]}
-              onPress={handleCloudPress}
-            >
-              <MaterialIcons name="cloud" size={RS(48)} color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Cloud</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.row}>
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#f59e0b' }]}
-              onPress={handleURLPress}
-            >
-              <MaterialIcons name="link" size={RS(48)} color="white" style={styles.icon} />
+            <View style={styles.buttonWrapper}>
+              <TouchableOpacity
+                style={styles.button}
+                onPress={handleURLPress}
+              >
+                <MaterialIcons name="link" size={RS(48)} color={theme.colors.primary} />
+              </TouchableOpacity>
               <Text style={styles.buttonText}>URL Link</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={[styles.button, { backgroundColor: '#ef4444' }]}
-              onPress={handleOtherAppsPress}
-            >
-              <MaterialIcons name="apps" size={RS(48)} color="white" style={styles.icon} />
-              <Text style={styles.buttonText}>Other Apps</Text>
-            </TouchableOpacity>
+            </View>
           </View>
         </View>
+
+        <View style={styles.bottomSpacer} />
       </View>
 
       <Modal visible={showEditor} animationType="slide" presentationStyle="fullScreen">
@@ -341,44 +300,6 @@ export default function ConvertScreen({}: ConvertScreenProps) {
           />
         )}
       </Modal>
-
-      <Modal visible={showOtherAppsModal} animationType="fade" transparent>
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Import from Other Apps</Text>
-            <Text style={styles.modalSubtitle}>To import documents from other apps:</Text>
-
-            <View style={styles.instructionsList}>
-              <View style={styles.instructionItem}>
-                <Text style={styles.instructionNumber}>1.</Text>
-                <Text style={styles.instructionText}>Open the app containing your document</Text>
-              </View>
-
-              <View style={styles.instructionItem}>
-                <Text style={styles.instructionNumber}>2.</Text>
-                <Text style={styles.instructionText}>Tap the share button</Text>
-              </View>
-
-              <View style={styles.instructionItem}>
-                <Text style={styles.instructionNumber}>3.</Text>
-                <Text style={styles.instructionText}>Select "Copy to PDF Converter"</Text>
-              </View>
-
-              <View style={styles.instructionItem}>
-                <Text style={styles.instructionNumber}>4.</Text>
-                <Text style={styles.instructionText}>Your document will appear in the app</Text>
-              </View>
-            </View>
-
-            <TouchableOpacity
-              style={styles.modalButton}
-              onPress={() => setShowOtherAppsModal(false)}
-            >
-              <Text style={styles.modalButtonText}>OK</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
     </SafeAreaView>
   );
 }
@@ -393,10 +314,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: RS(24),
     paddingVertical: RS(32),
   },
+  titleContainer: {
+    alignItems: 'center',
+    paddingBottom: RS(56),
+  },
   title: {
-    fontSize: RF(30),
+    fontSize: RF(24),
     fontWeight: 'bold',
-    color: theme.colors.text,
+    color: theme.colors.primary,
     marginBottom: RS(8),
     textAlign: 'center',
   },
@@ -405,31 +330,47 @@ const styles = StyleSheet.create({
     color: theme.colors.textLight,
     marginBottom: RS(16),
   },
-  buttonContainer: {
+  topSpacer: {
+    flex: 1.5,
+  },
+  bottomSpacer: {
     flex: 1,
+  },
+  buttonContainer: {
     justifyContent: 'center',
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: RS(16),
+    marginBottom: RS(32),
+  },
+  buttonWrapper: {
+    flex: 1,
+    alignItems: 'center',
+    marginHorizontal: RS(8),
+    minHeight: RS(150),
   },
   button: {
-    flex: 1,
-    height: RS(120),
-    borderRadius: theme.radius.xl,
+    width: RS(100),
+    height: RS(100),
+    borderRadius: RS(60),
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: RS(8),
+    backgroundColor: theme.colors.white,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    marginBottom: RS(8),
+    flexShrink: 0,
     ...theme.shadows.md,
   },
   icon: {
     marginBottom: RS(8),
   },
   buttonText: {
-    color: theme.colors.white,
-    fontSize: RF(18),
+    color: theme.colors.primary,
+    fontSize: RF(16),
     fontWeight: '600',
+    textAlign: 'center',
   },
   comingSoon: {
     fontSize: RF(10),
