@@ -209,11 +209,13 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     fontWeight: '600',
     color: theme.colors.text,
+    fontFamily: 'Urbanist_600SemiBold',
   },
   headerTitle: {
     fontSize: RF(18),
     fontWeight: '700',
     color: theme.colors.text,
+    fontFamily: 'Urbanist_700Bold',
   },
   imageContainer: {
     flex: 1,
@@ -245,6 +247,7 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     marginBottom: RS(8),
     paddingHorizontal: RS(16),
+    fontFamily: 'Urbanist_600SemiBold',
   },
   buttonRow: {
     paddingHorizontal: RS(16),
@@ -266,6 +269,7 @@ const styles = StyleSheet.create({
     fontSize: RF(14),
     fontWeight: '600',
     color: theme.colors.text,
+    fontFamily: 'Urbanist_600SemiBold',
   },
 });
 

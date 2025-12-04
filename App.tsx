@@ -10,6 +10,7 @@ import ManagePagesScreen from './screens/ManagePagesScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import { theme } from './theme/theme';
 import type { RootTabParamList, HistoryStackParamList } from './types/navigation';
+import { useFonts, Urbanist_400Regular, Urbanist_600SemiBold, Urbanist_700Bold } from '@expo-google-fonts/urbanist';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
 const HistoryStack = createNativeStackNavigator<HistoryStackParamList>();
@@ -30,13 +31,27 @@ function HistoryNavigator() {
 }
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    Urbanist_400Regular,
+    Urbanist_600SemiBold,
+    Urbanist_700Bold,
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   return (
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: theme.colors.primary,
+          tabBarActiveTintColor: '#ffffff',
           tabBarInactiveTintColor: theme.colors.textLight,
+          tabBarStyle: {
+            backgroundColor: theme.colors.background,
+            borderTopColor: theme.colors.border,
+          },
         }}
       >
         <Tab.Screen
@@ -70,7 +85,7 @@ export default function App() {
           }}
         />
       </Tab.Navigator>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
     </NavigationContainer>
   );
 }

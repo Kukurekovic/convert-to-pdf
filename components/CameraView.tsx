@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     color: theme.colors.white,
     marginTop: RS(16),
+    fontFamily: 'Urbanist_400Regular',
   },
   permissionContainer: {
     flex: 1,
@@ -177,6 +178,7 @@ const styles = StyleSheet.create({
     color: theme.colors.white,
     textAlign: 'center',
     marginBottom: RS(24),
+    fontFamily: 'Urbanist_400Regular',
   },
   permissionButton: {
     backgroundColor: theme.colors.primary,
@@ -189,6 +191,7 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     fontWeight: '600',
     color: theme.colors.white,
+    fontFamily: 'Urbanist_600SemiBold',
   },
   cancelButton: {
     paddingVertical: RS(12),
@@ -197,6 +200,7 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: RF(16),
     color: theme.colors.white,
+    fontFamily: 'Urbanist_400Regular',
   },
   errorContainer: {
     flex: 1,
@@ -207,6 +211,7 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     color: theme.colors.white,
     marginBottom: RS(24),
+    fontFamily: 'Urbanist_400Regular',
   },
   overlay: {
     flex: 1,
@@ -230,11 +235,13 @@ const styles = StyleSheet.create({
   closeButtonText: {
     fontSize: RF(24),
     color: theme.colors.white,
+    fontFamily: 'Urbanist_400Regular',
   },
   headerTitle: {
     fontSize: RF(18),
     fontWeight: '700',
     color: theme.colors.white,
+    fontFamily: 'Urbanist_700Bold',
   },
   placeholder: {
     width: RS(40),
@@ -270,6 +277,7 @@ const styles = StyleSheet.create({
     color: theme.colors.white,
     textAlign: 'center',
     paddingHorizontal: RS(32),
+    fontFamily: 'Urbanist_400Regular',
   },
 });
 

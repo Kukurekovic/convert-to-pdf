@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { MaterialIcons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import * as DocumentPicker from 'expo-document-picker';
 import { File, Paths } from 'expo-file-system';
@@ -16,7 +16,7 @@ import type { ConvertScreenProps } from '../types/navigation';
 import type { ImageAsset } from '../types/document';
 import { getImageDimensions } from '../utils/imageUtils';
 
-export default function ConvertScreen({}: ConvertScreenProps) {
+export default function ConvertScreen({ navigation }: ConvertScreenProps) {
   const [showEditor, setShowEditor] = useState<boolean>(false);
   const [showPreview, setShowPreview] = useState<boolean>(false);
   const [showPreviewPanel, setShowPreviewPanel] = useState<boolean>(false);
@@ -227,7 +227,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
                 style={styles.button}
                 onPress={handleGalleryPress}
               >
-                <MaterialIcons name="collections" size={RS(48)} color={theme.colors.primary} />
+                <Ionicons name="images-outline" size={RS(48)} color={theme.colors.primaryDark} />
               </TouchableOpacity>
               <Text style={styles.buttonText}>Gallery</Text>
             </View>
@@ -237,7 +237,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
                 style={styles.button}
                 onPress={handleScanDocument}
               >
-                <MaterialIcons name="camera-alt" size={RS(48)} color={theme.colors.primary} />
+                <Ionicons name="camera-outline" size={RS(48)} color={theme.colors.primaryDark} />
               </TouchableOpacity>
               <Text style={styles.buttonText}>Camera</Text>
             </View>
@@ -249,7 +249,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
                 style={styles.button}
                 onPress={handleFilesPress}
               >
-                <MaterialIcons name="folder" size={RS(48)} color={theme.colors.primary} />
+                <Ionicons name="folder-open-outline" size={RS(48)} color={theme.colors.primaryDark} />
               </TouchableOpacity>
               <Text style={styles.buttonText}>Files</Text>
             </View>
@@ -259,7 +259,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
                 style={styles.button}
                 onPress={handleURLPress}
               >
-                <MaterialIcons name="link" size={RS(48)} color={theme.colors.primary} />
+                <Ionicons name="link-outline" size={RS(48)} color={theme.colors.primaryDark} />
               </TouchableOpacity>
               <Text style={styles.buttonText}>URL Link</Text>
             </View>
@@ -297,6 +297,7 @@ export default function ConvertScreen({}: ConvertScreenProps) {
             onEdit={handleEditImage}
             filename={pdfFilename}
             quality={pdfQuality}
+            navigation={navigation}
           />
         )}
       </Modal>
@@ -319,14 +320,16 @@ const styles = StyleSheet.create({
     paddingBottom: RS(56),
   },
   title: {
-    fontSize: RF(24),
+    fontSize: RF(28),
     fontWeight: 'bold',
-    color: theme.colors.primary,
+    fontFamily: 'Urbanist_700Bold',
+    color: theme.colors.text,
     marginBottom: RS(8),
     textAlign: 'center',
   },
   subtitle: {
     fontSize: RF(16),
+    fontFamily: 'Urbanist_400Regular',
     color: theme.colors.textLight,
     marginBottom: RS(16),
   },
@@ -351,14 +354,12 @@ const styles = StyleSheet.create({
     minHeight: RS(150),
   },
   button: {
-    width: RS(100),
-    height: RS(100),
+    width: RS(95),
+    height: RS(95),
     borderRadius: RS(60),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.colors.white,
-    borderWidth: 2,
-    borderColor: theme.colors.primary,
+    backgroundColor: '#ffffff',
     marginBottom: RS(8),
     flexShrink: 0,
     ...theme.shadows.md,
@@ -367,14 +368,16 @@ const styles = StyleSheet.create({
     marginBottom: RS(8),
   },
   buttonText: {
-    color: theme.colors.primary,
-    fontSize: RF(16),
+    color: theme.colors.text,
+    fontSize: RF(18),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     textAlign: 'center',
   },
   comingSoon: {
     fontSize: RF(10),
-    color: theme.colors.white,
+    fontFamily: 'Urbanist_400Regular',
+    color: theme.colors.text,
     marginTop: RS(4),
   },
   modalOverlay: {
@@ -394,12 +397,14 @@ const styles = StyleSheet.create({
   modalTitle: {
     fontSize: RF(22),
     fontWeight: 'bold',
+    fontFamily: 'Urbanist_700Bold',
     color: theme.colors.text,
     marginBottom: RS(8),
     textAlign: 'center',
   },
   modalSubtitle: {
     fontSize: RF(15),
+    fontFamily: 'Urbanist_400Regular',
     color: theme.colors.textLight,
     marginBottom: RS(20),
   },
@@ -413,6 +418,7 @@ const styles = StyleSheet.create({
   instructionNumber: {
     fontSize: RF(15),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     color: theme.colors.text,
     marginRight: RS(8),
     width: RS(20),
@@ -420,6 +426,7 @@ const styles = StyleSheet.create({
   instructionText: {
     flex: 1,
     fontSize: RF(15),
+    fontFamily: 'Urbanist_400Regular',
     color: theme.colors.text,
     lineHeight: RF(22),
   },
@@ -432,6 +439,7 @@ const styles = StyleSheet.create({
   modalButtonText: {
     fontSize: RF(16),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     color: theme.colors.white,
   },
 });

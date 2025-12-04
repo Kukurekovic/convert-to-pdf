@@ -15,9 +15,10 @@ Key technologies:
 - **NativeWind v2** (Tailwind)
 - **Zustand** (state management)
 - **@expo/vector-icons**
-- Responsive utilities:  
-  - `utils/responsive.ts` (`RS()`, `RF()`)  
-  - `theme/theme.ts`  
+- **@expo-google-fonts/urbanist** (custom font)
+- Responsive utilities:
+  - `utils/responsive.ts` (`RS()`, `RF()`)
+  - `theme/theme.ts`
 
 **Always use RS() for spacing/sizing and RF() for fonts.
 Always import colors, spacing, fonts from theme.**
@@ -217,6 +218,34 @@ Expected file size reduction: 70–85%.
 
 ---
 
+## Font System — Urbanist
+
+**Font Family:** Urbanist (loaded via `@expo-google-fonts/urbanist`)
+
+**Loaded weights:**
+- `Urbanist_400Regular` (normal text)
+- `Urbanist_600SemiBold` (semi-bold text)
+- `Urbanist_700Bold` (bold text)
+
+**Font loading:**
+- Implemented in `App.tsx` using `useFonts()` hook
+- App waits for fonts to load before rendering
+
+**Usage rules:**
+- ALL Text components MUST include `fontFamily` property in their StyleSheet styles
+- Font mapping:
+  - `fontWeight: '700'` or `'bold'` → `fontFamily: 'Urbanist_700Bold'`
+  - `fontWeight: '600'` → `fontFamily: 'Urbanist_600SemiBold'`
+  - No fontWeight or `'400'` → `fontFamily: 'Urbanist_400Regular'`
+
+**Theme integration:**
+- `theme.typography` includes `fontFamily` for all text styles (h1, h2, h3, body, bodySmall, caption)
+- `tailwind.config.js` defines Urbanist font families: `sans`, `semibold`, `bold`
+
+**Important:** When adding new Text components, always add the appropriate `fontFamily` property. React Native does not inherit fonts like web CSS.
+
+---
+
 ## Critical Rules for Claude
 
 Use RS() and RF() for everything — no raw numbers.
@@ -224,6 +253,8 @@ Use RS() and RF() for everything — no raw numbers.
 Import all colors, spacing, and font sizes from theme.
 
 Never hardcode color values — always use `theme.colors.primary`, `theme.colors.textLight`, etc.
+
+**Always add `fontFamily` property to Text component styles** — use Urbanist_400Regular, Urbanist_600SemiBold, or Urbanist_700Bold based on fontWeight.
 
 Never use deprecated Swipeable — always ReanimatedSwipeable.
 

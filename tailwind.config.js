@@ -8,6 +8,11 @@ module.exports = {
 
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Urbanist_400Regular'],
+        semibold: ['Urbanist_600SemiBold'],
+        bold: ['Urbanist_700Bold'],
+      },
       colors: {
         primary: "#6366F1",
         "primary-dark": "#2F5FCC",

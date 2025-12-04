@@ -12,6 +12,7 @@ import {
   Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 import DocumentScanner from 'react-native-document-scanner-plugin';
 import { RF, RS } from '../utils/responsive';
@@ -91,14 +92,30 @@ export default function ImagePreviewPanel({
   }, [visible, previousVisible]);
 
   const handleClose = (): void => {
-    Animated.timing(slideAnim, {
-      toValue: 1,
-      duration: 250,
-      useNativeDriver: true,
-    }).start(() => {
-      onClose();
-      setFilename('');
-    });
+    Alert.alert(
+      'Discard Scan',
+      'Are you sure you want to discard this scan?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Discard',
+          style: 'destructive',
+          onPress: () => {
+            Animated.timing(slideAnim, {
+              toValue: 1,
+              duration: 250,
+              useNativeDriver: true,
+            }).start(() => {
+              onClose();
+              setFilename('');
+            });
+          },
+        },
+      ],
+    );
   };
 
   const handleGeneratePDF = (): void => {
@@ -269,20 +286,25 @@ export default function ImagePreviewPanel({
               <View style={styles.section}>
                 <Text style={styles.sectionLabel}>Add More Images</Text>
                 <View style={styles.addImageButtons}>
-                  <TouchableOpacity
-                    style={[styles.addButton, { backgroundColor: '#22c55e' }]}
-                    onPress={handleScanDocument}
-                  >
-                    <Text style={styles.addButtonIcon}>📄</Text>
-                    <Text style={styles.addButtonText}>Scan</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[styles.addButton, { backgroundColor: '#a855f7' }]}
-                    onPress={handleGalleryPress}
-                  >
-                    <Text style={styles.addButtonIcon}>🖼️</Text>
-                    <Text style={styles.addButtonText}>Gallery</Text>
-                  </TouchableOpacity>
+                  <View style={styles.buttonWrapper}>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={handleGalleryPress}
+                    >
+                      <MaterialIcons name="collections" size={RS(32)} color={theme.colors.primary} />
+                    </TouchableOpacity>
+                    <Text style={styles.buttonText}>Gallery</Text>
+                  </View>
+
+                  <View style={styles.buttonWrapper}>
+                    <TouchableOpacity
+                      style={styles.button}
+                      onPress={handleScanDocument}
+                    >
+                      <MaterialIcons name="camera-alt" size={RS(32)} color={theme.colors.primary} />
+                    </TouchableOpacity>
+                    <Text style={styles.buttonText}>Camera</Text>
+                  </View>
                 </View>
               </View>
             </ScrollView>
@@ -338,11 +360,13 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     color: theme.colors.primary,
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
   },
   headerTitle: {
     fontSize: RF(20),
     fontWeight: '700',
     color: theme.colors.text,
+    fontFamily: 'Urbanist_700Bold',
   },
   headerSpacer: {
     width: RS(32),
@@ -359,6 +383,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: theme.colors.text,
     marginBottom: RS(12),
+    fontFamily: 'Urbanist_600SemiBold',
   },
   textInput: {
     backgroundColor: theme.colors.surface,
@@ -369,6 +394,7 @@ const styles = StyleSheet.create({
     color: theme.colors.text,
     borderWidth: 1,
     borderColor: theme.colors.border,
+    fontFamily: 'Urbanist_400Regular',
   },
   qualityContainer: {
     flexDirection: 'row',
@@ -392,6 +418,7 @@ const styles = StyleSheet.create({
     fontSize: RF(12),
     fontWeight: '600',
     color: theme.colors.text,
+    fontFamily: 'Urbanist_600SemiBold',
   },
   qualityButtonTextActive: {
     color: theme.colors.white,
@@ -406,6 +433,7 @@ const styles = StyleSheet.create({
     fontSize: RF(14),
     color: theme.colors.danger,
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
   },
   previewScroll: {
     marginBottom: RS(12),
@@ -433,27 +461,37 @@ const styles = StyleSheet.create({
     fontSize: RF(10),
     color: theme.colors.white,
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
   },
   addImageButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  addButton: {
+  buttonWrapper: {
     flex: 1,
-    paddingVertical: RS(16),
-    marginHorizontal: RS(4),
-    borderRadius: theme.radius.lg,
+    alignItems: 'center',
+    marginHorizontal: RS(8),
+    minHeight: RS(100),
+  },
+  button: {
+    width: RS(70),
+    height: RS(70),
+    borderRadius: RS(40),
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: theme.colors.white,
+    borderWidth: 2,
+    borderColor: theme.colors.primary,
+    marginBottom: RS(8),
+    flexShrink: 0,
+    ...theme.shadows.md,
   },
-  addButtonIcon: {
-    fontSize: RF(28),
-    marginBottom: RS(4),
-  },
-  addButtonText: {
-    color: theme.colors.white,
-    fontSize: RF(14),
+  buttonText: {
+    color: theme.colors.primary,
+    fontSize: RF(13),
     fontWeight: '600',
+    textAlign: 'center',
+    fontFamily: 'Urbanist_600SemiBold',
   },
   footer: {
     paddingHorizontal: RS(20),
@@ -471,5 +509,6 @@ const styles = StyleSheet.create({
     fontSize: RF(18),
     fontWeight: '700',
     color: theme.colors.white,
+    fontFamily: 'Urbanist_700Bold',
   },
 });

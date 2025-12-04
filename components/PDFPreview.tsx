@@ -16,6 +16,8 @@ import { theme } from '../theme/theme';
 import { generatePDF, sharePDF } from '../utils/pdfUtils';
 import useDocumentStore from '../store/useDocumentStore';
 import type { ImageAsset } from '../types/document';
+import type { NavigationProp } from '@react-navigation/native';
+import type { RootTabParamList } from '../types/navigation';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const THUMBNAIL_WIDTH = (SCREEN_WIDTH - RS(48)) / 3;
@@ -26,9 +28,10 @@ interface PDFPreviewProps {
   onEdit: (index: number) => void;
   filename?: string;
   quality?: number;
+  navigation?: NavigationProp<RootTabParamList>;
 }
 
-const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filename, quality = 0.8 }) => {
+const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filename, quality = 0.8, navigation }) => {
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const addPDF = useDocumentStore((state) => state.addPDF);
@@ -57,7 +60,15 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
       Alert.alert(
         'Success',
         'PDF saved successfully!',
-        [{ text: 'OK', onPress: onClose }]
+        [{
+          text: 'OK',
+          onPress: () => {
+            onClose();
+            if (navigation) {
+              navigation.navigate('HistoryStack');
+            }
+          }
+        }]
       );
     } catch (error) {
       console.error('Error saving PDF:', error);
@@ -79,6 +90,9 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
 
       await sharePDF(pdf.uri);
       onClose();
+      if (navigation) {
+        navigation.navigate('HistoryStack');
+      }
     } catch (error) {
       console.error('Error saving and sharing PDF:', error);
       Alert.alert('Error', 'Failed to save and share PDF. Please try again.');
@@ -207,11 +221,13 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     fontWeight: '600',
     color: theme.colors.text,
+    fontFamily: 'Urbanist_600SemiBold',
   },
   headerTitle: {
     fontSize: RF(18),
     fontWeight: '700',
     color: theme.colors.text,
+    fontFamily: 'Urbanist_700Bold',
   },
   placeholder: {
     width: RS(60),
@@ -225,6 +241,7 @@ const styles = StyleSheet.create({
     fontSize: RF(14),
     color: theme.colors.textLight,
     textAlign: 'center',
+    fontFamily: 'Urbanist_400Regular',
   },
   scrollView: {
     flex: 1,
@@ -266,6 +283,7 @@ const styles = StyleSheet.create({
     fontSize: RF(12),
     fontWeight: '600',
     color: theme.colors.white,
+    fontFamily: 'Urbanist_600SemiBold',
   },
   removeButton: {
     position: 'absolute',
@@ -282,6 +300,7 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     color: theme.colors.white,
     fontWeight: '700',
+    fontFamily: 'Urbanist_700Bold',
   },
   footer: {
     flexDirection: 'row',
@@ -307,6 +326,7 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     fontWeight: '700',
     color: theme.colors.white,
+    fontFamily: 'Urbanist_700Bold',
   },
 });
 

@@ -201,7 +201,7 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
         <MaterialIcons
           name="chevron-right"
           size={RS(24)}
-          color={theme.colors.textLight}
+          color={theme.colors.white}
         />
       </TouchableOpacity>
     </ReanimatedSwipeable>
@@ -342,11 +342,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: RF(28),
     fontWeight: '700',
+    fontFamily: 'Urbanist_700Bold',
     color: theme.colors.text,
   },
   clearAllText: {
     fontSize: RF(14),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     color: theme.colors.danger,
   },
   loadingContainer: {
@@ -366,7 +368,7 @@ const styles = StyleSheet.create({
   pdfItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.colors.white,
+    backgroundColor: '#1596E8',
     borderRadius: theme.radius.lg,
     padding: RS(16),
     ...theme.shadows.md,
@@ -374,7 +376,7 @@ const styles = StyleSheet.create({
   pdfIcon: {
     width: RS(50),
     height: RS(60),
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.white,
     borderRadius: theme.radius.md,
     justifyContent: 'center',
     alignItems: 'center',
@@ -383,7 +385,8 @@ const styles = StyleSheet.create({
   pdfIconText: {
     fontSize: RF(12),
     fontWeight: '700',
-    color: theme.colors.white,
+    fontFamily: 'Urbanist_700Bold',
+    color: '#312E81',
   },
   pdfThumbnail: {
     width: RS(50),
@@ -399,17 +402,20 @@ const styles = StyleSheet.create({
   pdfName: {
     fontSize: RF(16),
     fontWeight: '600',
-    color: theme.colors.text,
+    fontFamily: 'Urbanist_600SemiBold',
+    color: theme.colors.white,
     marginBottom: RS(4),
   },
   pdfMeta: {
     fontSize: RF(12),
-    color: theme.colors.textLight,
+    fontFamily: 'Urbanist_400Regular',
+    color: theme.colors.white,
     marginBottom: RS(2),
   },
   pdfPages: {
     fontSize: RF(12),
-    color: theme.colors.textLight,
+    fontFamily: 'Urbanist_400Regular',
+    color: theme.colors.white,
   },
   emptyState: {
     flex: 1,
@@ -424,11 +430,13 @@ const styles = StyleSheet.create({
   emptyTitle: {
     fontSize: RF(24),
     fontWeight: '700',
+    fontFamily: 'Urbanist_700Bold',
     color: theme.colors.text,
     marginBottom: RS(8),
   },
   emptyText: {
     fontSize: RF(16),
+    fontFamily: 'Urbanist_400Regular',
     color: theme.colors.textLight,
     textAlign: 'center',
   },
@@ -475,6 +483,7 @@ const styles = StyleSheet.create({
   searchInput: {
     flex: 1,
     fontSize: RF(14),
+    fontFamily: 'Urbanist_400Regular',
     color: theme.colors.text,
   },
   sortButton: {
@@ -500,6 +509,7 @@ const styles = StyleSheet.create({
   sortMenuTitle: {
     fontSize: RF(18),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     color: theme.colors.text,
     marginBottom: RS(16),
   },
@@ -513,6 +523,7 @@ const styles = StyleSheet.create({
   },
   sortMenuItemText: {
     fontSize: RF(16),
+    fontFamily: 'Urbanist_400Regular',
     color: theme.colors.text,
   },
 });

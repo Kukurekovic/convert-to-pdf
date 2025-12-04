@@ -5,10 +5,10 @@ import { RF, RS } from '../utils/responsive';
 import type { Theme } from '../types/theme';
 
 const theme: Theme = {
-  // 🎨 COLOR PALETTE (Light mode only)
+  // 🎨 COLOR PALETTE (Dark indigo mode)
   colors: {
     primary: '#6366F1',
-    primaryDark: '#2F5FCC',
+    primaryDark: '#0077C8',
     primaryLight: '#AECBFF',
 
     secondary: '#FF7F50',
@@ -18,12 +18,12 @@ const theme: Theme = {
     warning: '#FFC107',
     danger: '#E53935',
 
-    background: '#FFFFFF',
-    surface: '#F7F7F7',
-    border: '#E1E1E1',
+    background: '#0077C8',
+    surface: '#3F3B8C',
+    border: '#4C4799',
 
-    text: '#1A1A1A',
-    textLight: '#777777',
+    text: '#FFFFFF',
+    textLight: '#D6D6D6',
 
     white: '#FFFFFF',
     black: '#000000',
@@ -31,13 +31,13 @@ const theme: Theme = {
 
   // 🔤 RESPONSIVE TYPOGRAPHY (matching tailwind scale)
   typography: {
-    h1: { fontSize: RF(32), fontWeight: '700', color: '#1A1A1A' },
-    h2: { fontSize: RF(28), fontWeight: '700', color: '#1A1A1A' },
-    h3: { fontSize: RF(24), fontWeight: '600', color: '#1A1A1A' },
+    h1: { fontSize: RF(32), fontWeight: '700', fontFamily: 'Urbanist_700Bold', color: '#000000' },
+    h2: { fontSize: RF(28), fontWeight: '700', fontFamily: 'Urbanist_700Bold', color: '#000000' },
+    h3: { fontSize: RF(24), fontWeight: '600', fontFamily: 'Urbanist_600SemiBold', color: '#000000' },
 
-    body: { fontSize: RF(16), color: '#1A1A1A' },
-    bodySmall: { fontSize: RF(14), color: '#777777' },
-    caption: { fontSize: RF(12), color: '#777777' },
+    body: { fontSize: RF(16), fontFamily: 'Urbanist_400Regular', color: '#000000' },
+    bodySmall: { fontSize: RF(14), fontFamily: 'Urbanist_400Regular', color: '#666666' },
+    caption: { fontSize: RF(12), fontFamily: 'Urbanist_400Regular', color: '#666666' },
   },
 
   // 📏 RESPONSIVE SPACING SCALE (mirrors tailwind 4–48)
@@ -92,7 +92,7 @@ const theme: Theme = {
       paddingHorizontal: RS(16),
       borderRadius: RS(10),
       fontSize: RF(16),
-      color: '#FFFFFF',
+      color: '#000000',
     },
   },
 };

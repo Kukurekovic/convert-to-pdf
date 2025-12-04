@@ -42,7 +42,8 @@
         {
           "photosPermission": "This app needs access to your photos to convert images to PDF."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "extra": {
       "eas": {

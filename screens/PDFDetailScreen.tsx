@@ -357,7 +357,7 @@ const styles = StyleSheet.create({
     paddingVertical: RS(12),
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
-    backgroundColor: theme.colors.white,
+    backgroundColor: '#312E81',
   },
   backButton: {
     padding: RS(8),
@@ -366,7 +366,8 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: RF(18),
     fontWeight: '700',
-    color: theme.colors.text,
+    fontFamily: 'Urbanist_700Bold',
+    color: 'red',
     textAlign: 'center',
     marginHorizontal: RS(8),
   },
@@ -382,7 +383,7 @@ const styles = StyleSheet.create({
     paddingRight: RS(16),
   },
   menuContainer: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: '#312E81',
     borderRadius: theme.radius.md,
     minWidth: RS(200),
     ...theme.shadows.lg,
@@ -397,7 +398,8 @@ const styles = StyleSheet.create({
   menuItemText: {
     fontSize: RF(16),
     fontWeight: '500',
-    color: theme.colors.text,
+    fontFamily: 'Urbanist_400Regular',
+    color: 'red',
   },
   menuDivider: {
     height: 1,
@@ -409,7 +411,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: RS(12),
     paddingHorizontal: RS(16),
-    backgroundColor: theme.colors.white,
+    backgroundColor: '#312E81',
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
     gap: RS(16),
@@ -422,7 +424,8 @@ const styles = StyleSheet.create({
   paginationText: {
     fontSize: RF(14),
     fontWeight: '600',
-    color: theme.colors.text,
+    fontFamily: 'Urbanist_600SemiBold',
+    color: 'red',
     minWidth: RS(50),
     textAlign: 'center',
   },
@@ -447,7 +450,8 @@ const styles = StyleSheet.create({
   noPreviewText: {
     fontSize: RF(16),
     fontWeight: '500',
-    color: theme.colors.textLight,
+    fontFamily: 'Urbanist_400Regular',
+    color: 'red',
     marginTop: RS(16),
   },
   footer: {
@@ -457,7 +461,7 @@ const styles = StyleSheet.create({
     paddingVertical: RS(16),
     borderTopWidth: 1,
     borderTopColor: theme.colors.border,
-    backgroundColor: theme.colors.white,
+    backgroundColor: '#312E81',
   },
   actionButton: {
     flex: 1,
@@ -479,7 +483,8 @@ const styles = StyleSheet.create({
   actionButtonText: {
     fontSize: RF(16),
     fontWeight: '600',
-    color: theme.colors.white,
+    fontFamily: 'Urbanist_600SemiBold',
+    color: 'red',
   },
   deleteButtonText: {
     color: theme.colors.danger,
@@ -492,7 +497,7 @@ const styles = StyleSheet.create({
     padding: RS(20),
   },
   renameModalContainer: {
-    backgroundColor: theme.colors.white,
+    backgroundColor: '#312E81',
     borderRadius: theme.radius.lg,
     padding: RS(24),
     width: SCREEN_WIDTH - RS(48),
@@ -502,7 +507,8 @@ const styles = StyleSheet.create({
   renameModalTitle: {
     fontSize: RF(20),
     fontWeight: '700',
-    color: theme.colors.text,
+    fontFamily: 'Urbanist_700Bold',
+    color: 'red',
     marginBottom: RS(16),
     textAlign: 'center',
   },
@@ -513,7 +519,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: RS(16),
     paddingVertical: RS(12),
     fontSize: RF(16),
-    color: theme.colors.text,
+    fontFamily: 'Urbanist_400Regular',
+    color: 'red',
     marginBottom: RS(20),
   },
   renameButtonContainer: {
@@ -535,7 +542,8 @@ const styles = StyleSheet.create({
   cancelButtonText: {
     fontSize: RF(16),
     fontWeight: '600',
-    color: theme.colors.text,
+    fontFamily: 'Urbanist_600SemiBold',
+    color: 'red',
   },
   saveButton: {
     backgroundColor: theme.colors.primary,
@@ -543,6 +551,7 @@ const styles = StyleSheet.create({
   saveButtonText: {
     fontSize: RF(16),
     fontWeight: '600',
-    color: theme.colors.white,
+    fontFamily: 'Urbanist_600SemiBold',
+    color: 'red',
   },
 });

@@ -204,6 +204,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: RF(28),
     fontWeight: '700',
+    fontFamily: 'Urbanist_700Bold',
     color: theme.colors.text,
   },
   content: {
@@ -216,6 +217,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: RF(18),
     fontWeight: '700',
+    fontFamily: 'Urbanist_700Bold',
     color: theme.colors.text,
     marginBottom: RS(16),
   },
@@ -223,7 +225,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: theme.colors.white,
+    backgroundColor: '#1596E8',
     padding: RS(16),
     borderRadius: theme.radius.lg,
     marginBottom: RS(12),
@@ -236,11 +238,13 @@ const styles = StyleSheet.create({
   settingLabel: {
     fontSize: RF(16),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     color: theme.colors.text,
     marginBottom: RS(4),
   },
   settingDescription: {
     fontSize: RF(14),
+    fontFamily: 'Urbanist_400Regular',
     color: theme.colors.textLight,
   },
   qualityButtons: {
@@ -264,6 +268,7 @@ const styles = StyleSheet.create({
   qualityButtonText: {
     fontSize: RF(14),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     color: theme.colors.text,
   },
   qualityButtonTextActive: {
@@ -273,7 +278,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: theme.colors.white,
+    backgroundColor: '#1596E8',
     padding: RS(16),
     borderRadius: theme.radius.lg,
     marginBottom: RS(12),
@@ -283,12 +288,13 @@ const styles = StyleSheet.create({
     fontSize: RF(24),
     color: theme.colors.textLight,
     fontWeight: '300',
+    fontFamily: 'Urbanist_400Regular',
   },
   infoItem: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: theme.colors.white,
+    backgroundColor: '#1596E8',
     padding: RS(16),
     borderRadius: theme.radius.lg,
     marginBottom: RS(12),
@@ -297,10 +303,12 @@ const styles = StyleSheet.create({
   infoLabel: {
     fontSize: RF(16),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     color: theme.colors.text,
   },
   infoValue: {
     fontSize: RF(16),
+    fontFamily: 'Urbanist_400Regular',
     color: theme.colors.textLight,
   },
 });

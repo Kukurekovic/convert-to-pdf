@@ -284,6 +284,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: RF(18),
     fontWeight: '700',
+    fontFamily: 'Urbanist_700Bold',
     color: theme.colors.text,
     textAlign: 'center',
     marginHorizontal: RS(8),
@@ -309,12 +310,14 @@ const styles = StyleSheet.create({
   toolbarButtonText: {
     fontSize: RF(14),
     fontWeight: '500',
+    fontFamily: 'Urbanist_400Regular',
     color: theme.colors.primary,
   },
   selectedCount: {
     marginLeft: 'auto',
     fontSize: RF(14),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     color: theme.colors.text,
   },
   listContainer: {
@@ -356,6 +359,7 @@ const styles = StyleSheet.create({
   pageNumber: {
     fontSize: RF(16),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     color: theme.colors.text,
   },
   reorderButtons: {
@@ -393,6 +397,7 @@ const styles = StyleSheet.create({
   deleteButtonText: {
     fontSize: RF(16),
     fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
     color: theme.colors.white,
   },
   deleteButtonTextDisabled: {

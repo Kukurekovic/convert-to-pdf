@@ -17,12 +17,12 @@ export interface Colors {
 }
 
 export interface Typography {
-  h1: { fontSize: number; fontWeight: string; color: string };
-  h2: { fontSize: number; fontWeight: string; color: string };
-  h3: { fontSize: number; fontWeight: string; color: string };
-  body: { fontSize: number; color: string };
-  bodySmall: { fontSize: number; color: string };
-  caption: { fontSize: number; color: string };
+  h1: { fontSize: number; fontWeight: string; fontFamily: string; color: string };
+  h2: { fontSize: number; fontWeight: string; fontFamily: string; color: string };
+  h3: { fontSize: number; fontWeight: string; fontFamily: string; color: string };
+  body: { fontSize: number; fontFamily: string; color: string };
+  bodySmall: { fontSize: number; fontFamily: string; color: string };
+  caption: { fontSize: number; fontFamily: string; color: string };
 }
 
 export interface Spacing {
