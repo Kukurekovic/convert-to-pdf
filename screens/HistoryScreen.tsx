@@ -179,6 +179,13 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
             source={{ uri: item.thumbnail }}
             style={styles.pdfThumbnail}
             resizeMode="cover"
+            onError={(error) => {
+              console.error('❌ Thumbnail load failed:', {
+                id: item.id,
+                uri: item.thumbnail,
+                error: error.nativeEvent?.error
+              });
+            }}
           />
         ) : (
           <View style={styles.pdfIcon}>
@@ -201,7 +208,7 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
         <MaterialIcons
           name="chevron-right"
           size={RS(24)}
-          color={theme.colors.white}
+          color={theme.colors.text}
         />
       </TouchableOpacity>
     </ReanimatedSwipeable>
@@ -364,11 +371,13 @@ const styles = StyleSheet.create({
   },
   swipeableWrapper: {
     marginBottom: RS(12),
+    borderRadius: theme.radius.lg,
+    overflow: 'hidden',
   },
   pdfItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1596E8',
+    backgroundColor: theme.colors.white,
     borderRadius: theme.radius.lg,
     padding: RS(16),
     ...theme.shadows.md,
@@ -403,19 +412,19 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     fontWeight: '600',
     fontFamily: 'Urbanist_600SemiBold',
-    color: theme.colors.white,
+    color: theme.colors.text,
     marginBottom: RS(4),
   },
   pdfMeta: {
     fontSize: RF(12),
     fontFamily: 'Urbanist_400Regular',
-    color: theme.colors.white,
+    color: theme.colors.textLight,
     marginBottom: RS(2),
   },
   pdfPages: {
     fontSize: RF(12),
     fontFamily: 'Urbanist_400Regular',
-    color: theme.colors.white,
+    color: theme.colors.textLight,
   },
   emptyState: {
     flex: 1,

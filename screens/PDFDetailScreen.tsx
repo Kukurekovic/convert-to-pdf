@@ -17,7 +17,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import useDocumentStore from '../store/useDocumentStore';
-import { sharePDF } from '../utils/pdfUtils';
+import { sharePDF, sanitizeFileName } from '../utils/pdfUtils';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import type { PDFDetailScreenProps } from '../types/navigation';
@@ -132,8 +132,11 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
       return;
     }
 
-    // Save the new name
-    renamePDF(pdf.id, trimmedName);
+    // Sanitize the filename for cross-platform compatibility
+    const sanitized = sanitizeFileName(trimmedName);
+
+    // Save the sanitized name
+    renamePDF(pdf.id, sanitized);
     setShowRenameModal(false);
     setNewFileName('');
   };
@@ -329,7 +332,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
             <ActivityIndicator color={theme.colors.danger} />
           ) : (
             <>
-              <MaterialIcons name="delete" size={RS(20)} color={theme.colors.danger} />
+              <MaterialIcons name="delete" size={RS(20)} color={theme.colors.white} />
               <Text style={[styles.actionButtonText, styles.deleteButtonText]}>Delete</Text>
             </>
           )}
@@ -357,7 +360,7 @@ const styles = StyleSheet.create({
     paddingVertical: RS(12),
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
-    backgroundColor: '#312E81',
+    backgroundColor: '#e1e5f2',
   },
   backButton: {
     padding: RS(8),
@@ -367,7 +370,7 @@ const styles = StyleSheet.create({
     fontSize: RF(18),
     fontWeight: '700',
     fontFamily: 'Urbanist_700Bold',
-    color: 'red',
+    color: 'black',
     textAlign: 'center',
     marginHorizontal: RS(8),
   },
@@ -383,7 +386,7 @@ const styles = StyleSheet.create({
     paddingRight: RS(16),
   },
   menuContainer: {
-    backgroundColor: '#312E81',
+    backgroundColor: '#e1e5f2',
     borderRadius: theme.radius.md,
     minWidth: RS(200),
     ...theme.shadows.lg,
@@ -399,7 +402,7 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     fontWeight: '500',
     fontFamily: 'Urbanist_400Regular',
-    color: 'red',
+    color: 'black',
   },
   menuDivider: {
     height: 1,
@@ -411,7 +414,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: RS(12),
     paddingHorizontal: RS(16),
-    backgroundColor: '#312E81',
+    backgroundColor: '#e1e5f2',
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
     gap: RS(16),
@@ -425,7 +428,7 @@ const styles = StyleSheet.create({
     fontSize: RF(14),
     fontWeight: '600',
     fontFamily: 'Urbanist_600SemiBold',
-    color: 'red',
+    color: 'black',
     minWidth: RS(50),
     textAlign: 'center',
   },
@@ -451,7 +454,7 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     fontWeight: '500',
     fontFamily: 'Urbanist_400Regular',
-    color: 'red',
+    color: 'black',
     marginTop: RS(16),
   },
   footer: {
@@ -461,7 +464,7 @@ const styles = StyleSheet.create({
     paddingVertical: RS(16),
     borderTopWidth: 1,
     borderTopColor: theme.colors.border,
-    backgroundColor: '#312E81',
+    backgroundColor: '#e1e5f2',
   },
   actionButton: {
     flex: 1,
@@ -476,7 +479,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
   },
   deleteButton: {
-    backgroundColor: theme.colors.surface,
+    backgroundColor: theme.colors.danger,
     borderWidth: 1,
     borderColor: theme.colors.danger,
   },
@@ -484,10 +487,10 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     fontWeight: '600',
     fontFamily: 'Urbanist_600SemiBold',
-    color: 'red',
+    color: 'white',
   },
   deleteButtonText: {
-    color: theme.colors.danger,
+    color: theme.colors.white,
   },
   renameOverlay: {
     flex: 1,
@@ -497,7 +500,7 @@ const styles = StyleSheet.create({
     padding: RS(20),
   },
   renameModalContainer: {
-    backgroundColor: '#312E81',
+    backgroundColor: '#e1e5f2',
     borderRadius: theme.radius.lg,
     padding: RS(24),
     width: SCREEN_WIDTH - RS(48),
@@ -508,7 +511,7 @@ const styles = StyleSheet.create({
     fontSize: RF(20),
     fontWeight: '700',
     fontFamily: 'Urbanist_700Bold',
-    color: 'red',
+    color: 'black',
     marginBottom: RS(16),
     textAlign: 'center',
   },
@@ -520,7 +523,7 @@ const styles = StyleSheet.create({
     paddingVertical: RS(12),
     fontSize: RF(16),
     fontFamily: 'Urbanist_400Regular',
-    color: 'red',
+    color: 'black',
     marginBottom: RS(20),
   },
   renameButtonContainer: {
@@ -543,7 +546,7 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     fontWeight: '600',
     fontFamily: 'Urbanist_600SemiBold',
-    color: 'red',
+    color: 'black',
   },
   saveButton: {
     backgroundColor: theme.colors.primary,
@@ -552,6 +555,6 @@ const styles = StyleSheet.create({
     fontSize: RF(16),
     fontWeight: '600',
     fontFamily: 'Urbanist_600SemiBold',
-    color: 'red',
+    color: 'white',
   },
 });

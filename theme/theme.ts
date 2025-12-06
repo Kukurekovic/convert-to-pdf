@@ -7,23 +7,23 @@ import type { Theme } from '../types/theme';
 const theme: Theme = {
   // 🎨 COLOR PALETTE (Dark indigo mode)
   colors: {
-    primary: '#6366F1',
-    primaryDark: '#0077C8',
-    primaryLight: '#AECBFF',
+    primary: '#2350E0',
+    primaryDark: '#ffffff',
+    primaryLight: '#e6f5fa',
 
-    secondary: '#FF7F50',
+    secondary: '#0f2260',
     secondaryDark: '#CC653F',
 
     success: '#4CAF50',
     warning: '#FFC107',
     danger: '#E53935',
 
-    background: '#0077C8',
-    surface: '#3F3B8C',
-    border: '#4C4799',
+    background: '#e1e5f2',
+    surface: '#e1e5f2',
+    border: '#ADADA6',
 
-    text: '#FFFFFF',
-    textLight: '#D6D6D6',
+    text: '#000000',
+    textLight: '#ADADA6',
 
     white: '#FFFFFF',
     black: '#000000',

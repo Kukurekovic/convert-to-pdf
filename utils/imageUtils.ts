@@ -181,6 +181,13 @@ export const generateThumbnail = async (
 
     // Move to final location in pdfs directory
     const pdfsDir = `${FileSystem.documentDirectory ?? ''}pdfs/`;
+
+    // Ensure directory exists before moving file
+    const dirInfo = await FileSystem.getInfoAsync(pdfsDir);
+    if (!dirInfo.exists) {
+      await FileSystem.makeDirectoryAsync(pdfsDir, { intermediates: true });
+    }
+
     const thumbnailUri = `${pdfsDir}${fileName}_thumb.jpg`;
 
     await FileSystem.moveAsync({
@@ -191,9 +198,13 @@ export const generateThumbnail = async (
     // Clean up temp file if it still exists
     await FileSystem.deleteAsync(tempUri, { idempotent: true });
 
-    return thumbnailUri;
+    return thumbnailUri.startsWith('file://') ? thumbnailUri : `file://${thumbnailUri}`;
   } catch (error) {
-    console.error('Error generating thumbnail:', error);
+    console.error('❌ Error generating thumbnail:', {
+      fileName,
+      error: error instanceof Error ? error.message : String(error),
+      pdfsDir: `${FileSystem.documentDirectory ?? ''}pdfs/`,
+    });
     throw error;
   }
 };

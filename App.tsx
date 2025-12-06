@@ -46,7 +46,7 @@ export default function App() {
       <Tab.Navigator
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: '#ffffff',
+          tabBarActiveTintColor: '#6d7a96',
           tabBarInactiveTintColor: theme.colors.textLight,
           tabBarStyle: {
             backgroundColor: theme.colors.background,

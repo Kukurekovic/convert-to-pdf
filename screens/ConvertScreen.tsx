@@ -359,7 +359,7 @@ const styles = StyleSheet.create({
     borderRadius: RS(60),
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#2350e0',
     marginBottom: RS(8),
     flexShrink: 0,
     ...theme.shadows.md,

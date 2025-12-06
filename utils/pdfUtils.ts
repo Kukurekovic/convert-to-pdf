@@ -13,6 +13,18 @@ const detectOrientation = (width: number, height: number): 'portrait' | 'landsca
   return width > height ? 'landscape' : 'portrait';
 };
 
+/**
+ * Sanitizes a filename to be cross-platform compatible (iOS + Android)
+ * Replaces invalid characters with safe alternatives
+ */
+export const sanitizeFileName = (fileName: string): string => {
+  return fileName
+    .replace(/[/:]/g, '-')        // Replace colons and slashes with hyphens
+    .replace(/[<>"|?*]/g, '_')    // Replace other invalid chars with underscores
+    .replace(/\s+/g, '_')         // Replace spaces with underscores
+    .trim();
+};
+
 const getImageOrientation = async (
   image: ImageAsset,
   quality: number = 0.6  // Default to Medium quality
@@ -50,7 +62,7 @@ const generateDefaultFileName = (): string => {
   const minutes = String(now.getMinutes()).padStart(2, '0');
   const seconds = String(now.getSeconds()).padStart(2, '0');
 
-  return `Doc ${month} ${day}, ${year} ${hours}:${minutes}:${seconds}`;
+  return `Doc_${month}_${day}_${year}_${hours}-${minutes}-${seconds}`;
 };
 
 export const generatePDF = async (
@@ -62,6 +74,9 @@ export const generatePDF = async (
       fileName = generateDefaultFileName(),
       quality: qualityOption,
     } = options;
+
+    // Sanitize the filename to ensure cross-platform compatibility
+    const sanitizedFileName = sanitizeFileName(fileName);
 
     // Convert quality option to numeric value (default to 0.6 = Medium)
     const quality = typeof qualityOption === 'number' ? qualityOption
@@ -187,7 +202,7 @@ export const generatePDF = async (
     }
 
     // Move PDF to permanent location
-    const finalUri = `${pdfsDir}${fileName}.pdf`;
+    const finalUri = `${pdfsDir}${sanitizedFileName}.pdf`;
     await FileSystem.moveAsync({
       from: uri,
       to: finalUri,
@@ -204,7 +219,7 @@ export const generatePDF = async (
       for (let i = 0; i < processedImages.length; i++) {
         const img = processedImages[i];
         if (img) {
-          const pageFileName = `${fileName}_page${i + 1}`;
+          const pageFileName = `${sanitizedFileName}_page${i + 1}`;
           const pageThumbUri = await generateThumbnail(
             img.base64Data,
             pageFileName
@@ -223,8 +238,8 @@ export const generatePDF = async (
     }
 
     return {
-      id: fileName,
-      name: fileName,
+      id: sanitizedFileName,
+      name: sanitizedFileName,
       uri: finalUri,
       size: fileInfo.exists && 'size' in fileInfo ? fileInfo.size : 0,
       createdAt: Date.now(),

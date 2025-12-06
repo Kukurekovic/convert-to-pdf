@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import * as FileSystem from 'expo-file-system/legacy';
 import type { DocumentStoreState, AppSettings } from '../types/store';
 import type { ImageAsset, PDFDocument } from '../types/document';
+import { sanitizeFileName } from '../utils/pdfUtils';
 
 const useDocumentStore = create<DocumentStoreState>((set, get) => ({
   // Current session images
@@ -135,42 +136,108 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
       const files = await FileSystem.readDirectoryAsync(documentsDir);
       const pdfFiles = files.filter(f => f.endsWith('.pdf'));
 
-      const pdfs = await Promise.all(
-        pdfFiles.map(async (filename): Promise<PDFDocument> => {
-          const uri = `${documentsDir}${filename}`;
-          const info = await FileSystem.getInfoAsync(uri);
+      const pdfs = (await Promise.all(
+        pdfFiles.map(async (filename): Promise<PDFDocument | null> => {
+          try {
+            const baseFilename = filename.replace('.pdf', '');
+            const sanitizedFilename = sanitizeFileName(baseFilename);
+            const needsMigration = baseFilename !== sanitizedFilename;
 
-          // Check for thumbnail file (backward compatibility)
-          const baseFilename = filename.replace('.pdf', '');
-          const thumbnailUri = `${documentsDir}${baseFilename}_thumb.jpg`;
-          const thumbnailInfo = await FileSystem.getInfoAsync(thumbnailUri);
-          const thumbnail = thumbnailInfo.exists ? thumbnailUri : null;
+            let finalUri = `${documentsDir}${filename}`;
+            let finalBaseFilename = baseFilename;
 
-          // Check for page thumbnails (new multi-page format)
-          const pageThumbnails: string[] = [];
-          let pageNum = 1;
-          while (true) {
-            const pageThumbUri = `${documentsDir}${baseFilename}_page${pageNum}_thumb.jpg`;
-            const pageThumbInfo = await FileSystem.getInfoAsync(pageThumbUri);
-            if (pageThumbInfo.exists) {
-              pageThumbnails.push(pageThumbUri);
-              pageNum++;
-            } else {
-              break;
+            // Migrate old files with problematic names
+            if (needsMigration) {
+              console.log(`Migrating PDF: "${baseFilename}" -> "${sanitizedFilename}"`);
+
+              const oldUri = `${documentsDir}${filename}`;
+              const newUri = `${documentsDir}${sanitizedFilename}.pdf`;
+
+              try {
+                // Rename the PDF file
+                await FileSystem.moveAsync({
+                  from: oldUri,
+                  to: newUri,
+                });
+
+                // Migrate main thumbnail if exists
+                const oldThumbUri = `${documentsDir}${baseFilename}_thumb.jpg`;
+                const newThumbUri = `${documentsDir}${sanitizedFilename}_thumb.jpg`;
+                const oldThumbInfo = await FileSystem.getInfoAsync(oldThumbUri);
+                if (oldThumbInfo.exists) {
+                  await FileSystem.moveAsync({
+                    from: oldThumbUri,
+                    to: newThumbUri,
+                  });
+                }
+
+                // Migrate page thumbnails if they exist
+                let pageNum = 1;
+                while (true) {
+                  const oldPageThumbUri = `${documentsDir}${baseFilename}_page${pageNum}_thumb.jpg`;
+                  const oldPageThumbInfo = await FileSystem.getInfoAsync(oldPageThumbUri);
+                  if (oldPageThumbInfo.exists) {
+                    const newPageThumbUri = `${documentsDir}${sanitizedFilename}_page${pageNum}_thumb.jpg`;
+                    await FileSystem.moveAsync({
+                      from: oldPageThumbUri,
+                      to: newPageThumbUri,
+                    });
+                    pageNum++;
+                  } else {
+                    break;
+                  }
+                }
+
+                finalUri = newUri;
+                finalBaseFilename = sanitizedFilename;
+                console.log(`✅ Migration successful: "${baseFilename}" -> "${sanitizedFilename}"`);
+              } catch (migrationError) {
+                console.error(`Failed to migrate PDF ${baseFilename}:`, migrationError);
+                return null;
+              }
             }
-          }
 
-          return {
-            id: baseFilename,
-            name: baseFilename,
-            uri,
-            size: info.exists && 'size' in info ? info.size : 0,
-            createdAt: info.exists && 'modificationTime' in info ? info.modificationTime * 1000 : Date.now(),
-            thumbnail,
-            pageThumbnails: pageThumbnails.length > 0 ? pageThumbnails : undefined,
-          };
+            const info = await FileSystem.getInfoAsync(finalUri);
+
+            if (!info.exists) {
+              console.warn(`PDF file not found: ${finalUri}`);
+              return null;
+            }
+
+            // Check for thumbnail file (backward compatibility)
+            const thumbnailUri = `${documentsDir}${finalBaseFilename}_thumb.jpg`;
+            const thumbnailInfo = await FileSystem.getInfoAsync(thumbnailUri);
+            const thumbnail = thumbnailInfo.exists ? thumbnailUri : null;
+
+            // Check for page thumbnails (new multi-page format)
+            const pageThumbnails: string[] = [];
+            let pageNum = 1;
+            while (true) {
+              const pageThumbUri = `${documentsDir}${finalBaseFilename}_page${pageNum}_thumb.jpg`;
+              const pageThumbInfo = await FileSystem.getInfoAsync(pageThumbUri);
+              if (pageThumbInfo.exists) {
+                pageThumbnails.push(pageThumbUri);
+                pageNum++;
+              } else {
+                break;
+              }
+            }
+
+            return {
+              id: finalBaseFilename,
+              name: finalBaseFilename,
+              uri: finalUri,
+              size: 'size' in info ? info.size : 0,
+              createdAt: 'modificationTime' in info ? info.modificationTime * 1000 : Date.now(),
+              thumbnail,
+              pageThumbnails: pageThumbnails.length > 0 ? pageThumbnails : undefined,
+            };
+          } catch (error) {
+            console.error(`Error loading PDF ${filename}:`, error);
+            return null;
+          }
         })
-      );
+      )).filter((pdf): pdf is PDFDocument => pdf !== null);
 
       set({ savedPDFs: pdfs.sort((a, b) => b.createdAt - a.createdAt) });
     } catch (error) {

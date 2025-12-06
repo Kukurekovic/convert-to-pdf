@@ -23,7 +23,7 @@ Key technologies:
 **Always use RS() for spacing/sizing and RF() for fonts.
 Always import colors, spacing, fonts from theme.**
 
-**Primary color is `#6366F1` (indigo) — defined in `theme.colors.primary`.
+
 Never hardcode color values. Always use `theme.colors.primary`, `theme.colors.textLight`, etc.**
 
 ---
@@ -202,7 +202,7 @@ Expected file size reduction: 70–85%.
 
 ## Color System Architecture
 
-**Primary Color:** `#6366F1` (indigo)
+**Primary Color:**
 - Defined in: `theme/theme.ts` → `theme.colors.primary`
 - Also synced in: `tailwind.config.js` (line 12)
 
