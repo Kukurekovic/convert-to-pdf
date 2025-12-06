@@ -32,7 +32,6 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
   const [showSortMenu, setShowSortMenu] = useState<boolean>(false);
   const savedPDFs = useDocumentStore((state) => state.savedPDFs);
   const loadPDFs = useDocumentStore((state) => state.loadPDFs);
-  const clearAllPDFs = useDocumentStore((state) => state.clearAllPDFs);
   const removePDF = useDocumentStore((state) => state.removePDF);
 
   useEffect(() => {
@@ -93,24 +92,6 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
     }
   };
 
-  const handleClearAll = (): void => {
-    if (savedPDFs.length === 0) return;
-
-    Alert.alert(
-      'Clear All',
-      'Are you sure you want to delete all PDFs? This action cannot be undone.',
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Delete All',
-          style: 'destructive',
-          onPress: async () => {
-            await clearAllPDFs();
-          },
-        },
-      ]
-    );
-  };
 
   const handlePDFPress = (pdf: PDFDocument): void => {
     navigation.navigate('PDFDetail', { pdfId: pdf.id });
@@ -227,14 +208,9 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
 
   return (
     <GestureHandlerRootView style={styles.container}>
-      <SafeAreaView style={styles.container}>
+      <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
         <View style={styles.header}>
           <Text style={styles.title}>History</Text>
-          {savedPDFs.length > 0 && (
-            <TouchableOpacity onPress={handleClearAll}>
-              <Text style={styles.clearAllText}>Clear All</Text>
-            </TouchableOpacity>
-          )}
         </View>
 
         {savedPDFs.length > 0 && (
@@ -338,9 +314,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     paddingHorizontal: RS(24),
     paddingVertical: RS(16),
     borderBottomWidth: 1,
@@ -351,12 +324,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontFamily: 'Urbanist_700Bold',
     color: theme.colors.text,
-  },
-  clearAllText: {
-    fontSize: RF(14),
-    fontWeight: '600',
-    fontFamily: 'Urbanist_600SemiBold',
-    color: theme.colors.danger,
   },
   loadingContainer: {
     flex: 1,

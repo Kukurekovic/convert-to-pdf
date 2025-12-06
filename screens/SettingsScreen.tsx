@@ -61,7 +61,7 @@ export default function SettingsScreen({}: SettingsScreenProps) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
         <Text style={styles.title}>Settings</Text>
       </View>
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
   },
   qualityButton: {
     flex: 1,
-    backgroundColor: theme.colors.surface,
+    backgroundColor: theme.colors.white,
     paddingVertical: RS(12),
     borderRadius: theme.radius.md,
     alignItems: 'center',

@@ -212,7 +212,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.content}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>Convert to PDF</Text>
