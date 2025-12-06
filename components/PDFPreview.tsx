@@ -31,17 +31,18 @@ interface PDFPreviewProps {
   navigation?: NavigationProp<RootTabParamList>;
 }
 
-const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filename, quality = 0.8, navigation }) => {
+const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filename, quality = 0.6, navigation }) => {
   const [isSaving, setIsSaving] = useState<boolean>(false);
   const [isSharing, setIsSharing] = useState<boolean>(false);
   const addPDF = useDocumentStore((state) => state.addPDF);
   const clearImages = useDocumentStore((state) => state.clearImages);
 
   // Map numeric quality to PDFQuality type
-  const getQualityString = (numericQuality: number): 'low' | 'medium' | 'high' => {
+  const getQualityString = (numericQuality: number): 'low' | 'medium' | 'high' | 'best' => {
     if (numericQuality <= 0.3) return 'low';
     if (numericQuality <= 0.6) return 'medium';
-    return 'high';
+    if (numericQuality <= 0.8) return 'high';
+    return 'best';
   };
 
   const pdfQuality = getQualityString(quality);

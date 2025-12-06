@@ -1,7 +1,6 @@
 import type { ImageAsset, PDFDocument, PDFQuality } from './document';
 
 export interface AppSettings {
-  autoEnhance: boolean;
   defaultQuality: PDFQuality;
   showTutorial: boolean;
 }

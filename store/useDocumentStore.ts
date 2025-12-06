@@ -14,7 +14,6 @@ const useDocumentStore = create<DocumentStoreState>((set, get) => ({
 
   // App settings
   settings: {
-    autoEnhance: true,
     defaultQuality: 'high',
     showTutorial: true,
   },

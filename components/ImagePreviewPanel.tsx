@@ -26,7 +26,6 @@ interface ImagePreviewPanelProps {
   onClose: () => void;
   onGeneratePDF: (filename: string, quality: number) => void;
   onAddImages: (newImages: ImageAsset[]) => void;
-  onClearImages: () => void;
   onEditImage: (index: number) => void;
 }
 
@@ -38,8 +37,7 @@ type QualityOption = {
 const qualityOptions: QualityOption[] = [
   { label: 'Low', value: 0.3 },
   { label: 'Medium', value: 0.6 },
-  { label: 'High', value: 0.8 },
-  { label: 'Best', value: 1.0 },
+  { label: 'High', value: 1.0 },
 ];
 
 export default function ImagePreviewPanel({
@@ -48,7 +46,6 @@ export default function ImagePreviewPanel({
   onClose,
   onGeneratePDF,
   onAddImages,
-  onClearImages,
   onEditImage,
 }: ImagePreviewPanelProps) {
   const [slideAnim] = useState(new Animated.Value(1));
@@ -258,14 +255,9 @@ export default function ImagePreviewPanel({
 
               {/* Image Preview */}
               <View style={styles.section}>
-                <View style={styles.previewHeader}>
-                  <Text style={styles.sectionLabel}>
-                    {images.length} image{images.length > 1 ? 's' : ''} selected
-                  </Text>
-                  <TouchableOpacity onPress={onClearImages}>
-                    <Text style={styles.clearText}>Clear all</Text>
-                  </TouchableOpacity>
-                </View>
+                <Text style={styles.sectionLabel}>
+                  {images.length} image{images.length > 1 ? 's' : ''} selected
+                </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.previewScroll}>
                   {images.map((img, index) => (
                     <TouchableOpacity
@@ -422,18 +414,6 @@ const styles = StyleSheet.create({
   },
   qualityButtonTextActive: {
     color: theme.colors.white,
-  },
-  previewHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: RS(12),
-  },
-  clearText: {
-    fontSize: RF(14),
-    color: theme.colors.danger,
-    fontWeight: '600',
-    fontFamily: 'Urbanist_600SemiBold',
   },
   previewScroll: {
     marginBottom: RS(12),

@@ -22,12 +22,11 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
   const [showPreviewPanel, setShowPreviewPanel] = useState<boolean>(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [pdfFilename, setPdfFilename] = useState<string>('');
-  const [pdfQuality, setPdfQuality] = useState<number>(0.8);
+  const [pdfQuality, setPdfQuality] = useState<number>(0.6);
 
   const images = useDocumentStore((state) => state.images);
   const addImage = useDocumentStore((state) => state.addImage);
   const updateImage = useDocumentStore((state) => state.updateImage);
-  const clearImages = useDocumentStore((state) => state.clearImages);
 
   const handleFilesPress = async (): Promise<void> => {
     try {
@@ -285,7 +284,6 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
         onClose={handleClosePanelAndClear}
         onGeneratePDF={handleGeneratePDF}
         onAddImages={handleAddImages}
-        onClearImages={clearImages}
         onEditImage={handleEditImage}
       />
 

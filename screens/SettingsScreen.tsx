@@ -1,19 +1,11 @@
-import { View, Text, StyleSheet, Switch, ScrollView, TouchableOpacity, Linking, Share, Alert } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Share, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import useDocumentStore from '../store/useDocumentStore';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import type { SettingsScreenProps } from '../types/navigation';
 
 export default function SettingsScreen({}: SettingsScreenProps) {
-  const settings = useDocumentStore((state) => state.settings);
-  const updateSettings = useDocumentStore((state) => state.updateSettings);
-
-  const handleToggleAutoEnhance = (value: boolean): void => {
-    updateSettings({ autoEnhance: value });
-  };
-
   const handleOpenURL = async (url: string): Promise<void> => {
     try {
       const supported = await Linking.canOpenURL(url);
@@ -58,26 +50,6 @@ export default function SettingsScreen({}: SettingsScreenProps) {
       </View>
 
       <ScrollView style={styles.content}>
-        <View style={styles.section}>
-          <Text style={styles.sectionTitle}>PDF Generation</Text>
-
-          <View style={styles.settingItem}>
-            <View style={styles.settingInfo}>
-              <Text style={styles.settingLabel}>Auto Enhance</Text>
-              <Text style={styles.settingDescription}>
-                Automatically enhance image quality
-              </Text>
-            </View>
-            <Switch
-              value={settings.autoEnhance}
-              onValueChange={handleToggleAutoEnhance}
-              trackColor={{ false: theme.colors.border, true: theme.colors.primary }}
-              thumbColor={theme.colors.white}
-            />
-          </View>
-
-        </View>
-
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Info</Text>
 
