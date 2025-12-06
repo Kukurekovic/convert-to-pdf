@@ -16,12 +16,12 @@ const detectOrientation = (width: number, height: number): 'portrait' | 'landsca
 /**
  * Sanitizes a filename to be cross-platform compatible (iOS + Android)
  * Replaces invalid characters with safe alternatives
+ * Preserves spaces in filenames (safe on modern iOS/Android)
  */
 export const sanitizeFileName = (fileName: string): string => {
   return fileName
     .replace(/[/:]/g, '-')        // Replace colons and slashes with hyphens
     .replace(/[<>"|?*]/g, '_')    // Replace other invalid chars with underscores
-    .replace(/\s+/g, '_')         // Replace spaces with underscores
     .trim();
 };
 
@@ -56,13 +56,13 @@ const getImageOrientation = async (
 const generateDefaultFileName = (): string => {
   const now = new Date();
   const month = now.toLocaleString('en-US', { month: 'short' });
-  const day = String(now.getDate()).padStart(2, '0');
+  const day = now.getDate();
   const year = now.getFullYear();
   const hours = String(now.getHours()).padStart(2, '0');
   const minutes = String(now.getMinutes()).padStart(2, '0');
   const seconds = String(now.getSeconds()).padStart(2, '0');
 
-  return `Doc_${month}_${day}_${year}_${hours}-${minutes}-${seconds}`;
+  return `Doc ${month} ${day}, ${year} ${hours}-${minutes}-${seconds}`;
 };
 
 export const generatePDF = async (

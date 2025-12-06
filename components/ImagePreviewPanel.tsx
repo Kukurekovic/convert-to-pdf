@@ -85,7 +85,7 @@ export default function ImagePreviewPanel({
         minute: '2-digit',
         second: '2-digit',
         hour12: false,
-      }).replace(/:/g, ':')}`;
+      }).replace(/:/g, '-')}`;
       setFilename(defaultName);
     }
     setPreviousVisible(visible);
