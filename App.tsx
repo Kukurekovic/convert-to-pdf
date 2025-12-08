@@ -2,13 +2,12 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { MaterialIcons } from '@expo/vector-icons';
 import ConvertScreen from './screens/ConvertScreen';
 import HistoryScreen from './screens/HistoryScreen';
 import PDFDetailScreen from './screens/PDFDetailScreen';
 import ManagePagesScreen from './screens/ManagePagesScreen';
 import SettingsScreen from './screens/SettingsScreen';
-import { theme } from './theme/theme';
+import FloatingTabBar from './components/FloatingTabBar';
 import type { RootTabParamList, HistoryStackParamList } from './types/navigation';
 import { useFonts, Urbanist_400Regular, Urbanist_600SemiBold, Urbanist_700Bold } from '@expo-google-fonts/urbanist';
 
@@ -44,14 +43,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator
+        tabBar={(props) => <FloatingTabBar {...props} />}
         screenOptions={{
           headerShown: false,
-          tabBarActiveTintColor: '#6d7a96',
-          tabBarInactiveTintColor: theme.colors.textLight,
-          tabBarStyle: {
-            backgroundColor: theme.colors.background,
-            borderTopColor: theme.colors.border,
-          },
         }}
       >
         <Tab.Screen
@@ -59,9 +53,6 @@ export default function App() {
           component={ConvertScreen}
           options={{
             tabBarLabel: 'Convert',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="picture-as-pdf" size={size} color={color} />
-            ),
           }}
         />
         <Tab.Screen
@@ -69,9 +60,6 @@ export default function App() {
           component={HistoryNavigator}
           options={{
             tabBarLabel: 'History',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="history" size={size} color={color} />
-            ),
           }}
         />
         <Tab.Screen
@@ -79,9 +67,6 @@ export default function App() {
           component={SettingsScreen}
           options={{
             tabBarLabel: 'Settings',
-            tabBarIcon: ({ color, size }) => (
-              <MaterialIcons name="settings" size={size} color={color} />
-            ),
           }}
         />
       </Tab.Navigator>
