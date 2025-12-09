@@ -1,33 +1,13 @@
+import { useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import ConvertScreen from './screens/ConvertScreen';
-import HistoryScreen from './screens/HistoryScreen';
-import PDFDetailScreen from './screens/PDFDetailScreen';
-import ManagePagesScreen from './screens/ManagePagesScreen';
-import SettingsScreen from './screens/SettingsScreen';
-import FloatingTabBar from './components/FloatingTabBar';
-import type { RootTabParamList, HistoryStackParamList } from './types/navigation';
 import { useFonts, Urbanist_400Regular, Urbanist_600SemiBold, Urbanist_700Bold } from '@expo-google-fonts/urbanist';
+import * as SplashScreen from 'expo-splash-screen';
+import RootNavigator from './navigation/RootNavigator';
+import { useOnboardingStore } from './store/useOnboardingStore';
 
-const Tab = createBottomTabNavigator<RootTabParamList>();
-const HistoryStack = createNativeStackNavigator<HistoryStackParamList>();
-
-function HistoryNavigator() {
-  return (
-    <HistoryStack.Navigator
-      screenOptions={{
-        headerShown: false,
-        animation: 'slide_from_right',
-      }}
-    >
-      <HistoryStack.Screen name="HistoryList" component={HistoryScreen} />
-      <HistoryStack.Screen name="PDFDetail" component={PDFDetailScreen} />
-      <HistoryStack.Screen name="ManagePages" component={ManagePagesScreen} />
-    </HistoryStack.Navigator>
-  );
-}
+// Prevent splash screen from auto-hiding
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -36,41 +16,25 @@ export default function App() {
     Urbanist_700Bold,
   });
 
-  if (!fontsLoaded) {
-    return null;
+  const isLoading = useOnboardingStore((state) => state.isLoading);
+
+  // Combined loading state - wait for both fonts and onboarding state
+  const isReady = fontsLoaded && !isLoading;
+
+  useEffect(() => {
+    if (isReady) {
+      SplashScreen.hideAsync();
+    }
+  }, [isReady]);
+
+  if (!isReady) {
+    return null; // Splash screen will still be visible
   }
 
   return (
     <NavigationContainer>
-      <Tab.Navigator
-        tabBar={(props) => <FloatingTabBar {...props} />}
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        <Tab.Screen
-          name="Convert"
-          component={ConvertScreen}
-          options={{
-            tabBarLabel: 'Convert',
-          }}
-        />
-        <Tab.Screen
-          name="HistoryStack"
-          component={HistoryNavigator}
-          options={{
-            tabBarLabel: 'History',
-          }}
-        />
-        <Tab.Screen
-          name="Settings"
-          component={SettingsScreen}
-          options={{
-            tabBarLabel: 'Settings',
-          }}
-        />
-      </Tab.Navigator>
       <StatusBar style="light" />
+      <RootNavigator />
     </NavigationContainer>
   );
 }

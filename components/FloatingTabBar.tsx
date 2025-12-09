@@ -86,7 +86,7 @@ export default function FloatingTabBar({ state, descriptors, navigation }: Botto
               <Ionicons
                 name={getIconName(route.name)}
                 size={RF(20)}
-                color={isFocused ? theme.colors.white : theme.colors.primary}
+                color={isFocused ? '#2350E0' : '#000000'}
               />
             </View>
             <Text
@@ -96,9 +96,7 @@ export default function FloatingTabBar({ state, descriptors, navigation }: Botto
                   fontFamily: isFocused
                     ? 'Urbanist_700Bold'
                     : 'Urbanist_600SemiBold',
-                  color: isFocused
-                    ? theme.colors.primary
-                    : theme.colors.textLight,
+                  color: isFocused ? '#2350E0' : '#000000',
                 },
               ]}
             >
@@ -116,9 +114,9 @@ const styles = StyleSheet.create({
     position: 'absolute',
     flexDirection: 'row',
     backgroundColor: theme.colors.white,
-    borderRadius: RS(35),
-    paddingVertical: RS(8),
-    paddingHorizontal: RS(16),
+    borderRadius: RS(28),
+    paddingVertical: RS(6),
+    paddingHorizontal: RS(12),
     justifyContent: 'space-around',
     alignItems: 'center',
     ...theme.shadows.md,
@@ -127,18 +125,18 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: RS(4),
+    paddingVertical: RS(2),
   },
   iconContainer: {
-    width: RS(40),
-    height: RS(40),
-    borderRadius: RS(20),
+    width: RS(32),
+    height: RS(32),
+    borderRadius: RS(16),
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
   },
   iconContainerActive: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: '#e1e5f2',
   },
   label: {
     fontSize: RF(10),

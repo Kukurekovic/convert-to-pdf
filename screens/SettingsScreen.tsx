@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Share, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import type { SettingsScreenProps } from '../types/navigation';
@@ -41,6 +42,22 @@ export default function SettingsScreen({}: SettingsScreenProps) {
 
   const handleRateUs = (): void => {
     // Placeholder - no functionality for now
+  };
+
+  const handleResetOnboarding = async (): Promise<void> => {
+    if (__DEV__) {
+      try {
+        await AsyncStorage.removeItem('onboarding-storage');
+        Alert.alert(
+          'Onboarding Reset',
+          'Restart the app to see onboarding again.',
+          [{ text: 'OK' }]
+        );
+      } catch (error) {
+        console.error('Failed to reset onboarding:', error);
+        Alert.alert('Error', 'Failed to reset onboarding');
+      }
+    }
   };
 
   return (
@@ -114,6 +131,19 @@ export default function SettingsScreen({}: SettingsScreenProps) {
               <Ionicons name="chevron-forward" size={RF(20)} color={theme.colors.textLight} />
             </TouchableOpacity>
           </View>
+        </View>
+
+        {/* Developer Tools - Hidden, long-press to activate */}
+        <View style={styles.section}>
+          <TouchableOpacity
+            onLongPress={handleResetOnboarding}
+            style={styles.versionContainer}
+          >
+            <Text style={styles.versionText}>Version 1.0.0</Text>
+            {__DEV__ && (
+              <Text style={styles.devText}>(Dev Mode - Long press to reset onboarding)</Text>
+            )}
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -202,5 +232,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: RS(16),
     gap: RS(12),
+  },
+  versionContainer: {
+    alignItems: 'center',
+    paddingVertical: RS(24),
+  },
+  versionText: {
+    fontSize: RF(14),
+    fontFamily: 'Urbanist_400Regular',
+    color: theme.colors.textLight,
+  },
+  devText: {
+    fontSize: RF(12),
+    fontFamily: 'Urbanist_400Regular',
+    color: theme.colors.textLight,
+    marginTop: RS(4),
+    fontStyle: 'italic',
   },
 });

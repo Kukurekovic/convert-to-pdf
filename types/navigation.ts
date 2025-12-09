@@ -2,6 +2,20 @@ import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 
+// Root level navigator (onboarding or main app)
+export type RootStackParamList = {
+  OnboardingStack: undefined;
+  MainApp: undefined;
+};
+
+// Onboarding screens
+export type OnboardingStackParamList = {
+  Onboarding1: undefined;
+  Onboarding2: undefined;
+  Onboarding3: undefined;
+};
+
+// Main app tab navigator
 export type RootTabParamList = {
   Convert: undefined;
   HistoryStack: undefined;
@@ -32,8 +46,24 @@ export type ManagePagesScreenProps = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList>
 >;
 
+// Onboarding screen props
+export type Onboarding1ScreenProps = NativeStackScreenProps<
+  OnboardingStackParamList,
+  'Onboarding1'
+>;
+
+export type Onboarding2ScreenProps = NativeStackScreenProps<
+  OnboardingStackParamList,
+  'Onboarding2'
+>;
+
+export type Onboarding3ScreenProps = NativeStackScreenProps<
+  OnboardingStackParamList,
+  'Onboarding3'
+>;
+
 declare global {
   namespace ReactNavigation {
-    interface RootParamList extends RootTabParamList {}
+    interface RootParamList extends RootStackParamList {}
   }
 }

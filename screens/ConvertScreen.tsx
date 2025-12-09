@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert, TextInput } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
@@ -23,6 +23,8 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
   const [selectedImageIndex, setSelectedImageIndex] = useState<number>(0);
   const [pdfFilename, setPdfFilename] = useState<string>('');
   const [pdfQuality, setPdfQuality] = useState<number>(0.6);
+  const [showURLModal, setShowURLModal] = useState<boolean>(false);
+  const [urlInput, setUrlInput] = useState<string>('');
 
   const images = useDocumentStore((state) => state.images);
   const addImage = useDocumentStore((state) => state.addImage);
@@ -156,58 +158,50 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
   };
 
   const handleURLPress = (): void => {
-    Alert.prompt(
-      'Enter Image URL',
-      'Please enter the URL of the image you want to download',
-      [
-        {
-          text: 'Cancel',
-          style: 'cancel',
-        },
-        {
-          text: 'Download',
-          onPress: async (url?: string) => {
-            if (url && url.trim()) {
-              try {
-                const trimmedUrl = url.trim();
+    setUrlInput('');
+    setShowURLModal(true);
+  };
 
-                // Validate URL format
-                if (!trimmedUrl.match(/^https?:\/\/.+/i)) {
-                  Alert.alert('Invalid URL', 'Please enter a valid URL starting with http:// or https://');
-                  return;
-                }
+  const handleDownloadFromURL = async (): Promise<void> => {
+    const url = urlInput.trim();
 
-                // Download the image to cache directory
-                const downloadedFile = await File.downloadFileAsync(trimmedUrl, Paths.cache);
+    if (!url) {
+      Alert.alert('Invalid Input', 'Please enter a valid URL');
+      return;
+    }
 
-                try {
-                  // Get image dimensions
-                  const dimensions = await getImageDimensions(downloadedFile.uri);
-                  addImage({
-                    uri: downloadedFile.uri,
-                    width: dimensions.width,
-                    height: dimensions.height,
-                  });
-                  setShowPreviewPanel(true);
-                  Alert.alert('Success', 'Image downloaded successfully');
-                } catch (error) {
-                  console.error('Failed to get dimensions for downloaded image:', error);
-                  // Add image without dimensions as fallback
-                  addImage({ uri: downloadedFile.uri });
-                  setShowPreviewPanel(true);
-                  Alert.alert('Success', 'Image downloaded successfully');
-                }
-              } catch (error) {
-                Alert.alert('Invalid URL', 'Please check the URL and try again.');
-              }
-            } else {
-              Alert.alert('Invalid Input', 'Please enter a valid URL');
-            }
-          },
-        },
-      ],
-      'plain-text'
-    );
+    // Validate URL format
+    if (!url.match(/^https?:\/\/.+/i)) {
+      Alert.alert('Invalid URL', 'Please enter a valid URL starting with http:// or https://');
+      return;
+    }
+
+    setShowURLModal(false);
+
+    try {
+      // Download the image to cache directory
+      const downloadedFile = await File.downloadFileAsync(url, Paths.cache);
+
+      try {
+        // Get image dimensions
+        const dimensions = await getImageDimensions(downloadedFile.uri);
+        addImage({
+          uri: downloadedFile.uri,
+          width: dimensions.width,
+          height: dimensions.height,
+        });
+        setShowPreviewPanel(true);
+        Alert.alert('Success', 'Image downloaded successfully');
+      } catch (error) {
+        console.error('Failed to get dimensions for downloaded image:', error);
+        // Add image without dimensions as fallback
+        addImage({ uri: downloadedFile.uri });
+        setShowPreviewPanel(true);
+        Alert.alert('Success', 'Image downloaded successfully');
+      }
+    } catch (error) {
+      Alert.alert('Error', 'Failed to download image. Please check the URL and try again.');
+    }
   };
 
   return (
@@ -299,6 +293,50 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
           />
         )}
       </Modal>
+
+      <Modal
+        visible={showURLModal}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowURLModal(false)}
+      >
+        <View style={styles.urlModalOverlay}>
+          <View style={styles.urlModalContent}>
+            <Text style={styles.urlModalTitle}>Enter Image URL</Text>
+            <Text style={styles.urlModalSubtitle}>
+              Please enter the URL of the image you want to download
+            </Text>
+
+            <TextInput
+              style={styles.urlInput}
+              value={urlInput}
+              onChangeText={setUrlInput}
+              placeholder="https://example.com/image.jpg"
+              placeholderTextColor={theme.colors.textLight}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="url"
+              autoFocus
+            />
+
+            <View style={styles.urlModalButtons}>
+              <TouchableOpacity
+                style={[styles.urlModalButton, styles.urlModalButtonCancel]}
+                onPress={() => setShowURLModal(false)}
+              >
+                <Text style={styles.urlModalButtonTextCancel}>Cancel</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={[styles.urlModalButton, styles.urlModalButtonDownload]}
+                onPress={handleDownloadFromURL}
+              >
+                <Text style={styles.urlModalButtonTextDownload}>Download</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -332,7 +370,7 @@ const styles = StyleSheet.create({
     marginBottom: RS(16),
   },
   topSpacer: {
-    flex: 1.5,
+    flex: 0.5,
   },
   bottomSpacer: {
     flex: 1,
@@ -435,6 +473,76 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   modalButtonText: {
+    fontSize: RF(16),
+    fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
+    color: theme.colors.white,
+  },
+  urlModalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: RS(24),
+  },
+  urlModalContent: {
+    backgroundColor: theme.colors.white,
+    borderRadius: theme.radius.xl,
+    padding: RS(24),
+    width: '100%',
+    maxWidth: RS(400),
+  },
+  urlModalTitle: {
+    fontSize: RF(22),
+    fontWeight: 'bold',
+    fontFamily: 'Urbanist_700Bold',
+    color: theme.colors.text,
+    marginBottom: RS(8),
+    textAlign: 'center',
+  },
+  urlModalSubtitle: {
+    fontSize: RF(15),
+    fontFamily: 'Urbanist_400Regular',
+    color: theme.colors.textLight,
+    marginBottom: RS(20),
+    textAlign: 'center',
+  },
+  urlInput: {
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    borderRadius: theme.radius.md,
+    paddingHorizontal: RS(16),
+    paddingVertical: RS(12),
+    fontSize: RF(16),
+    fontFamily: 'Urbanist_400Regular',
+    color: theme.colors.text,
+    marginBottom: RS(20),
+  },
+  urlModalButtons: {
+    flexDirection: 'row',
+    gap: RS(12),
+  },
+  urlModalButton: {
+    flex: 1,
+    paddingVertical: RS(14),
+    borderRadius: theme.radius.md,
+    alignItems: 'center',
+  },
+  urlModalButtonCancel: {
+    backgroundColor: theme.colors.surface,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+  },
+  urlModalButtonDownload: {
+    backgroundColor: theme.colors.primary,
+  },
+  urlModalButtonTextCancel: {
+    fontSize: RF(16),
+    fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
+    color: theme.colors.text,
+  },
+  urlModalButtonTextDownload: {
     fontSize: RF(16),
     fontWeight: '600',
     fontFamily: 'Urbanist_600SemiBold',
