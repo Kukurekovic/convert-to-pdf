@@ -12,6 +12,7 @@ import { theme } from '../theme/theme';
 import ImageEditor from '../components/ImageEditor';
 import ImagePreviewPanel from '../components/ImagePreviewPanel';
 import PDFPreview from '../components/PDFPreview';
+import i18n from '../i18n';
 import type { ConvertScreenProps } from '../types/navigation';
 import type { ImageAsset } from '../types/document';
 import { getImageDimensions } from '../utils/imageUtils';
@@ -56,7 +57,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
       }
     } catch (error) {
       console.error('Error picking files:', error);
-      Alert.alert('Error', 'Failed to pick files');
+      Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('convert.alerts.failedToPick'));
     }
   };
 
@@ -65,7 +66,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
       if (!permissionResult.granted) {
-        Alert.alert('Permission Required', 'Please grant access to your photo library.');
+        Alert.alert(i18n.t('convert.alerts.permissionRequired'), i18n.t('convert.alerts.permissionMessage'));
         return;
       }
 
@@ -87,7 +88,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
       }
     } catch (error) {
       console.error('Error picking images:', error);
-      Alert.alert('Error', 'Failed to pick images from gallery');
+      Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('convert.alerts.failedToPickImages'));
     }
   };
 
@@ -119,7 +120,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
     } catch (error: any) {
       console.error('Error scanning document:', error);
       if (error.message !== 'User cancelled') {
-        Alert.alert('Error', 'Failed to scan document');
+        Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('convert.alerts.failedToScan'));
       }
     }
   };
@@ -136,7 +137,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
 
   const handleGeneratePDF = (filename: string, quality: number): void => {
     if (images.length === 0) {
-      Alert.alert('No Images', 'Please add at least one image to generate a PDF');
+      Alert.alert(i18n.t('convert.alerts.noImages'), i18n.t('convert.alerts.noImagesMessage'));
       return;
     }
     setPdfFilename(filename);
@@ -166,13 +167,13 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
     const url = urlInput.trim();
 
     if (!url) {
-      Alert.alert('Invalid Input', 'Please enter a valid URL');
+      Alert.alert(i18n.t('convert.alerts.invalidInput'), i18n.t('convert.alerts.enterValidURL'));
       return;
     }
 
     // Validate URL format
     if (!url.match(/^https?:\/\/.+/i)) {
-      Alert.alert('Invalid URL', 'Please enter a valid URL starting with http:// or https://');
+      Alert.alert(i18n.t('convert.alerts.invalidURL'), i18n.t('convert.alerts.invalidURLMessage'));
       return;
     }
 
@@ -191,16 +192,16 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
           height: dimensions.height,
         });
         setShowPreviewPanel(true);
-        Alert.alert('Success', 'Image downloaded successfully');
+        Alert.alert(i18n.t('common.success'), i18n.t('convert.alerts.imageDownloaded'));
       } catch (error) {
         console.error('Failed to get dimensions for downloaded image:', error);
         // Add image without dimensions as fallback
         addImage({ uri: downloadedFile.uri });
         setShowPreviewPanel(true);
-        Alert.alert('Success', 'Image downloaded successfully');
+        Alert.alert(i18n.t('common.success'), i18n.t('convert.alerts.imageDownloaded'));
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to download image. Please check the URL and try again.');
+      Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('convert.alerts.failedToDownload'));
     }
   };
 
@@ -208,7 +209,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.content}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Convert to PDF</Text>
+          <Text style={styles.title}>{i18n.t('convert.title')}</Text>
         </View>
 
         <View style={styles.topSpacer} />
@@ -222,7 +223,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
               >
                 <Ionicons name="images-outline" size={RS(48)} color={theme.colors.primaryDark} />
               </TouchableOpacity>
-              <Text style={styles.buttonText}>Gallery</Text>
+              <Text style={styles.buttonText}>{i18n.t('convert.buttons.gallery')}</Text>
             </View>
 
             <View style={styles.buttonWrapper}>
@@ -232,7 +233,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
               >
                 <Ionicons name="camera-outline" size={RS(48)} color={theme.colors.primaryDark} />
               </TouchableOpacity>
-              <Text style={styles.buttonText}>Camera</Text>
+              <Text style={styles.buttonText}>{i18n.t('convert.buttons.camera')}</Text>
             </View>
           </View>
 
@@ -244,7 +245,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
               >
                 <Ionicons name="folder-open-outline" size={RS(48)} color={theme.colors.primaryDark} />
               </TouchableOpacity>
-              <Text style={styles.buttonText}>Files</Text>
+              <Text style={styles.buttonText}>{i18n.t('convert.buttons.files')}</Text>
             </View>
 
             <View style={styles.buttonWrapper}>
@@ -254,7 +255,7 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
               >
                 <Ionicons name="link-outline" size={RS(48)} color={theme.colors.primaryDark} />
               </TouchableOpacity>
-              <Text style={styles.buttonText}>URL Link</Text>
+              <Text style={styles.buttonText}>{i18n.t('convert.buttons.urlLink')}</Text>
             </View>
           </View>
         </View>
@@ -302,16 +303,16 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
       >
         <View style={styles.urlModalOverlay}>
           <View style={styles.urlModalContent}>
-            <Text style={styles.urlModalTitle}>Enter Image URL</Text>
+            <Text style={styles.urlModalTitle}>{i18n.t('convert.urlModal.title')}</Text>
             <Text style={styles.urlModalSubtitle}>
-              Please enter the URL of the image you want to download
+              {i18n.t('convert.urlModal.subtitle')}
             </Text>
 
             <TextInput
               style={styles.urlInput}
               value={urlInput}
               onChangeText={setUrlInput}
-              placeholder="https://example.com/image.jpg"
+              placeholder={i18n.t('convert.urlModal.placeholder')}
               placeholderTextColor={theme.colors.textLight}
               autoCapitalize="none"
               autoCorrect={false}
@@ -324,14 +325,14 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
                 style={[styles.urlModalButton, styles.urlModalButtonCancel]}
                 onPress={() => setShowURLModal(false)}
               >
-                <Text style={styles.urlModalButtonTextCancel}>Cancel</Text>
+                <Text style={styles.urlModalButtonTextCancel}>{i18n.t('common.cancel')}</Text>
               </TouchableOpacity>
 
               <TouchableOpacity
                 style={[styles.urlModalButton, styles.urlModalButtonDownload]}
                 onPress={handleDownloadFromURL}
               >
-                <Text style={styles.urlModalButtonTextDownload}>Download</Text>
+                <Text style={styles.urlModalButtonTextDownload}>{i18n.t('convert.urlModal.download')}</Text>
               </TouchableOpacity>
             </View>
           </View>

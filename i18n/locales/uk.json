@@ -1,0 +1,191 @@
+{
+  "common": {
+    "cancel": "Скасувати",
+    "save": "Зберегти",
+    "delete": "Видалити",
+    "share": "Поділитися",
+    "edit": "Редагувати",
+    "ok": "OK",
+    "error": "Помилка",
+    "success": "Успішно",
+    "next": "Далі",
+    "download": "Завантажити",
+    "page": "Сторінка",
+    "pages": "сторінок",
+    "selected": "вибрано"
+  },
+  "tabs": {
+    "convert": "Конвертувати",
+    "history": "Історія",
+    "settings": "Налаштування"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "Конвертуйте файли в PDF",
+      "subtitle": "Легко перетворюйте зображення, документи та інше в професійні PDF"
+    },
+    "screen2": {
+      "title": "Керуйте своїми PDF",
+      "subtitle": "Редагуйте, перейменовуйте, змінюйте порядок сторінок та організовуйте свої документи без зусиль"
+    },
+    "screen3": {
+      "title": "Готові розпочати?",
+      "subtitle": "Створіть свій перший PDF за лічені секунди",
+      "button": "Розпочати"
+    }
+  },
+  "convert": {
+    "title": "Конвертувати в PDF",
+    "buttons": {
+      "gallery": "Галерея",
+      "camera": "Камера",
+      "files": "Файли",
+      "urlLink": "URL посилання"
+    },
+    "urlModal": {
+      "title": "Введіть URL зображення",
+      "subtitle": "Будь ласка, введіть URL зображення, яке ви хочете завантажити",
+      "placeholder": "https://example.com/image.jpg",
+      "download": "Завантажити"
+    },
+    "alerts": {
+      "errorTitle": "Помилка",
+      "failedToPick": "Не вдалося вибрати файли",
+      "permissionRequired": "Потрібен дозвіл",
+      "permissionMessage": "Будь ласка, надайте доступ до вашої фотогалереї.",
+      "failedToPickImages": "Не вдалося вибрати зображення з галереї",
+      "failedToScan": "Не вдалося відсканувати документ",
+      "noImages": "Немає зображень",
+      "noImagesMessage": "Будь ласка, додайте принаймні одне зображення для створення PDF",
+      "invalidInput": "Некоректне введення",
+      "enterValidURL": "Будь ласка, введіть правильний URL",
+      "invalidURL": "Некоректний URL",
+      "invalidURLMessage": "Будь ласка, введіть правильний URL, що починається з http:// або https://",
+      "imageDownloaded": "Зображення успішно завантажено",
+      "failedToDownload": "Не вдалося завантажити зображення. Перевірте URL і спробуйте ще раз."
+    }
+  },
+  "history": {
+    "title": "Історія",
+    "search": "Шукати PDF...",
+    "sortBy": "Сортувати за",
+    "sortOptions": {
+      "nameAsc": "Назва (А-Я)",
+      "nameDesc": "Назва (Я-А)",
+      "dateOldest": "Дата (найстаріші)",
+      "dateNewest": "Дата (найновіші)",
+      "sizeSmallest": "Розмір (найменші)",
+      "sizeLargest": "Розмір (найбільші)"
+    },
+    "empty": {
+      "title": "Поки немає PDF",
+      "message": "Конвертуйте зображення в PDF, щоб побачити їх тут"
+    },
+    "alerts": {
+      "deletePDF": "Видалити PDF",
+      "deleteMessage": "Ви впевнені, що хочете видалити \"{{name}}\"?",
+      "failedToShare": "Не вдалося поділитися PDF"
+    }
+  },
+  "pdfDetail": {
+    "menu": {
+      "rename": "Перейменувати документ",
+      "managePages": "Керувати сторінками"
+    },
+    "renameModal": {
+      "title": "Перейменувати документ",
+      "placeholder": "Введіть нову назву",
+      "invalidName": "Некоректна назва",
+      "invalidNameMessage": "Будь ласка, введіть правильну назву файлу."
+    },
+    "pagination": "{{current}}/{{total}}",
+    "noPreview": "Попередній перегляд недоступний",
+    "alerts": {
+      "pdfNotFound": "PDF не знайдено",
+      "deletePDF": "Видалити PDF",
+      "deleteMessage": "Ви впевнені, що хочете видалити \"{{name}}\"?",
+      "failedToShare": "Не вдалося поділитися PDF"
+    }
+  },
+  "managePages": {
+    "title": "Керування сторінками",
+    "selectAll": "Вибрати все",
+    "deselect": "Скасувати вибір",
+    "deleteSelected": "Видалити вибране",
+    "pageNumber": "Сторінка {{number}}",
+    "alerts": {
+      "noPagesSelected": "Сторінки не вибрано",
+      "noPagesSelectedMessage": "Будь ласка, виберіть принаймні одну сторінку для видалення.",
+      "cannotDeleteAll": "Неможливо видалити всі сторінки",
+      "cannotDeleteAllMessage": "Ви повинні залишити принаймні одну сторінку в документі.",
+      "deletePages": "Видалити сторінки",
+      "deletePagesMessage": "Ви впевнені, що хочете видалити {{count}} сторінок?"
+    }
+  },
+  "settings": {
+    "title": "Налаштування",
+    "info": {
+      "title": "Інформація",
+      "faq": "Поширені питання та допомога",
+      "privacy": "Політика конфіденційності",
+      "terms": "Умови використання"
+    },
+    "support": {
+      "title": "Підтримка",
+      "contact": "Зв'язатися з підтримкою",
+      "share": "Поділитися додатком",
+      "rate": "Оцінити нас"
+    },
+    "version": "Версія 1.0.0",
+    "devMode": "(Режим розробника - Утримуйте для скидання вступу)",
+    "alerts": {
+      "cannotOpenURL": "Не вдається відкрити URL: {{url}}",
+      "failedToOpenURL": "Не вдалося відкрити URL",
+      "failedToOpenEmail": "Не вдалося відкрити поштовий клієнт",
+      "failedToShare": "Не вдалося поділитися",
+      "shareMessage": "Подивіться на цей чудовий додаток для конвертації PDF!",
+      "onboardingReset": "Скидання вступу",
+      "onboardingResetMessage": "Перезапустіть додаток, щоб знову побачити вступ.",
+      "failedToResetOnboarding": "Не вдалося скинути вступ"
+    }
+  },
+  "imagePreview": {
+    "title": "Попередній перегляд",
+    "filename": "Назва файлу",
+    "quality": "Якість",
+    "qualityOptions": {
+      "low": "Низька",
+      "medium": "Середня",
+      "high": "Висока"
+    },
+    "addMore": "Додати ще",
+    "generatePDF": "Створити PDF",
+    "alerts": {
+      "discardScan": "Відхилити сканування",
+      "discardScanMessage": "Ви впевнені, що хочете відхилити це сканування?",
+      "discard": "Відхилити",
+      "enterFilename": "Введіть назву файлу",
+      "enterFilenameMessage": "Будь ласка, введіть назву файлу для вашого PDF.",
+      "failedToPickImages": "Не вдалося вибрати зображення з галереї",
+      "failedToScan": "Не вдалося відсканувати документ"
+    }
+  },
+  "pdfPreview": {
+    "title": "Попередній перегляд PDF",
+    "generating": "Створення PDF...",
+    "savingPDF": "Збереження PDF",
+    "savingPDFMessage": "Ваш PDF створюється. Будь ласка, зачекайте...",
+    "alerts": {
+      "pdfSaved": "PDF збережено",
+      "pdfSavedMessage": "Ваш PDF успішно збережено!",
+      "failedToGenerate": "Не вдалося створити PDF",
+      "failedToGenerateMessage": "Сталася помилка під час створення вашого PDF. Спробуйте ще раз.",
+      "errorGeneratingPDF": "Помилка створення PDF"
+    }
+  },
+  "imageEditor": {
+    "title": "Редагувати зображення",
+    "reset": "Скинути",
+    "done": "Готово"
+  }
+}

@@ -1,0 +1,4 @@
+/Users/markokukurekovic/Library/Android/sdk/cmake/3.22.1/bin/ninja \
+  -C \
+  /Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/android/app/.cxx/Debug/352486n1/armeabi-v7a \
+  clean

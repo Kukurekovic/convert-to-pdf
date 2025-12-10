@@ -6,6 +6,7 @@ import PDFDetailScreen from '../screens/PDFDetailScreen';
 import ManagePagesScreen from '../screens/ManagePagesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 import FloatingTabBar from '../components/FloatingTabBar';
+import i18n from '../i18n';
 import type { RootTabParamList, HistoryStackParamList } from '../types/navigation';
 
 const Tab = createBottomTabNavigator<RootTabParamList>();
@@ -38,21 +39,21 @@ export default function TabNavigator() {
         name="Convert"
         component={ConvertScreen}
         options={{
-          tabBarLabel: 'Convert',
+          tabBarLabel: i18n.t('tabs.convert'),
         }}
       />
       <Tab.Screen
         name="HistoryStack"
         component={HistoryNavigator}
         options={{
-          tabBarLabel: 'History',
+          tabBarLabel: i18n.t('tabs.history'),
         }}
       />
       <Tab.Screen
         name="Settings"
         component={SettingsScreen}
         options={{
-          tabBarLabel: 'Settings',
+          tabBarLabel: i18n.t('tabs.settings'),
         }}
       />
     </Tab.Navigator>

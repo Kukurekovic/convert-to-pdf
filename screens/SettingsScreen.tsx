@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
+import i18n from '../i18n';
 import type { SettingsScreenProps } from '../types/navigation';
 
 export default function SettingsScreen({}: SettingsScreenProps) {
@@ -13,10 +14,10 @@ export default function SettingsScreen({}: SettingsScreenProps) {
       if (supported) {
         await Linking.openURL(url);
       } else {
-        Alert.alert('Error', `Cannot open URL: ${url}`);
+        Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('settings.alerts.cannotOpenURL', { url }));
       }
     } catch (error) {
-      Alert.alert('Error', 'Failed to open URL');
+      Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('settings.alerts.failedToOpenURL'));
     }
   };
 
@@ -26,17 +27,17 @@ export default function SettingsScreen({}: SettingsScreenProps) {
     try {
       await Linking.openURL(url);
     } catch (error) {
-      Alert.alert('Error', 'Failed to open email client');
+      Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('settings.alerts.failedToOpenEmail'));
     }
   };
 
   const handleShareApp = async (): Promise<void> => {
     try {
       await Share.share({
-        message: 'Check out this amazing PDF converter app!',
+        message: i18n.t('settings.alerts.shareMessage'),
       });
     } catch (error) {
-      Alert.alert('Error', 'Failed to share');
+      Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('settings.alerts.failedToShare'));
     }
   };
 
@@ -49,13 +50,13 @@ export default function SettingsScreen({}: SettingsScreenProps) {
       try {
         await AsyncStorage.removeItem('onboarding-storage');
         Alert.alert(
-          'Onboarding Reset',
-          'Restart the app to see onboarding again.',
-          [{ text: 'OK' }]
+          i18n.t('settings.alerts.onboardingReset'),
+          i18n.t('settings.alerts.onboardingResetMessage'),
+          [{ text: i18n.t('common.ok') }]
         );
       } catch (error) {
         console.error('Failed to reset onboarding:', error);
-        Alert.alert('Error', 'Failed to reset onboarding');
+        Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('settings.alerts.failedToResetOnboarding'));
       }
     }
   };
@@ -63,12 +64,12 @@ export default function SettingsScreen({}: SettingsScreenProps) {
   return (
     <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
-        <Text style={styles.title}>Settings</Text>
+        <Text style={styles.title}>{i18n.t('settings.title')}</Text>
       </View>
 
       <ScrollView style={styles.content}>
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Info</Text>
+          <Text style={styles.sectionTitle}>{i18n.t('settings.info.title')}</Text>
 
           <View style={styles.card}>
             <TouchableOpacity
@@ -76,7 +77,7 @@ export default function SettingsScreen({}: SettingsScreenProps) {
               onPress={() => handleOpenURL('https://www.makefast.app/help-center')}
             >
               <Ionicons name="help-circle-outline" size={RF(20)} color={theme.colors.primary} />
-              <Text style={styles.buttonText}>FAQ & Help</Text>
+              <Text style={styles.buttonText}>{i18n.t('settings.info.faq')}</Text>
               <Ionicons name="chevron-forward" size={RF(20)} color={theme.colors.textLight} />
             </TouchableOpacity>
 
@@ -85,7 +86,7 @@ export default function SettingsScreen({}: SettingsScreenProps) {
               onPress={() => handleOpenURL('https://www.makefast.app/privacy')}
             >
               <Ionicons name="shield-checkmark-outline" size={RF(20)} color={theme.colors.primary} />
-              <Text style={styles.buttonText}>Privacy Policy</Text>
+              <Text style={styles.buttonText}>{i18n.t('settings.info.privacy')}</Text>
               <Ionicons name="chevron-forward" size={RF(20)} color={theme.colors.textLight} />
             </TouchableOpacity>
 
@@ -94,14 +95,14 @@ export default function SettingsScreen({}: SettingsScreenProps) {
               onPress={() => handleOpenURL('https://www.makefast.app/terms')}
             >
               <Ionicons name="document-text-outline" size={RF(20)} color={theme.colors.primary} />
-              <Text style={styles.buttonText}>Terms of Use</Text>
+              <Text style={styles.buttonText}>{i18n.t('settings.info.terms')}</Text>
               <Ionicons name="chevron-forward" size={RF(20)} color={theme.colors.textLight} />
             </TouchableOpacity>
           </View>
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Support</Text>
+          <Text style={styles.sectionTitle}>{i18n.t('settings.support.title')}</Text>
 
           <View style={styles.card}>
             <TouchableOpacity
@@ -109,7 +110,7 @@ export default function SettingsScreen({}: SettingsScreenProps) {
               onPress={handleContactSupport}
             >
               <Ionicons name="mail-outline" size={RF(20)} color={theme.colors.primary} />
-              <Text style={styles.buttonText}>Contact Support</Text>
+              <Text style={styles.buttonText}>{i18n.t('settings.support.contact')}</Text>
               <Ionicons name="chevron-forward" size={RF(20)} color={theme.colors.textLight} />
             </TouchableOpacity>
 
@@ -118,7 +119,7 @@ export default function SettingsScreen({}: SettingsScreenProps) {
               onPress={handleShareApp}
             >
               <Ionicons name="share-social-outline" size={RF(20)} color={theme.colors.primary} />
-              <Text style={styles.buttonText}>Share app</Text>
+              <Text style={styles.buttonText}>{i18n.t('settings.support.share')}</Text>
               <Ionicons name="chevron-forward" size={RF(20)} color={theme.colors.textLight} />
             </TouchableOpacity>
 
@@ -127,7 +128,7 @@ export default function SettingsScreen({}: SettingsScreenProps) {
               onPress={handleRateUs}
             >
               <Ionicons name="star-outline" size={RF(20)} color={theme.colors.primary} />
-              <Text style={styles.buttonText}>Rate us</Text>
+              <Text style={styles.buttonText}>{i18n.t('settings.support.rate')}</Text>
               <Ionicons name="chevron-forward" size={RF(20)} color={theme.colors.textLight} />
             </TouchableOpacity>
           </View>
@@ -139,9 +140,9 @@ export default function SettingsScreen({}: SettingsScreenProps) {
             onLongPress={handleResetOnboarding}
             style={styles.versionContainer}
           >
-            <Text style={styles.versionText}>Version 1.0.0</Text>
+            <Text style={styles.versionText}>{i18n.t('settings.version')}</Text>
             {__DEV__ && (
-              <Text style={styles.devText}>(Dev Mode - Long press to reset onboarding)</Text>
+              <Text style={styles.devText}>{i18n.t('settings.devMode')}</Text>
             )}
           </TouchableOpacity>
         </View>

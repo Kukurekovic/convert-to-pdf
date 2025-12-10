@@ -1,0 +1,191 @@
+{
+  "common": {
+    "cancel": "Batal",
+    "save": "Simpan",
+    "delete": "Hapus",
+    "share": "Bagikan",
+    "edit": "Edit",
+    "ok": "OK",
+    "error": "Kesalahan",
+    "success": "Berhasil",
+    "next": "Berikutnya",
+    "download": "Unduh",
+    "page": "Halaman",
+    "pages": "halaman",
+    "selected": "dipilih"
+  },
+  "tabs": {
+    "convert": "Konversi",
+    "history": "Riwayat",
+    "settings": "Pengaturan"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "Konversi File ke PDF",
+      "subtitle": "Ubah gambar, dokumen, dan lainnya menjadi PDF profesional dengan mudah"
+    },
+    "screen2": {
+      "title": "Kelola PDF Anda",
+      "subtitle": "Edit, ubah nama, atur ulang halaman, dan kelola dokumen Anda dengan mudah"
+    },
+    "screen3": {
+      "title": "Siap untuk Memulai?",
+      "subtitle": "Buat PDF pertama Anda dalam hitungan detik",
+      "button": "Mulai"
+    }
+  },
+  "convert": {
+    "title": "Konversi ke PDF",
+    "buttons": {
+      "gallery": "Galeri",
+      "camera": "Kamera",
+      "files": "File",
+      "urlLink": "Link URL"
+    },
+    "urlModal": {
+      "title": "Masukkan URL Gambar",
+      "subtitle": "Silakan masukkan URL gambar yang ingin Anda unduh",
+      "placeholder": "https://example.com/image.jpg",
+      "download": "Unduh"
+    },
+    "alerts": {
+      "errorTitle": "Kesalahan",
+      "failedToPick": "Gagal memilih file",
+      "permissionRequired": "Izin Diperlukan",
+      "permissionMessage": "Harap berikan akses ke galeri foto Anda.",
+      "failedToPickImages": "Gagal memilih gambar dari galeri",
+      "failedToScan": "Gagal memindai dokumen",
+      "noImages": "Tidak Ada Gambar",
+      "noImagesMessage": "Harap tambahkan setidaknya satu gambar untuk membuat PDF",
+      "invalidInput": "Input Tidak Valid",
+      "enterValidURL": "Harap masukkan URL yang valid",
+      "invalidURL": "URL Tidak Valid",
+      "invalidURLMessage": "Harap masukkan URL yang valid dimulai dengan http:// atau https://",
+      "imageDownloaded": "Gambar berhasil diunduh",
+      "failedToDownload": "Gagal mengunduh gambar. Harap periksa URL dan coba lagi."
+    }
+  },
+  "history": {
+    "title": "Riwayat",
+    "search": "Cari PDF...",
+    "sortBy": "Urutkan berdasarkan",
+    "sortOptions": {
+      "nameAsc": "Nama (A-Z)",
+      "nameDesc": "Nama (Z-A)",
+      "dateOldest": "Tanggal (Terlama)",
+      "dateNewest": "Tanggal (Terbaru)",
+      "sizeSmallest": "Ukuran (Terkecil)",
+      "sizeLargest": "Ukuran (Terbesar)"
+    },
+    "empty": {
+      "title": "Belum Ada PDF",
+      "message": "Konversi gambar ke PDF untuk melihatnya di sini"
+    },
+    "alerts": {
+      "deletePDF": "Hapus PDF",
+      "deleteMessage": "Apakah Anda yakin ingin menghapus \"{{name}}\"?",
+      "failedToShare": "Gagal membagikan PDF"
+    }
+  },
+  "pdfDetail": {
+    "menu": {
+      "rename": "Ubah nama dokumen",
+      "managePages": "Kelola halaman"
+    },
+    "renameModal": {
+      "title": "Ubah Nama Dokumen",
+      "placeholder": "Masukkan nama baru",
+      "invalidName": "Nama Tidak Valid",
+      "invalidNameMessage": "Harap masukkan nama file yang valid."
+    },
+    "pagination": "{{current}}/{{total}}",
+    "noPreview": "Tidak ada pratinjau tersedia",
+    "alerts": {
+      "pdfNotFound": "PDF tidak ditemukan",
+      "deletePDF": "Hapus PDF",
+      "deleteMessage": "Apakah Anda yakin ingin menghapus \"{{name}}\"?",
+      "failedToShare": "Gagal membagikan PDF"
+    }
+  },
+  "managePages": {
+    "title": "Kelola Halaman",
+    "selectAll": "Pilih Semua",
+    "deselect": "Batalkan Pilihan",
+    "deleteSelected": "Hapus yang Dipilih",
+    "pageNumber": "Halaman {{number}}",
+    "alerts": {
+      "noPagesSelected": "Tidak Ada Halaman yang Dipilih",
+      "noPagesSelectedMessage": "Harap pilih setidaknya satu halaman untuk dihapus.",
+      "cannotDeleteAll": "Tidak Dapat Menghapus Semua Halaman",
+      "cannotDeleteAllMessage": "Anda harus menyimpan setidaknya satu halaman dalam dokumen.",
+      "deletePages": "Hapus Halaman",
+      "deletePagesMessage": "Apakah Anda yakin ingin menghapus {{count}} halaman?"
+    }
+  },
+  "settings": {
+    "title": "Pengaturan",
+    "info": {
+      "title": "Info",
+      "faq": "FAQ & Bantuan",
+      "privacy": "Kebijakan Privasi",
+      "terms": "Ketentuan Penggunaan"
+    },
+    "support": {
+      "title": "Dukungan",
+      "contact": "Hubungi Dukungan",
+      "share": "Bagikan aplikasi",
+      "rate": "Beri kami nilai"
+    },
+    "version": "Versi 1.0.0",
+    "devMode": "(Mode Dev - Tekan lama untuk mereset onboarding)",
+    "alerts": {
+      "cannotOpenURL": "Tidak dapat membuka URL: {{url}}",
+      "failedToOpenURL": "Gagal membuka URL",
+      "failedToOpenEmail": "Gagal membuka klien email",
+      "failedToShare": "Gagal membagikan",
+      "shareMessage": "Lihat aplikasi konverter PDF yang luar biasa ini!",
+      "onboardingReset": "Reset Onboarding",
+      "onboardingResetMessage": "Mulai ulang aplikasi untuk melihat onboarding lagi.",
+      "failedToResetOnboarding": "Gagal mereset onboarding"
+    }
+  },
+  "imagePreview": {
+    "title": "Pratinjau",
+    "filename": "Nama file",
+    "quality": "Kualitas",
+    "qualityOptions": {
+      "low": "Rendah",
+      "medium": "Sedang",
+      "high": "Tinggi"
+    },
+    "addMore": "Tambah Lagi",
+    "generatePDF": "Buat PDF",
+    "alerts": {
+      "discardScan": "Buang Scan",
+      "discardScanMessage": "Apakah Anda yakin ingin membuang scan ini?",
+      "discard": "Buang",
+      "enterFilename": "Masukkan Nama File",
+      "enterFilenameMessage": "Harap masukkan nama file untuk PDF Anda.",
+      "failedToPickImages": "Gagal memilih gambar dari galeri",
+      "failedToScan": "Gagal memindai dokumen"
+    }
+  },
+  "pdfPreview": {
+    "title": "Pratinjau PDF",
+    "generating": "Membuat PDF...",
+    "savingPDF": "Menyimpan PDF",
+    "savingPDFMessage": "PDF Anda sedang dibuat. Harap tunggu...",
+    "alerts": {
+      "pdfSaved": "PDF Tersimpan",
+      "pdfSavedMessage": "PDF Anda telah berhasil disimpan!",
+      "failedToGenerate": "Gagal Membuat PDF",
+      "failedToGenerateMessage": "Terjadi kesalahan saat membuat PDF Anda. Harap coba lagi.",
+      "errorGeneratingPDF": "Kesalahan membuat PDF"
+    }
+  },
+  "imageEditor": {
+    "title": "Edit Gambar",
+    "reset": "Reset",
+    "done": "Selesai"
+  }
+}

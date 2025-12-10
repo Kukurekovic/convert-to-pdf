@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { RF, RS } from '../../utils/responsive';
 import { theme } from '../../theme/theme';
+import i18n from '../../i18n';
 import type { Onboarding1ScreenProps } from '../../types/navigation';
 
 export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps) {
@@ -31,9 +32,9 @@ export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps
         <View style={styles.topSpacer} />
 
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>Convert Files to PDF</Text>
+          <Text style={styles.title}>{i18n.t('onboarding.screen1.title')}</Text>
           <Text style={styles.subtitle}>
-            Easily convert images, documents, and more into professional PDFs
+            {i18n.t('onboarding.screen1.subtitle')}
           </Text>
         </View>
 
@@ -46,7 +47,7 @@ export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps
           accessibilityLabel="Next, go to screen 2"
           accessibilityHint="Advances to the next onboarding screen"
         >
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>{i18n.t('common.next')}</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </LinearGradient>

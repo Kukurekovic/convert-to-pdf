@@ -1,0 +1,191 @@
+{
+  "common": {
+    "cancel": "ยกเลิก",
+    "save": "บันทึก",
+    "delete": "ลบ",
+    "share": "แชร์",
+    "edit": "แก้ไข",
+    "ok": "ตรวจสอบ",
+    "error": "ข้อผิดพลาด",
+    "success": "สำเร็จ",
+    "next": "ถัดไป",
+    "download": "ดาวน์โหลด",
+    "page": "หน้า",
+    "pages": "หน้า",
+    "selected": "เลือกแล้ว"
+  },
+  "tabs": {
+    "convert": "แปลง",
+    "history": "ประวัติ",
+    "settings": "การตั้งค่า"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "แปลงไฟล์เป็น PDF",
+      "subtitle": "แปลงรูปภาพ เอกสาร และอื่นๆ เป็น PDF แบบมืออาชีพได้อย่างง่ายดาย"
+    },
+    "screen2": {
+      "title": "จัดการ PDF ของคุณ",
+      "subtitle": "แก้ไข เปลี่ยนชื่อ จัดเรียงหน้า และจัดระเบียบเอกสารของคุณได้อย่างง่ายดาย"
+    },
+    "screen3": {
+      "title": "พร้อมเริ่มต้นหรือยัง?",
+      "subtitle": "สร้าง PDF แรกของคุณในเวลาไม่กี่วินาที",
+      "button": "เริ่มต้น"
+    }
+  },
+  "convert": {
+    "title": "แปลงเป็น PDF",
+    "buttons": {
+      "gallery": "แกลเลอรี",
+      "camera": "กล้อง",
+      "files": "ไฟล์",
+      "urlLink": "ลิงก์ URL"
+    },
+    "urlModal": {
+      "title": "ใส่ URL รูปภาพ",
+      "subtitle": "กรุณาใส่ URL ของรูปภาพที่คุณต้องการดาวน์โหลด",
+      "placeholder": "https://example.com/image.jpg",
+      "download": "ดาวน์โหลด"
+    },
+    "alerts": {
+      "errorTitle": "ข้อผิดพลาด",
+      "failedToPick": "ไม่สามารถเลือกไฟล์ได้",
+      "permissionRequired": "ต้องการสิทธิ์การเข้าถึง",
+      "permissionMessage": "กรุณาอนุญาตการเข้าถึงคลังรูปภาพของคุณ",
+      "failedToPickImages": "ไม่สามารถเลือกรูปภาพจากแกลเลอรีได้",
+      "failedToScan": "ไม่สามารถสแกนเอกสารได้",
+      "noImages": "ไม่มีรูปภาพ",
+      "noImagesMessage": "กรุณาเพิ่มรูปภาพอย่างน้อยหนึ่งรูปเพื่อสร้าง PDF",
+      "invalidInput": "ข้อมูลไม่ถูกต้อง",
+      "enterValidURL": "กรุณาใส่ URL ที่ถูกต้อง",
+      "invalidURL": "URL ไม่ถูกต้อง",
+      "invalidURLMessage": "กรุณาใส่ URL ที่ถูกต้องซึ่งขึ้นต้นด้วย http:// หรือ https://",
+      "imageDownloaded": "ดาวน์โหลดรูปภาพสำเร็จ",
+      "failedToDownload": "ไม่สามารถดาวน์โหลดรูปภาพได้ กรุณาตรวจสอบ URL และลองอีกครั้ง"
+    }
+  },
+  "history": {
+    "title": "ประวัติ",
+    "search": "ค้นหา PDF...",
+    "sortBy": "เรียงตาม",
+    "sortOptions": {
+      "nameAsc": "ชื่อ (A-Z)",
+      "nameDesc": "ชื่อ (Z-A)",
+      "dateOldest": "วันที่ (เก่าสุด)",
+      "dateNewest": "วันที่ (ใหม่สุด)",
+      "sizeSmallest": "ขนาด (เล็กสุด)",
+      "sizeLargest": "ขนาด (ใหญ่สุด)"
+    },
+    "empty": {
+      "title": "ยังไม่มี PDF",
+      "message": "แปลงรูปภาพเป็น PDF เพื่อดูที่นี่"
+    },
+    "alerts": {
+      "deletePDF": "ลบ PDF",
+      "deleteMessage": "คุณแน่ใจหรือไม่ว่าต้องการลบ \"{{name}}\"?",
+      "failedToShare": "ไม่สามารถแชร์ PDF ได้"
+    }
+  },
+  "pdfDetail": {
+    "menu": {
+      "rename": "เปลี่ยนชื่อเอกสาร",
+      "managePages": "จัดการหน้า"
+    },
+    "renameModal": {
+      "title": "เปลี่ยนชื่อเอกสาร",
+      "placeholder": "ใส่ชื่อใหม่",
+      "invalidName": "ชื่อไม่ถูกต้อง",
+      "invalidNameMessage": "กรุณาใส่ชื่อไฟล์ที่ถูกต้อง"
+    },
+    "pagination": "{{current}}/{{total}}",
+    "noPreview": "ไม่มีตัวอย่าง",
+    "alerts": {
+      "pdfNotFound": "ไม่พบ PDF",
+      "deletePDF": "ลบ PDF",
+      "deleteMessage": "คุณแน่ใจหรือไม่ว่าต้องการลบ \"{{name}}\"?",
+      "failedToShare": "ไม่สามารถแชร์ PDF ได้"
+    }
+  },
+  "managePages": {
+    "title": "จัดการหน้า",
+    "selectAll": "เลือกทั้งหมด",
+    "deselect": "ยกเลิกการเลือก",
+    "deleteSelected": "ลบที่เลือก",
+    "pageNumber": "หน้า {{number}}",
+    "alerts": {
+      "noPagesSelected": "ไม่ได้เลือกหน้า",
+      "noPagesSelectedMessage": "กรุณาเลือกอย่างน้อยหนึ่งหน้าเพื่อลบ",
+      "cannotDeleteAll": "ไม่สามารถลบทุกหน้าได้",
+      "cannotDeleteAllMessage": "คุณต้องเก็บอย่างน้อยหนึ่งหน้าในเอกสาร",
+      "deletePages": "ลบหน้า",
+      "deletePagesMessage": "คุณแน่ใจหรือไม่ว่าต้องการลบ {{count}} หน้า?"
+    }
+  },
+  "settings": {
+    "title": "การตั้งค่า",
+    "info": {
+      "title": "ข้อมูล",
+      "faq": "คำถามที่พบบ่อยและความช่วยเหลือ",
+      "privacy": "นโยบายความเป็นส่วนตัว",
+      "terms": "ข้อกำหนดการใช้งาน"
+    },
+    "support": {
+      "title": "การสนับสนุน",
+      "contact": "ติดต่อฝ่ายสนับสนุน",
+      "share": "แชร์แอป",
+      "rate": "ให้คะแนนเรา"
+    },
+    "version": "เวอร์ชัน 1.0.0",
+    "devMode": "(โหมดนักพัฒนา - กดค้างเพื่อรีเซ็ตการแนะนำ)",
+    "alerts": {
+      "cannotOpenURL": "ไม่สามารถเปิด URL: {{url}}",
+      "failedToOpenURL": "ไม่สามารถเปิด URL ได้",
+      "failedToOpenEmail": "ไม่สามารถเปิดโปรแกรมอีเมลได้",
+      "failedToShare": "ไม่สามารถแชร์ได้",
+      "shareMessage": "ลองใช้แอปแปลง PDF ที่ยอดเยี่ยมนี้!",
+      "onboardingReset": "รีเซ็ตการแนะนำ",
+      "onboardingResetMessage": "รีสตาร์ทแอปเพื่อดูการแนะนำอีกครั้ง",
+      "failedToResetOnboarding": "ไม่สามารถรีเซ็ตการแนะนำได้"
+    }
+  },
+  "imagePreview": {
+    "title": "ดูตัวอย่าง",
+    "filename": "ชื่อไฟล์",
+    "quality": "คุณภาพ",
+    "qualityOptions": {
+      "low": "ต่ำ",
+      "medium": "ปานกลาง",
+      "high": "สูง"
+    },
+    "addMore": "เพิ่มเติม",
+    "generatePDF": "สร้าง PDF",
+    "alerts": {
+      "discardScan": "ยกเลิกการสแกน",
+      "discardScanMessage": "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการสแกนนี้?",
+      "discard": "ยกเลิก",
+      "enterFilename": "ใส่ชื่อไฟล์",
+      "enterFilenameMessage": "กรุณาใส่ชื่อไฟล์สำหรับ PDF ของคุณ",
+      "failedToPickImages": "ไม่สามารถเลือกรูปภาพจากแกลเลอรีได้",
+      "failedToScan": "ไม่สามารถสแกนเอกสารได้"
+    }
+  },
+  "pdfPreview": {
+    "title": "ดูตัวอย่าง PDF",
+    "generating": "กำลังสร้าง PDF...",
+    "savingPDF": "กำลังบันทึก PDF",
+    "savingPDFMessage": "กำลังสร้าง PDF ของคุณ กรุณารอสักครู่...",
+    "alerts": {
+      "pdfSaved": "บันทึก PDF แล้ว",
+      "pdfSavedMessage": "บันทึก PDF ของคุณเรียบร้อยแล้ว!",
+      "failedToGenerate": "ไม่สามารถสร้าง PDF ได้",
+      "failedToGenerateMessage": "เกิดข้อผิดพลาดขึ้นขณะสร้าง PDF ของคุณ กรุณาลองอีกครั้ง",
+      "errorGeneratingPDF": "เกิดข้อผิดพลาดในการสร้าง PDF"
+    }
+  },
+  "imageEditor": {
+    "title": "แก้ไขรูปภาพ",
+    "reset": "รีเซ็ต",
+    "done": "เสร็จสิ้น"
+  }
+}

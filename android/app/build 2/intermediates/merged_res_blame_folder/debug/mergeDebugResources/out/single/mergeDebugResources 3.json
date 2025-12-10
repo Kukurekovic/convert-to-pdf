@@ -1,0 +1,50 @@
+[
+    {
+        "merged": "com.converttopdf.app-debug-78:/mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "com.converttopdf.app-main-80:/mipmap-xxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.converttopdf.app-main-80:/mipmap-xxxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "com.converttopdf.app-main-80:/mipmap-xhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "com.converttopdf.app-main-80:/mipmap-mdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.converttopdf.app-main-80:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "com.converttopdf.app-main-80:/mipmap-hdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "com.converttopdf.app-main-80:/mipmap-xhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/drawable_rn_edit_text_material.xml.flat",
+        "source": "com.converttopdf.app-main-80:/drawable/rn_edit_text_material.xml"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "com.converttopdf.app-main-80:/mipmap-xxxhdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "com.converttopdf.app-main-80:/mipmap-hdpi/ic_launcher.webp"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "com.converttopdf.app-main-80:/mipmap-xxhdpi/ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.converttopdf.app-debug-78:/mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "com.converttopdf.app-main-80:/mipmap-mdpi/ic_launcher.webp"
+    }
+]

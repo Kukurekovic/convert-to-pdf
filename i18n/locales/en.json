@@ -1,0 +1,191 @@
+{
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "share": "Share",
+    "edit": "Edit",
+    "ok": "OK",
+    "error": "Error",
+    "success": "Success",
+    "next": "Next",
+    "download": "Download",
+    "page": "Page",
+    "pages": "pages",
+    "selected": "selected"
+  },
+  "tabs": {
+    "convert": "Convert",
+    "history": "History",
+    "settings": "Settings"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "Convert Files to PDF",
+      "subtitle": "Easily convert images, documents, and more into professional PDFs"
+    },
+    "screen2": {
+      "title": "Manage Your PDFs",
+      "subtitle": "Edit, rename, reorder pages, and organize your documents effortlessly"
+    },
+    "screen3": {
+      "title": "Ready to Get Started?",
+      "subtitle": "Create your first PDF in seconds",
+      "button": "Get Started"
+    }
+  },
+  "convert": {
+    "title": "Convert to PDF",
+    "buttons": {
+      "gallery": "Gallery",
+      "camera": "Camera",
+      "files": "Files",
+      "urlLink": "URL Link"
+    },
+    "urlModal": {
+      "title": "Enter Image URL",
+      "subtitle": "Please enter the URL of the image you want to download",
+      "placeholder": "https://example.com/image.jpg",
+      "download": "Download"
+    },
+    "alerts": {
+      "errorTitle": "Error",
+      "failedToPick": "Failed to pick files",
+      "permissionRequired": "Permission Required",
+      "permissionMessage": "Please grant access to your photo library.",
+      "failedToPickImages": "Failed to pick images from gallery",
+      "failedToScan": "Failed to scan document",
+      "noImages": "No Images",
+      "noImagesMessage": "Please add at least one image to generate a PDF",
+      "invalidInput": "Invalid Input",
+      "enterValidURL": "Please enter a valid URL",
+      "invalidURL": "Invalid URL",
+      "invalidURLMessage": "Please enter a valid URL starting with http:// or https://",
+      "imageDownloaded": "Image downloaded successfully",
+      "failedToDownload": "Failed to download image. Please check the URL and try again."
+    }
+  },
+  "history": {
+    "title": "History",
+    "search": "Search PDFs...",
+    "sortBy": "Sort by",
+    "sortOptions": {
+      "nameAsc": "Name (A-Z)",
+      "nameDesc": "Name (Z-A)",
+      "dateOldest": "Date (Oldest)",
+      "dateNewest": "Date (Newest)",
+      "sizeSmallest": "Size (Smallest)",
+      "sizeLargest": "Size (Largest)"
+    },
+    "empty": {
+      "title": "No PDFs Yet",
+      "message": "Convert images to PDF to see them here"
+    },
+    "alerts": {
+      "deletePDF": "Delete PDF",
+      "deleteMessage": "Are you sure you want to delete \"{{name}}\"?",
+      "failedToShare": "Failed to share PDF"
+    }
+  },
+  "pdfDetail": {
+    "menu": {
+      "rename": "Rename document",
+      "managePages": "Manage pages"
+    },
+    "renameModal": {
+      "title": "Rename Document",
+      "placeholder": "Enter new name",
+      "invalidName": "Invalid Name",
+      "invalidNameMessage": "Please enter a valid filename."
+    },
+    "pagination": "{{current}}/{{total}}",
+    "noPreview": "No preview available",
+    "alerts": {
+      "pdfNotFound": "PDF not found",
+      "deletePDF": "Delete PDF",
+      "deleteMessage": "Are you sure you want to delete \"{{name}}\"?",
+      "failedToShare": "Failed to share PDF"
+    }
+  },
+  "managePages": {
+    "title": "Manage Pages",
+    "selectAll": "Select All",
+    "deselect": "Deselect",
+    "deleteSelected": "Delete Selected",
+    "pageNumber": "Page {{number}}",
+    "alerts": {
+      "noPagesSelected": "No Pages Selected",
+      "noPagesSelectedMessage": "Please select at least one page to delete.",
+      "cannotDeleteAll": "Cannot Delete All Pages",
+      "cannotDeleteAllMessage": "You must keep at least one page in the document.",
+      "deletePages": "Delete Pages",
+      "deletePagesMessage": "Are you sure you want to delete {{count}} page(s)?"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "info": {
+      "title": "Info",
+      "faq": "FAQ & Help",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Use"
+    },
+    "support": {
+      "title": "Support",
+      "contact": "Contact Support",
+      "share": "Share app",
+      "rate": "Rate us"
+    },
+    "version": "Version 1.0.0",
+    "devMode": "(Dev Mode - Long press to reset onboarding)",
+    "alerts": {
+      "cannotOpenURL": "Cannot open URL: {{url}}",
+      "failedToOpenURL": "Failed to open URL",
+      "failedToOpenEmail": "Failed to open email client",
+      "failedToShare": "Failed to share",
+      "shareMessage": "Check out this amazing PDF converter app!",
+      "onboardingReset": "Onboarding Reset",
+      "onboardingResetMessage": "Restart the app to see onboarding again.",
+      "failedToResetOnboarding": "Failed to reset onboarding"
+    }
+  },
+  "imagePreview": {
+    "title": "Preview",
+    "filename": "Filename",
+    "quality": "Quality",
+    "qualityOptions": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High"
+    },
+    "addMore": "Add More",
+    "generatePDF": "Generate PDF",
+    "alerts": {
+      "discardScan": "Discard Scan",
+      "discardScanMessage": "Are you sure you want to discard this scan?",
+      "discard": "Discard",
+      "enterFilename": "Enter Filename",
+      "enterFilenameMessage": "Please enter a filename for your PDF.",
+      "failedToPickImages": "Failed to pick images from gallery",
+      "failedToScan": "Failed to scan document"
+    }
+  },
+  "pdfPreview": {
+    "title": "PDF Preview",
+    "generating": "Generating PDF...",
+    "savingPDF": "Saving PDF",
+    "savingPDFMessage": "Your PDF is being generated. Please wait...",
+    "alerts": {
+      "pdfSaved": "PDF Saved",
+      "pdfSavedMessage": "Your PDF has been saved successfully!",
+      "failedToGenerate": "Failed to Generate PDF",
+      "failedToGenerateMessage": "An error occurred while generating your PDF. Please try again.",
+      "errorGeneratingPDF": "Error generating PDF"
+    }
+  },
+  "imageEditor": {
+    "title": "Edit Image",
+    "reset": "Reset",
+    "done": "Done"
+  }
+}

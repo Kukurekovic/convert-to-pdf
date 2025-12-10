@@ -20,6 +20,7 @@ import useDocumentStore from '../store/useDocumentStore';
 import { formatFileSize, formatDate, sharePDF } from '../utils/pdfUtils';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
+import i18n from '../i18n';
 import type { HistoryListScreenProps } from '../types/navigation';
 import type { PDFDocument } from '../types/document';
 
@@ -78,17 +79,17 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
   const getSortLabel = (option: SortOption): string => {
     switch (option) {
       case 'name-asc':
-        return 'Name (A-Z)';
+        return i18n.t('history.sortOptions.nameAsc');
       case 'name-desc':
-        return 'Name (Z-A)';
+        return i18n.t('history.sortOptions.nameDesc');
       case 'date-oldest':
-        return 'Date (Oldest)';
+        return i18n.t('history.sortOptions.dateOldest');
       case 'date-newest':
-        return 'Date (Newest)';
+        return i18n.t('history.sortOptions.dateNewest');
       case 'size-smallest':
-        return 'Size (Smallest)';
+        return i18n.t('history.sortOptions.sizeSmallest');
       case 'size-largest':
-        return 'Size (Largest)';
+        return i18n.t('history.sortOptions.sizeLargest');
     }
   };
 
@@ -102,18 +103,18 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
       await sharePDF(pdf.uri);
     } catch (error) {
       console.error('Error sharing PDF:', error);
-      Alert.alert('Error', 'Failed to share PDF');
+      Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('history.alerts.failedToShare'));
     }
   };
 
   const handleDelete = (pdf: PDFDocument): void => {
     Alert.alert(
-      'Delete PDF',
-      `Are you sure you want to delete "${pdf.name}"?`,
+      i18n.t('history.alerts.deletePDF'),
+      i18n.t('history.alerts.deleteMessage', { name: pdf.name }),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: i18n.t('common.cancel'), style: 'cancel' },
         {
-          text: 'Delete',
+          text: i18n.t('common.delete'),
           style: 'destructive',
           onPress: async () => {
             await removePDF(pdf.id);
@@ -199,9 +200,9 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
   const renderEmptyState = () => (
     <View style={styles.emptyState}>
       <Text style={styles.emptyIcon}>📄</Text>
-      <Text style={styles.emptyTitle}>No PDFs Yet</Text>
+      <Text style={styles.emptyTitle}>{i18n.t('history.empty.title')}</Text>
       <Text style={styles.emptyText}>
-        Convert images to PDF to see them here
+        {i18n.t('history.empty.message')}
       </Text>
     </View>
   );
@@ -210,7 +211,7 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
     <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
         <View style={styles.header}>
-          <Text style={styles.title}>History</Text>
+          <Text style={styles.title}>{i18n.t('history.title')}</Text>
         </View>
 
         {savedPDFs.length > 0 && (
@@ -224,7 +225,7 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
               />
               <TextInput
                 style={styles.searchInput}
-                placeholder="Search PDFs..."
+                placeholder={i18n.t('history.search')}
                 placeholderTextColor={theme.colors.textLight}
                 value={searchQuery}
                 onChangeText={setSearchQuery}
@@ -264,7 +265,7 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
             onPress={() => setShowSortMenu(false)}
           >
             <View style={styles.sortMenu}>
-              <Text style={styles.sortMenuTitle}>Sort by</Text>
+              <Text style={styles.sortMenuTitle}>{i18n.t('history.sortBy')}</Text>
               {(['name-asc', 'name-desc', 'date-oldest', 'date-newest', 'size-smallest', 'size-largest'] as SortOption[]).map((option) => (
                 <TouchableOpacity
                   key={option}

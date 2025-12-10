@@ -1,0 +1,191 @@
+{
+  "common": {
+    "cancel": "रद्द करें",
+    "save": "सहेजें",
+    "delete": "हटाएं",
+    "share": "साझा करें",
+    "edit": "संपादित करें",
+    "ok": "ठीक है",
+    "error": "त्रुटि",
+    "success": "सफलता",
+    "next": "आगे",
+    "download": "डाउनलोड करें",
+    "page": "पृष्ठ",
+    "pages": "पृष्ठ",
+    "selected": "चयनित"
+  },
+  "tabs": {
+    "convert": "कन्वर्ट करें",
+    "history": "इतिहास",
+    "settings": "सेटिंग्स"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "फ़ाइलों को PDF में कन्वर्ट करें",
+      "subtitle": "इमेज, डॉक्युमेंट और अन्य फ़ाइलों को आसानी से प्रोफेशनल PDF में बदलें"
+    },
+    "screen2": {
+      "title": "अपने PDF प्रबंधित करें",
+      "subtitle": "संपादित करें, नाम बदलें, पृष्ठों को पुनर्व्यवस्थित करें और अपने दस्तावेज़ों को आसानी से व्यवस्थित करें"
+    },
+    "screen3": {
+      "title": "शुरू करने के लिए तैयार हैं?",
+      "subtitle": "कुछ ही सेकंड में अपना पहला PDF बनाएं",
+      "button": "शुरू करें"
+    }
+  },
+  "convert": {
+    "title": "PDF में कन्वर्ट करें",
+    "buttons": {
+      "gallery": "गैलरी",
+      "camera": "कैमरा",
+      "files": "फ़ाइलें",
+      "urlLink": "URL लिंक"
+    },
+    "urlModal": {
+      "title": "इमेज URL दर्ज करें",
+      "subtitle": "कृपया उस इमेज का URL दर्ज करें जिसे आप डाउनलोड करना चाहते हैं",
+      "placeholder": "https://example.com/image.jpg",
+      "download": "डाउनलोड करें"
+    },
+    "alerts": {
+      "errorTitle": "त्रुटि",
+      "failedToPick": "फ़ाइलें चुनने में विफल",
+      "permissionRequired": "अनुमति आवश्यक है",
+      "permissionMessage": "कृपया अपनी फोटो लाइब्रेरी तक पहुंच की अनुमति दें।",
+      "failedToPickImages": "गैलरी से इमेज चुनने में विफल",
+      "failedToScan": "दस्तावेज़ स्कैन करने में विफल",
+      "noImages": "कोई इमेज नहीं",
+      "noImagesMessage": "PDF बनाने के लिए कृपया कम से कम एक इमेज जोड़ें",
+      "invalidInput": "अमान्य इनपुट",
+      "enterValidURL": "कृपया एक मान्य URL दर्ज करें",
+      "invalidURL": "अमान्य URL",
+      "invalidURLMessage": "कृपया http:// या https:// से शुरू होने वाला एक मान्य URL दर्ज करें",
+      "imageDownloaded": "इमेज सफलतापूर्वक डाउनलोड हो गई",
+      "failedToDownload": "इमेज डाउनलोड करने में विफल। कृपया URL जांचें और पुनः प्रयास करें।"
+    }
+  },
+  "history": {
+    "title": "इतिहास",
+    "search": "PDF खोजें...",
+    "sortBy": "इसके अनुसार क्रमबद्ध करें",
+    "sortOptions": {
+      "nameAsc": "नाम (A-Z)",
+      "nameDesc": "नाम (Z-A)",
+      "dateOldest": "तिथि (पुराना)",
+      "dateNewest": "तिथि (नया)",
+      "sizeSmallest": "आकार (छोटा)",
+      "sizeLargest": "आकार (बड़ा)"
+    },
+    "empty": {
+      "title": "अभी तक कोई PDF नहीं",
+      "message": "इमेज को PDF में कन्वर्ट करें और उन्हें यहां देखें"
+    },
+    "alerts": {
+      "deletePDF": "PDF हटाएं",
+      "deleteMessage": "क्या आप वाकई \"{{name}}\" को हटाना चाहते हैं?",
+      "failedToShare": "PDF साझा करने में विफल"
+    }
+  },
+  "pdfDetail": {
+    "menu": {
+      "rename": "दस्तावेज़ का नाम बदलें",
+      "managePages": "पृष्ठ प्रबंधित करें"
+    },
+    "renameModal": {
+      "title": "दस्तावेज़ का नाम बदलें",
+      "placeholder": "नया नाम दर्ज करें",
+      "invalidName": "अमान्य नाम",
+      "invalidNameMessage": "कृपया एक मान्य फ़ाइल नाम दर्ज करें।"
+    },
+    "pagination": "{{current}}/{{total}}",
+    "noPreview": "कोई पूर्वावलोकन उपलब्ध नहीं",
+    "alerts": {
+      "pdfNotFound": "PDF नहीं मिला",
+      "deletePDF": "PDF हटाएं",
+      "deleteMessage": "क्या आप वाकई \"{{name}}\" को हटाना चाहते हैं?",
+      "failedToShare": "PDF साझा करने में विफल"
+    }
+  },
+  "managePages": {
+    "title": "पृष्ठ प्रबंधित करें",
+    "selectAll": "सभी चुनें",
+    "deselect": "अचयनित करें",
+    "deleteSelected": "चयनित को हटाएं",
+    "pageNumber": "पृष्ठ {{number}}",
+    "alerts": {
+      "noPagesSelected": "कोई पृष्ठ चयनित नहीं",
+      "noPagesSelectedMessage": "हटाने के लिए कृपया कम से कम एक पृष्ठ चुनें।",
+      "cannotDeleteAll": "सभी पृष्ठ नहीं हटा सकते",
+      "cannotDeleteAllMessage": "दस्तावेज़ में कम से कम एक पृष्ठ रखना आवश्यक है।",
+      "deletePages": "पृष्ठ हटाएं",
+      "deletePagesMessage": "क्या आप वाकई {{count}} पृष्ठ हटाना चाहते हैं?"
+    }
+  },
+  "settings": {
+    "title": "सेटिंग्स",
+    "info": {
+      "title": "जानकारी",
+      "faq": "FAQ और सहायता",
+      "privacy": "गोपनीयता नीति",
+      "terms": "उपयोग की शर्तें"
+    },
+    "support": {
+      "title": "सहायता",
+      "contact": "सहायता से संपर्क करें",
+      "share": "ऐप साझा करें",
+      "rate": "हमें रेट करें"
+    },
+    "version": "संस्करण 1.0.0",
+    "devMode": "(Dev Mode - ऑनबोर्डिंग रीसेट करने के लिए लंबे समय तक दबाएं)",
+    "alerts": {
+      "cannotOpenURL": "URL नहीं खोल सकते: {{url}}",
+      "failedToOpenURL": "URL खोलने में विफल",
+      "failedToOpenEmail": "ईमेल क्लाइंट खोलने में विफल",
+      "failedToShare": "साझा करने में विफल",
+      "shareMessage": "इस शानदार PDF कन्वर्टर ऐप को देखें!",
+      "onboardingReset": "ऑनबोर्डिंग रीसेट",
+      "onboardingResetMessage": "ऑनबोर्डिंग फिर से देखने के लिए ऐप पुनः प्रारंभ करें।",
+      "failedToResetOnboarding": "ऑनबोर्डिंग रीसेट करने में विफल"
+    }
+  },
+  "imagePreview": {
+    "title": "पूर्वावलोकन",
+    "filename": "फ़ाइल नाम",
+    "quality": "गुणवत्ता",
+    "qualityOptions": {
+      "low": "कम",
+      "medium": "मध्यम",
+      "high": "उच्च"
+    },
+    "addMore": "और जोड़ें",
+    "generatePDF": "PDF बनाएं",
+    "alerts": {
+      "discardScan": "स्कैन त्यागें",
+      "discardScanMessage": "क्या आप वाकई इस स्कैन को त्यागना चाहते हैं?",
+      "discard": "त्यागें",
+      "enterFilename": "फ़ाइल नाम दर्ज करें",
+      "enterFilenameMessage": "कृपया अपने PDF के लिए एक फ़ाइल नाम दर्ज करें।",
+      "failedToPickImages": "गैलरी से इमेज चुनने में विफल",
+      "failedToScan": "दस्तावेज़ स्कैन करने में विफल"
+    }
+  },
+  "pdfPreview": {
+    "title": "PDF पूर्वावलोकन",
+    "generating": "PDF बनाया जा रहा है...",
+    "savingPDF": "PDF सहेजा जा रहा है",
+    "savingPDFMessage": "आपका PDF बनाया जा रहा है। कृपया प्रतीक्षा करें...",
+    "alerts": {
+      "pdfSaved": "PDF सहेजा गया",
+      "pdfSavedMessage": "आपका PDF सफलतापूर्वक सहेज लिया गया है!",
+      "failedToGenerate": "PDF बनाने में विफल",
+      "failedToGenerateMessage": "आपका PDF बनाते समय एक त्रुटि हुई। कृपया पुनः प्रयास करें।",
+      "errorGeneratingPDF": "PDF बनाने में त्रुटि"
+    }
+  },
+  "imageEditor": {
+    "title": "इमेज संपादित करें",
+    "reset": "रीसेट करें",
+    "done": "पूर्ण"
+  }
+}

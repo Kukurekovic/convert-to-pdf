@@ -4,6 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { RF, RS } from '../../utils/responsive';
 import { theme } from '../../theme/theme';
+import i18n from '../../i18n';
 import type { Onboarding2ScreenProps } from '../../types/navigation';
 
 export default function OnboardingScreen2({ navigation }: Onboarding2ScreenProps) {
@@ -16,9 +17,9 @@ export default function OnboardingScreen2({ navigation }: Onboarding2ScreenProps
         <View style={styles.topSpacer} />
 
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>Manage Your PDFs</Text>
+          <Text style={styles.title}>{i18n.t('onboarding.screen2.title')}</Text>
           <Text style={styles.subtitle}>
-            Edit, rename, reorder pages, and organize your documents effortlessly
+            {i18n.t('onboarding.screen2.subtitle')}
           </Text>
         </View>
 
@@ -31,7 +32,7 @@ export default function OnboardingScreen2({ navigation }: Onboarding2ScreenProps
           accessibilityLabel="Next, go to screen 3"
           accessibilityHint="Advances to the final onboarding screen"
         >
-          <Text style={styles.buttonText}>Next</Text>
+          <Text style={styles.buttonText}>{i18n.t('common.next')}</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </LinearGradient>

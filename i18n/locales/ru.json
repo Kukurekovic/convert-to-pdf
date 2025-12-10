@@ -1,0 +1,191 @@
+{
+  "common": {
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "share": "Поделиться",
+    "edit": "Редактировать",
+    "ok": "ОК",
+    "error": "Ошибка",
+    "success": "Успешно",
+    "next": "Далее",
+    "download": "Скачать",
+    "page": "Страница",
+    "pages": "страниц",
+    "selected": "выбрано"
+  },
+  "tabs": {
+    "convert": "Конвертировать",
+    "history": "История",
+    "settings": "Настройки"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "Конвертируйте файлы в PDF",
+      "subtitle": "Легко конвертируйте изображения, документы и многое другое в профессиональные PDF"
+    },
+    "screen2": {
+      "title": "Управляйте своими PDF",
+      "subtitle": "Редактируйте, переименовывайте, меняйте порядок страниц и организуйте документы без усилий"
+    },
+    "screen3": {
+      "title": "Готовы начать?",
+      "subtitle": "Создайте свой первый PDF за несколько секунд",
+      "button": "Начать"
+    }
+  },
+  "convert": {
+    "title": "Конвертировать в PDF",
+    "buttons": {
+      "gallery": "Галерея",
+      "camera": "Камера",
+      "files": "Файлы",
+      "urlLink": "URL-ссылка"
+    },
+    "urlModal": {
+      "title": "Введите URL изображения",
+      "subtitle": "Пожалуйста, введите URL изображения, которое хотите скачать",
+      "placeholder": "https://example.com/image.jpg",
+      "download": "Скачать"
+    },
+    "alerts": {
+      "errorTitle": "Ошибка",
+      "failedToPick": "Не удалось выбрать файлы",
+      "permissionRequired": "Требуется разрешение",
+      "permissionMessage": "Пожалуйста, предоставьте доступ к вашей фотогалерее.",
+      "failedToPickImages": "Не удалось выбрать изображения из галереи",
+      "failedToScan": "Не удалось отсканировать документ",
+      "noImages": "Нет изображений",
+      "noImagesMessage": "Пожалуйста, добавьте хотя бы одно изображение для создания PDF",
+      "invalidInput": "Неверный ввод",
+      "enterValidURL": "Пожалуйста, введите правильный URL",
+      "invalidURL": "Неверный URL",
+      "invalidURLMessage": "Пожалуйста, введите правильный URL, начинающийся с http:// или https://",
+      "imageDownloaded": "Изображение успешно скачано",
+      "failedToDownload": "Не удалось скачать изображение. Пожалуйста, проверьте URL и попробуйте снова."
+    }
+  },
+  "history": {
+    "title": "История",
+    "search": "Поиск PDF...",
+    "sortBy": "Сортировать по",
+    "sortOptions": {
+      "nameAsc": "Имя (А-Я)",
+      "nameDesc": "Имя (Я-А)",
+      "dateOldest": "Дата (Старые)",
+      "dateNewest": "Дата (Новые)",
+      "sizeSmallest": "Размер (Меньше)",
+      "sizeLargest": "Размер (Больше)"
+    },
+    "empty": {
+      "title": "Пока нет PDF",
+      "message": "Конвертируйте изображения в PDF, чтобы увидеть их здесь"
+    },
+    "alerts": {
+      "deletePDF": "Удалить PDF",
+      "deleteMessage": "Вы уверены, что хотите удалить \"{{name}}\"?",
+      "failedToShare": "Не удалось поделиться PDF"
+    }
+  },
+  "pdfDetail": {
+    "menu": {
+      "rename": "Переименовать документ",
+      "managePages": "Управление страницами"
+    },
+    "renameModal": {
+      "title": "Переименовать документ",
+      "placeholder": "Введите новое имя",
+      "invalidName": "Неверное имя",
+      "invalidNameMessage": "Пожалуйста, введите правильное имя файла."
+    },
+    "pagination": "{{current}}/{{total}}",
+    "noPreview": "Предварительный просмотр недоступен",
+    "alerts": {
+      "pdfNotFound": "PDF не найден",
+      "deletePDF": "Удалить PDF",
+      "deleteMessage": "Вы уверены, что хотите удалить \"{{name}}\"?",
+      "failedToShare": "Не удалось поделиться PDF"
+    }
+  },
+  "managePages": {
+    "title": "Управление страницами",
+    "selectAll": "Выбрать все",
+    "deselect": "Снять выделение",
+    "deleteSelected": "Удалить выбранные",
+    "pageNumber": "Страница {{number}}",
+    "alerts": {
+      "noPagesSelected": "Страницы не выбраны",
+      "noPagesSelectedMessage": "Пожалуйста, выберите хотя бы одну страницу для удаления.",
+      "cannotDeleteAll": "Невозможно удалить все страницы",
+      "cannotDeleteAllMessage": "Вы должны оставить хотя бы одну страницу в документе.",
+      "deletePages": "Удалить страницы",
+      "deletePagesMessage": "Вы уверены, что хотите удалить {{count}} страниц(ы)?"
+    }
+  },
+  "settings": {
+    "title": "Настройки",
+    "info": {
+      "title": "Информация",
+      "faq": "FAQ и помощь",
+      "privacy": "Политика конфиденциальности",
+      "terms": "Условия использования"
+    },
+    "support": {
+      "title": "Поддержка",
+      "contact": "Связаться с поддержкой",
+      "share": "Поделиться приложением",
+      "rate": "Оценить нас"
+    },
+    "version": "Версия 1.0.0",
+    "devMode": "(Режим разработчика - Долгое нажатие для сброса приветствия)",
+    "alerts": {
+      "cannotOpenURL": "Не удается открыть URL: {{url}}",
+      "failedToOpenURL": "Не удалось открыть URL",
+      "failedToOpenEmail": "Не удалось открыть почтовый клиент",
+      "failedToShare": "Не удалось поделиться",
+      "shareMessage": "Попробуйте это замечательное приложение для конвертации в PDF!",
+      "onboardingReset": "Сброс приветствия",
+      "onboardingResetMessage": "Перезапустите приложение, чтобы снова увидеть приветствие.",
+      "failedToResetOnboarding": "Не удалось сбросить приветствие"
+    }
+  },
+  "imagePreview": {
+    "title": "Предпросмотр",
+    "filename": "Имя файла",
+    "quality": "Качество",
+    "qualityOptions": {
+      "low": "Низкое",
+      "medium": "Среднее",
+      "high": "Высокое"
+    },
+    "addMore": "Добавить еще",
+    "generatePDF": "Создать PDF",
+    "alerts": {
+      "discardScan": "Отменить сканирование",
+      "discardScanMessage": "Вы уверены, что хотите отменить это сканирование?",
+      "discard": "Отменить",
+      "enterFilename": "Введите имя файла",
+      "enterFilenameMessage": "Пожалуйста, введите имя файла для вашего PDF.",
+      "failedToPickImages": "Не удалось выбрать изображения из галереи",
+      "failedToScan": "Не удалось отсканировать документ"
+    }
+  },
+  "pdfPreview": {
+    "title": "Предпросмотр PDF",
+    "generating": "Создание PDF...",
+    "savingPDF": "Сохранение PDF",
+    "savingPDFMessage": "Ваш PDF создается. Пожалуйста, подождите...",
+    "alerts": {
+      "pdfSaved": "PDF сохранен",
+      "pdfSavedMessage": "Ваш PDF успешно сохранен!",
+      "failedToGenerate": "Не удалось создать PDF",
+      "failedToGenerateMessage": "Произошла ошибка при создании вашего PDF. Пожалуйста, попробуйте снова.",
+      "errorGeneratingPDF": "Ошибка при создании PDF"
+    }
+  },
+  "imageEditor": {
+    "title": "Редактировать изображение",
+    "reset": "Сбросить",
+    "done": "Готово"
+  }
+}

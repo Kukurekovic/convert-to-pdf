@@ -1,0 +1,47 @@
+-- GLOB mismatch!
+-- GLOB mismatch!
+-- GLOB mismatch!
+CMake Error at /Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/android/app/build/generated/autolinking/src/main/jni/Android-autolinking.cmake:10 (add_subdirectory):
+  add_subdirectory given source
+  "/Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/node_modules/react-native-document-scanner-plugin/android/build/generated/source/codegen/jni/"
+  which is not an existing directory.
+Call Stack (most recent call first):
+  /Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/node_modules/react-native/ReactAndroid/cmake-utils/ReactNative-application.cmake:94 (include)
+  CMakeLists.txt:31 (include)
+
+
+CMake Error at /Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/android/app/build/generated/autolinking/src/main/jni/Android-autolinking.cmake:11 (add_subdirectory):
+  add_subdirectory given source
+  "/Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/node_modules/react-native-gesture-handler/android/build/generated/source/codegen/jni/"
+  which is not an existing directory.
+Call Stack (most recent call first):
+  /Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/node_modules/react-native/ReactAndroid/cmake-utils/ReactNative-application.cmake:94 (include)
+  CMakeLists.txt:31 (include)
+
+
+CMake Error at /Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/android/app/build/generated/autolinking/src/main/jni/Android-autolinking.cmake:12 (add_subdirectory):
+  add_subdirectory given source
+  "/Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/node_modules/react-native-reanimated/android/build/generated/source/codegen/jni/"
+  which is not an existing directory.
+Call Stack (most recent call first):
+  /Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/node_modules/react-native/ReactAndroid/cmake-utils/ReactNative-application.cmake:94 (include)
+  CMakeLists.txt:31 (include)
+
+
+CMake Error at /Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/android/app/build/generated/autolinking/src/main/jni/Android-autolinking.cmake:17 (add_subdirectory):
+  add_subdirectory given source
+  "/Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/node_modules/react-native-worklets/android/build/generated/source/codegen/jni/"
+  which is not an existing directory.
+Call Stack (most recent call first):
+  /Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/node_modules/react-native/ReactAndroid/cmake-utils/ReactNative-application.cmake:94 (include)
+  CMakeLists.txt:31 (include)
+
+
+CMake Error at /Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/node_modules/react-native/ReactAndroid/cmake-utils/ReactNative-application.cmake:97 (target_link_libraries):
+  Cannot specify link libraries for target
+  "react_codegen_DocumentScannerSpec" which is not built by this project.
+Call Stack (most recent call first):
+  CMakeLists.txt:31 (include)
+
+
+ninja: error: rebuilding 'build.ninja': subcommand failed

@@ -5,6 +5,7 @@ import { useFonts, Urbanist_400Regular, Urbanist_600SemiBold, Urbanist_700Bold }
 import * as SplashScreen from 'expo-splash-screen';
 import RootNavigator from './navigation/RootNavigator';
 import { useOnboardingStore } from './store/useOnboardingStore';
+import './i18n'; // Initialize i18n
 
 // Prevent splash screen from auto-hiding
 SplashScreen.preventAutoHideAsync();

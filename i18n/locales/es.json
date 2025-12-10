@@ -1,0 +1,191 @@
+{
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "share": "Compartir",
+    "edit": "Editar",
+    "ok": "OK",
+    "error": "Error",
+    "success": "Éxito",
+    "next": "Siguiente",
+    "download": "Descargar",
+    "page": "Página",
+    "pages": "páginas",
+    "selected": "seleccionado"
+  },
+  "tabs": {
+    "convert": "Convertir",
+    "history": "Historial",
+    "settings": "Ajustes"
+  },
+  "onboarding": {
+    "screen1": {
+      "title": "Convierte archivos a PDF",
+      "subtitle": "Convierte fácilmente imágenes, documentos y más en PDFs profesionales"
+    },
+    "screen2": {
+      "title": "Gestiona tus PDFs",
+      "subtitle": "Edita, renombra, reordena páginas y organiza tus documentos sin esfuerzo"
+    },
+    "screen3": {
+      "title": "¿Listo para empezar?",
+      "subtitle": "Crea tu primer PDF en segundos",
+      "button": "Empezar"
+    }
+  },
+  "convert": {
+    "title": "Convertir a PDF",
+    "buttons": {
+      "gallery": "Galería",
+      "camera": "Cámara",
+      "files": "Archivos",
+      "urlLink": "Enlace URL"
+    },
+    "urlModal": {
+      "title": "Introduce la URL de la imagen",
+      "subtitle": "Por favor, introduce la URL de la imagen que deseas descargar",
+      "placeholder": "https://example.com/image.jpg",
+      "download": "Descargar"
+    },
+    "alerts": {
+      "errorTitle": "Error",
+      "failedToPick": "Error al seleccionar archivos",
+      "permissionRequired": "Permiso requerido",
+      "permissionMessage": "Por favor, concede acceso a tu galería de fotos.",
+      "failedToPickImages": "Error al seleccionar imágenes de la galería",
+      "failedToScan": "Error al escanear documento",
+      "noImages": "Sin imágenes",
+      "noImagesMessage": "Por favor, añade al menos una imagen para generar un PDF",
+      "invalidInput": "Entrada no válida",
+      "enterValidURL": "Por favor, introduce una URL válida",
+      "invalidURL": "URL no válida",
+      "invalidURLMessage": "Por favor, introduce una URL válida que comience con http:// o https://",
+      "imageDownloaded": "Imagen descargada correctamente",
+      "failedToDownload": "Error al descargar la imagen. Por favor, verifica la URL e inténtalo de nuevo."
+    }
+  },
+  "history": {
+    "title": "Historial",
+    "search": "Buscar PDFs...",
+    "sortBy": "Ordenar por",
+    "sortOptions": {
+      "nameAsc": "Nombre (A-Z)",
+      "nameDesc": "Nombre (Z-A)",
+      "dateOldest": "Fecha (Más antiguo)",
+      "dateNewest": "Fecha (Más reciente)",
+      "sizeSmallest": "Tamaño (Más pequeño)",
+      "sizeLargest": "Tamaño (Más grande)"
+    },
+    "empty": {
+      "title": "Aún no hay PDFs",
+      "message": "Convierte imágenes a PDF para verlas aquí"
+    },
+    "alerts": {
+      "deletePDF": "Eliminar PDF",
+      "deleteMessage": "¿Estás seguro de que quieres eliminar \"{{name}}\"?",
+      "failedToShare": "Error al compartir PDF"
+    }
+  },
+  "pdfDetail": {
+    "menu": {
+      "rename": "Renombrar documento",
+      "managePages": "Gestionar páginas"
+    },
+    "renameModal": {
+      "title": "Renombrar documento",
+      "placeholder": "Introduce nuevo nombre",
+      "invalidName": "Nombre no válido",
+      "invalidNameMessage": "Por favor, introduce un nombre de archivo válido."
+    },
+    "pagination": "{{current}}/{{total}}",
+    "noPreview": "Vista previa no disponible",
+    "alerts": {
+      "pdfNotFound": "PDF no encontrado",
+      "deletePDF": "Eliminar PDF",
+      "deleteMessage": "¿Estás seguro de que quieres eliminar \"{{name}}\"?",
+      "failedToShare": "Error al compartir PDF"
+    }
+  },
+  "managePages": {
+    "title": "Gestionar páginas",
+    "selectAll": "Seleccionar todo",
+    "deselect": "Deseleccionar",
+    "deleteSelected": "Eliminar seleccionados",
+    "pageNumber": "Página {{number}}",
+    "alerts": {
+      "noPagesSelected": "No hay páginas seleccionadas",
+      "noPagesSelectedMessage": "Por favor, selecciona al menos una página para eliminar.",
+      "cannotDeleteAll": "No se pueden eliminar todas las páginas",
+      "cannotDeleteAllMessage": "Debes mantener al menos una página en el documento.",
+      "deletePages": "Eliminar páginas",
+      "deletePagesMessage": "¿Estás seguro de que quieres eliminar {{count}} página(s)?"
+    }
+  },
+  "settings": {
+    "title": "Ajustes",
+    "info": {
+      "title": "Información",
+      "faq": "FAQ y ayuda",
+      "privacy": "Política de privacidad",
+      "terms": "Términos de uso"
+    },
+    "support": {
+      "title": "Soporte",
+      "contact": "Contactar soporte",
+      "share": "Compartir app",
+      "rate": "Califícanos"
+    },
+    "version": "Versión 1.0.0",
+    "devMode": "(Modo desarrollador - Mantén presionado para reiniciar introducción)",
+    "alerts": {
+      "cannotOpenURL": "No se puede abrir la URL: {{url}}",
+      "failedToOpenURL": "Error al abrir URL",
+      "failedToOpenEmail": "Error al abrir cliente de correo",
+      "failedToShare": "Error al compartir",
+      "shareMessage": "¡Mira esta increíble app de conversión a PDF!",
+      "onboardingReset": "Reinicio de introducción",
+      "onboardingResetMessage": "Reinicia la app para ver la introducción de nuevo.",
+      "failedToResetOnboarding": "Error al reiniciar introducción"
+    }
+  },
+  "imagePreview": {
+    "title": "Vista previa",
+    "filename": "Nombre de archivo",
+    "quality": "Calidad",
+    "qualityOptions": {
+      "low": "Baja",
+      "medium": "Media",
+      "high": "Alta"
+    },
+    "addMore": "Añadir más",
+    "generatePDF": "Generar PDF",
+    "alerts": {
+      "discardScan": "Descartar escaneo",
+      "discardScanMessage": "¿Estás seguro de que quieres descartar este escaneo?",
+      "discard": "Descartar",
+      "enterFilename": "Introduce nombre de archivo",
+      "enterFilenameMessage": "Por favor, introduce un nombre de archivo para tu PDF.",
+      "failedToPickImages": "Error al seleccionar imágenes de la galería",
+      "failedToScan": "Error al escanear documento"
+    }
+  },
+  "pdfPreview": {
+    "title": "Vista previa del PDF",
+    "generating": "Generando PDF...",
+    "savingPDF": "Guardando PDF",
+    "savingPDFMessage": "Tu PDF se está generando. Por favor, espera...",
+    "alerts": {
+      "pdfSaved": "PDF guardado",
+      "pdfSavedMessage": "¡Tu PDF se ha guardado correctamente!",
+      "failedToGenerate": "Error al generar PDF",
+      "failedToGenerateMessage": "Ocurrió un error al generar tu PDF. Por favor, inténtalo de nuevo.",
+      "errorGeneratingPDF": "Error al generar PDF"
+    }
+  },
+  "imageEditor": {
+    "title": "Editar imagen",
+    "reset": "Restablecer",
+    "done": "Hecho"
+  }
+}

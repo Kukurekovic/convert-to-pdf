@@ -5,6 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { RF, RS } from '../../utils/responsive';
 import { theme } from '../../theme/theme';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
+import i18n from '../../i18n';
 import type { Onboarding3ScreenProps } from '../../types/navigation';
 
 export default function OnboardingScreen3({}: Onboarding3ScreenProps) {
@@ -24,9 +25,9 @@ export default function OnboardingScreen3({}: Onboarding3ScreenProps) {
         <View style={styles.topSpacer} />
 
         <View style={styles.contentContainer}>
-          <Text style={styles.title}>Ready to Get Started?</Text>
+          <Text style={styles.title}>{i18n.t('onboarding.screen3.title')}</Text>
           <Text style={styles.subtitle}>
-            Create your first PDF in seconds
+            {i18n.t('onboarding.screen3.subtitle')}
           </Text>
         </View>
 
@@ -39,7 +40,7 @@ export default function OnboardingScreen3({}: Onboarding3ScreenProps) {
           accessibilityLabel="Get Started"
           accessibilityHint="Complete onboarding and start using the app"
         >
-          <Text style={styles.buttonText}>Get Started</Text>
+          <Text style={styles.buttonText}>{i18n.t('onboarding.screen3.button')}</Text>
         </TouchableOpacity>
       </SafeAreaView>
     </LinearGradient>
