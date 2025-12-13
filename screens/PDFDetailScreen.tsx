@@ -313,14 +313,10 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
           onPress={handleShare}
           disabled={isSharing || isDeleting}
         >
-          {isSharing ? (
-            <ActivityIndicator color={theme.colors.white} />
-          ) : (
-            <>
-              <MaterialIcons name="share" size={RS(20)} color={theme.colors.white} />
-              <Text style={styles.actionButtonText}>Share</Text>
-            </>
-          )}
+          <>
+            <MaterialIcons name="share" size={RS(20)} color={theme.colors.primary} />
+            <Text style={styles.actionButtonText}>Share</Text>
+          </>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -332,7 +328,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
             <ActivityIndicator color={theme.colors.danger} />
           ) : (
             <>
-              <MaterialIcons name="delete" size={RS(20)} color={theme.colors.white} />
+              <MaterialIcons name="delete" size={RS(20)} color={theme.colors.danger} />
               <Text style={[styles.actionButtonText, styles.deleteButtonText]}>Delete</Text>
             </>
           )}
@@ -462,6 +458,7 @@ const styles = StyleSheet.create({
     gap: RS(12),
     paddingHorizontal: RS(16),
     paddingVertical: RS(16),
+    paddingBottom: RS(100),
     borderTopWidth: 1,
     borderTopColor: theme.colors.border,
     backgroundColor: '#e1e5f2',
@@ -476,21 +473,19 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius.md,
   },
   shareButton: {
-    backgroundColor: theme.colors.primary,
+    backgroundColor: theme.colors.white,
   },
   deleteButton: {
-    backgroundColor: theme.colors.danger,
-    borderWidth: 1,
-    borderColor: theme.colors.danger,
+    backgroundColor: theme.colors.white,
   },
   actionButtonText: {
     fontSize: RF(16),
     fontWeight: '600',
     fontFamily: 'Urbanist_600SemiBold',
-    color: 'white',
+    color: theme.colors.primary,
   },
   deleteButtonText: {
-    color: theme.colors.white,
+    color: theme.colors.danger,
   },
   renameOverlay: {
     flex: 1,

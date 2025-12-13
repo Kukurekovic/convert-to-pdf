@@ -67,7 +67,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ image, onSave, onCancel }) =>
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
+    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={onCancel} style={styles.headerButton}>
           <Text style={styles.headerButtonText}>Cancel</Text>
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: RS(50),
+    paddingTop: RS(16),
     paddingHorizontal: RS(16),
     paddingBottom: RS(12),
     borderBottomWidth: 1,

@@ -7,6 +7,7 @@ import {
   FlatList,
   Image,
   Alert,
+  Switch,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -61,12 +62,13 @@ export default function ManagePagesScreen({ route, navigation }: ManagePagesScre
     );
   };
 
-  const selectAll = (): void => {
-    setPages((prevPages) => prevPages.map((page) => ({ ...page, selected: true })));
-  };
+  const allSelected = pages.length > 0 && pages.every(p => p.selected);
 
-  const deselectAll = (): void => {
-    setPages((prevPages) => prevPages.map((page) => ({ ...page, selected: false })));
+  const toggleSelectAll = (): void => {
+    const shouldSelectAll = !allSelected;
+    setPages((prevPages) =>
+      prevPages.map((page) => ({ ...page, selected: shouldSelectAll }))
+    );
   };
 
   const movePageUp = (index: number): void => {
@@ -204,24 +206,37 @@ export default function ManagePagesScreen({ route, navigation }: ManagePagesScre
   const selectedCount = pages.filter((p) => p.selected).length;
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <MaterialIcons name="arrow-back" size={RS(24)} color={theme.colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>Manage Pages</Text>
-        <View style={styles.placeholder} />
+        {selectedCount > 0 ? (
+          <TouchableOpacity onPress={handleDeleteSelected}>
+            <Text style={styles.deleteText}>Delete</Text>
+          </TouchableOpacity>
+        ) : (
+          <View style={styles.placeholder} />
+        )}
       </View>
 
       <View style={styles.toolbar}>
-        <TouchableOpacity style={styles.toolbarButton} onPress={selectAll}>
-          <MaterialIcons name="select-all" size={RS(20)} color={theme.colors.primary} />
-          <Text style={styles.toolbarButtonText}>Select All</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.toolbarButton} onPress={deselectAll}>
-          <MaterialIcons name="deselect" size={RS(20)} color={theme.colors.primary} />
-          <Text style={styles.toolbarButtonText}>Deselect</Text>
-        </TouchableOpacity>
+        <View style={styles.switchContainer}>
+          <Switch
+            value={allSelected}
+            onValueChange={toggleSelectAll}
+            trackColor={{
+              false: theme.colors.border,
+              true: theme.colors.primary,
+            }}
+            thumbColor={theme.colors.white}
+            ios_backgroundColor={theme.colors.border}
+          />
+          <Text style={styles.switchLabel}>
+            {allSelected ? 'Deselect All' : 'Select All'}
+          </Text>
+        </View>
         {selectedCount > 0 && (
           <Text style={styles.selectedCount}>{selectedCount} selected</Text>
         )}
@@ -233,31 +248,6 @@ export default function ManagePagesScreen({ route, navigation }: ManagePagesScre
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
       />
-
-      <View style={styles.footer}>
-        <TouchableOpacity
-          style={[
-            styles.deleteButton,
-            selectedCount === 0 && styles.deleteButtonDisabled
-          ]}
-          onPress={handleDeleteSelected}
-          disabled={selectedCount === 0}
-        >
-          <MaterialIcons
-            name="delete"
-            size={RS(20)}
-            color={selectedCount === 0 ? theme.colors.textLight : theme.colors.white}
-          />
-          <Text
-            style={[
-              styles.deleteButtonText,
-              selectedCount === 0 && styles.deleteButtonTextDisabled
-            ]}
-          >
-            Delete Selected
-          </Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 }
@@ -292,6 +282,12 @@ const styles = StyleSheet.create({
   placeholder: {
     width: RS(40),
   },
+  deleteText: {
+    fontSize: RF(16),
+    fontWeight: '600',
+    fontFamily: 'Urbanist_600SemiBold',
+    color: theme.colors.danger,
+  },
   toolbar: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -302,16 +298,16 @@ const styles = StyleSheet.create({
     borderBottomColor: theme.colors.border,
     gap: RS(16),
   },
-  toolbarButton: {
+  switchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: RS(6),
+    gap: RS(8),
   },
-  toolbarButtonText: {
+  switchLabel: {
     fontSize: RF(14),
     fontWeight: '500',
     fontFamily: 'Urbanist_400Regular',
-    color: theme.colors.primary,
+    color: theme.colors.text,
   },
   selectedCount: {
     marginLeft: 'auto',
@@ -369,38 +365,10 @@ const styles = StyleSheet.create({
   },
   reorderButton: {
     padding: RS(8),
-    borderRadius: theme.radius.sm,
+    borderRadius: RS(18),
     backgroundColor: theme.colors.surface,
   },
   reorderButtonDisabled: {
     opacity: 0.3,
-  },
-  footer: {
-    paddingHorizontal: RS(16),
-    paddingVertical: RS(12),
-    backgroundColor: theme.colors.white,
-    borderTopWidth: 1,
-    borderTopColor: theme.colors.border,
-  },
-  deleteButton: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    gap: RS(8),
-    paddingVertical: RS(14),
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.danger,
-  },
-  deleteButtonDisabled: {
-    backgroundColor: theme.colors.surface,
-  },
-  deleteButtonText: {
-    fontSize: RF(16),
-    fontWeight: '600',
-    fontFamily: 'Urbanist_600SemiBold',
-    color: theme.colors.white,
-  },
-  deleteButtonTextDisabled: {
-    color: theme.colors.textLight,
   },
 });

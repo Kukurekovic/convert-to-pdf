@@ -194,7 +194,7 @@ export default function ImagePreviewPanel({
   });
 
   return (
-    <Modal visible={visible} animationType="none" transparent>
+    <Modal visible={visible} animationType="none" transparent statusBarTranslucent={false}>
       <View style={styles.overlay}>
         <Animated.View
           style={[
@@ -204,7 +204,7 @@ export default function ImagePreviewPanel({
             },
           ]}
         >
-          <SafeAreaView style={styles.safeArea} edges={['top', 'right', 'bottom']}>
+          <SafeAreaView style={styles.safeArea} edges={['right', 'bottom']}>
             {/* Header */}
             <View style={styles.header}>
               <TouchableOpacity onPress={handleClose} style={styles.backButton}>
@@ -338,7 +338,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: RS(20),
-    paddingVertical: RS(16),
+    paddingTop: RS(56),
+    paddingBottom: RS(16),
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
   },
