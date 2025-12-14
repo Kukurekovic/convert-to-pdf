@@ -124,6 +124,10 @@
   },
   "settings": {
     "title": "Settings",
+    "premium": {
+      "title": "Try Premium",
+      "description": "Unlock all features"
+    },
     "info": {
       "title": "Info",
       "faq": "FAQ & Help",
@@ -187,5 +191,48 @@
     "title": "Edit Image",
     "reset": "Reset",
     "done": "Done"
+  },
+  "paywall": {
+    "title": "Unlock Premium",
+    "features": {
+      "savedRoutines": "Unlock unlimited PDF storage",
+      "unlimitedSessions": "Unlimited conversions",
+      "voiceCues": "Priority support",
+      "removePaywalls": "Remove ads"
+    },
+    "plans": {
+      "yearly": "Yearly Plan",
+      "yearlyPrice": "{{price}} per year",
+      "trial": "Monthly Plan",
+      "trialPrice": "{{price}} per month",
+      "bestValue": "BEST VALUE",
+      "freeTrial": "MOST POPULAR"
+    },
+    "freeTrialEnabled": "Free Trial Enabled",
+    "buttons": {
+      "unlockNow": "Unlock Now",
+      "tryFree": "Subscribe Now",
+      "restore": "Restore Purchases"
+    },
+    "links": {
+      "privacy": "Privacy Policy"
+    }
+  },
+  "upgrade": {
+    "title": "Upgrade to Premium",
+    "message": "Unlock all features with Premium!",
+    "buttons": {
+      "learnMore": "Learn More",
+      "alreadyPaid": "Restore Purchases",
+      "noThanks": "Not Now"
+    }
+  },
+  "trialLimit": {
+    "title": "Upgrade to Premium",
+    "message": "You've reached the limit. Upgrade to continue!",
+    "buttons": {
+      "learnMore": "Learn More",
+      "maybeLater": "Maybe Later"
+    }
   }
 }

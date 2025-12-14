@@ -9,6 +9,7 @@ export interface Colors {
   danger: string;
   background: string;
   surface: string;
+  card: string;
   border: string;
   text: string;
   textLight: string;

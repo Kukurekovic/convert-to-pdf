@@ -356,7 +356,7 @@ const styles = StyleSheet.create({
     paddingVertical: RS(12),
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
-    backgroundColor: '#e1e5f2',
+    backgroundColor: theme.colors.background,
   },
   backButton: {
     padding: RS(8),
@@ -382,7 +382,7 @@ const styles = StyleSheet.create({
     paddingRight: RS(16),
   },
   menuContainer: {
-    backgroundColor: '#e1e5f2',
+    backgroundColor: theme.colors.background,
     borderRadius: theme.radius.md,
     minWidth: RS(200),
     ...theme.shadows.lg,
@@ -410,7 +410,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: RS(12),
     paddingHorizontal: RS(16),
-    backgroundColor: '#e1e5f2',
+    backgroundColor: theme.colors.background,
     borderBottomWidth: 1,
     borderBottomColor: theme.colors.border,
     gap: RS(16),
@@ -461,7 +461,7 @@ const styles = StyleSheet.create({
     paddingBottom: RS(100),
     borderTopWidth: 1,
     borderTopColor: theme.colors.border,
-    backgroundColor: '#e1e5f2',
+    backgroundColor: theme.colors.background,
   },
   actionButton: {
     flex: 1,
@@ -495,7 +495,7 @@ const styles = StyleSheet.create({
     padding: RS(20),
   },
   renameModalContainer: {
-    backgroundColor: '#e1e5f2',
+    backgroundColor: theme.colors.background,
     borderRadius: theme.radius.lg,
     padding: RS(24),
     width: SCREEN_WIDTH - RS(48),

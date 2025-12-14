@@ -345,7 +345,7 @@ const styles = StyleSheet.create({
   pdfItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.card,
     borderRadius: theme.radius.lg,
     padding: RS(16),
     ...theme.shadows.md,
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
   pdfIcon: {
     width: RS(50),
     height: RS(60),
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.card,
     borderRadius: theme.radius.md,
     justifyContent: 'center',
     alignItems: 'center',

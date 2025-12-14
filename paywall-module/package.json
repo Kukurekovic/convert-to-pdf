@@ -1,0 +1,42 @@
+{
+  "name": "@yourorg/paywall-module",
+  "version": "1.0.0",
+  "description": "Reusable RevenueCat subscription paywall system for React Native + Expo apps",
+  "main": "index.ts",
+  "types": "types/index.ts",
+  "keywords": [
+    "react-native",
+    "expo",
+    "revenuecat",
+    "paywall",
+    "subscriptions",
+    "in-app-purchases"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-native": ">=0.70.0",
+    "expo": ">=48.0.0",
+    "react-native-purchases": "^9.2.0",
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "i18n-js": "^4.5.1",
+    "expo-localization": ">=17.0.0",
+    "@expo/vector-icons": ">=13.0.0",
+    "react-native-reanimated": ">=3.0.0",
+    "nativewind": "^4.0.0",
+    "@expo-google-fonts/inter": ">=0.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.0",
+    "@types/react-native": "^0.70.0",
+    "typescript": "^5.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourorg/paywall-module"
+  },
+  "bugs": {
+    "url": "https://github.com/yourorg/paywall-module/issues"
+  }
+}

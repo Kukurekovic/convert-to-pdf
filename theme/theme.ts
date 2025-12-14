@@ -19,7 +19,8 @@ const theme: Theme = {
     danger: '#E53935',
 
     background: '#e1e5f2',
-    surface: '#e1e5f2',
+    surface: '#FFFFFF',
+    card: '#FFFFFF',
     border: '#ADADA6',
 
     text: '#000000',

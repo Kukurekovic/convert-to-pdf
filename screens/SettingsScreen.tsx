@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Share, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -6,8 +7,18 @@ import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import i18n from '../i18n';
 import type { SettingsScreenProps } from '../types/navigation';
+// @ts-ignore - Paywall module has internal TS errors but works at runtime
+import { usePaywallGate, useRevenueCat, Paywall } from '../paywall-module';
 
 export default function SettingsScreen({}: SettingsScreenProps) {
+  const [showPaywallModal, setShowPaywallModal] = useState(false);
+
+  const { isSubscriber, offerings } = usePaywallGate();
+  const { subscribe, restore } = useRevenueCat(
+    (isSubscriber: boolean) => console.log('Subscriber status:', isSubscriber),
+    (show: boolean) => setShowPaywallModal(show)
+  );
+
   const handleOpenURL = async (url: string): Promise<void> => {
     try {
       const supported = await Linking.canOpenURL(url);
@@ -34,7 +45,7 @@ export default function SettingsScreen({}: SettingsScreenProps) {
   const handleShareApp = async (): Promise<void> => {
     try {
       await Share.share({
-        message: i18n.t('settings.alerts.shareMessage'),
+        message: i18n.t('settings.alerts.shareMessage') || 'Check out this amazing PDF converter app!',
       });
     } catch (error) {
       Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('settings.alerts.failedToShare'));
@@ -68,6 +79,19 @@ export default function SettingsScreen({}: SettingsScreenProps) {
       </View>
 
       <ScrollView style={styles.content}>
+        <View style={styles.premiumSection}>
+          <View style={styles.card}>
+            <TouchableOpacity
+              style={styles.cardButton}
+              activeOpacity={0.7}
+              onPress={() => setShowPaywallModal(true)}
+            >
+              <Ionicons name="ribbon" size={RF(20)} color={theme.colors.warning} />
+              <Text style={styles.buttonText}>{i18n.t('settings.premium.title')}</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>{i18n.t('settings.info.title')}</Text>
 
@@ -147,6 +171,15 @@ export default function SettingsScreen({}: SettingsScreenProps) {
           </TouchableOpacity>
         </View>
       </ScrollView>
+
+      <Paywall
+        visible={showPaywallModal}
+        isSubscriber={isSubscriber}
+        offerings={offerings}
+        onClose={() => setShowPaywallModal(false)}
+        onSubscribe={subscribe}
+        onRestore={restore}
+      />
     </SafeAreaView>
   );
 }
@@ -172,7 +205,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   section: {
-    marginTop: RS(24),
+    marginTop: RS(14),
     paddingHorizontal: RS(24),
   },
   sectionTitle: {
@@ -180,7 +213,7 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontFamily: 'Urbanist_700Bold',
     color: theme.colors.text,
-    marginBottom: RS(16),
+    marginBottom: RS(12),
   },
   settingItem: {
     flexDirection: 'row',
@@ -225,7 +258,7 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: theme.colors.white,
     borderRadius: theme.radius.lg,
-    marginBottom: RS(12),
+    marginBottom: RS(8),
     ...theme.shadows.light,
   },
   cardButton: {
@@ -249,5 +282,10 @@ const styles = StyleSheet.create({
     color: theme.colors.textLight,
     marginTop: RS(4),
     fontStyle: 'italic',
+  },
+  premiumSection: {
+    marginTop: RS(16),
+    paddingHorizontal: RS(24),
+    marginBottom: RS(2),
   },
 });

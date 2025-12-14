@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
   },
   iconContainerActive: {
-    backgroundColor: '#e1e5f2',
+    backgroundColor: theme.colors.background,
   },
   label: {
     fontSize: RF(10),
