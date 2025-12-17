@@ -15,6 +15,7 @@ import useDocumentStore from '../store/useDocumentStore';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import type { ManagePagesScreenProps } from '../types/navigation';
+import i18n from '../i18n';
 
 interface PageItem {
   id: string;
@@ -115,22 +116,22 @@ export default function ManagePagesScreen({ route, navigation }: ManagePagesScre
       .map(p => p.index);
 
     if (selectedIndices.length === 0) {
-      Alert.alert('No Pages Selected', 'Please select at least one page to delete.');
+      Alert.alert(i18n.t('managePages.alerts.noPagesSelected'), i18n.t('managePages.alerts.noPagesSelectedMessage'));
       return;
     }
 
     if (selectedIndices.length === pages.length) {
-      Alert.alert('Cannot Delete All Pages', 'You must keep at least one page in the document.');
+      Alert.alert(i18n.t('managePages.alerts.cannotDeleteAll'), i18n.t('managePages.alerts.cannotDeleteAllMessage'));
       return;
     }
 
     Alert.alert(
-      'Delete Pages',
-      `Are you sure you want to delete ${selectedIndices.length} page(s)?`,
+      i18n.t('managePages.alerts.deletePages'),
+      i18n.t('managePages.alerts.deletePagesMessage', { count: selectedIndices.length }),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: i18n.t('common.cancel'), style: 'cancel' },
         {
-          text: 'Delete',
+          text: i18n.t('common.delete'),
           style: 'destructive',
           onPress: () => {
             if (pdf) {
@@ -169,7 +170,7 @@ export default function ManagePagesScreen({ route, navigation }: ManagePagesScre
         </View>
 
         <View style={styles.pageInfoContainer}>
-          <Text style={styles.pageNumber}>Page {item.index + 1}</Text>
+          <Text style={styles.pageNumber}>{i18n.t('managePages.pageNumber', { number: item.index + 1 })}</Text>
         </View>
 
         <View style={styles.reorderButtons}>
@@ -211,10 +212,10 @@ export default function ManagePagesScreen({ route, navigation }: ManagePagesScre
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <MaterialIcons name="arrow-back" size={RS(24)} color={theme.colors.text} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Manage Pages</Text>
+        <Text style={styles.headerTitle}>{i18n.t('managePages.title')}</Text>
         {selectedCount > 0 ? (
           <TouchableOpacity onPress={handleDeleteSelected}>
-            <Text style={styles.deleteText}>Delete</Text>
+            <Text style={styles.deleteText}>{i18n.t('common.delete')}</Text>
           </TouchableOpacity>
         ) : (
           <View style={styles.placeholder} />
@@ -234,11 +235,11 @@ export default function ManagePagesScreen({ route, navigation }: ManagePagesScre
             ios_backgroundColor={theme.colors.border}
           />
           <Text style={styles.switchLabel}>
-            {allSelected ? 'Deselect All' : 'Select All'}
+            {allSelected ? i18n.t('managePages.deselect') + ' All' : i18n.t('managePages.selectAll')}
           </Text>
         </View>
         {selectedCount > 0 && (
-          <Text style={styles.selectedCount}>{selectedCount} selected</Text>
+          <Text style={styles.selectedCount}>{selectedCount} {i18n.t('common.selected')}</Text>
         )}
       </View>
 

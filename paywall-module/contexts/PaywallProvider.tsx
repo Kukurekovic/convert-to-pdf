@@ -5,6 +5,7 @@ import { mergeTheme } from '../theme/paywallTheme';
 import { PaywallConfigProvider } from './PaywallConfigContext';
 import { PaywallThemeProvider } from './PaywallThemeContext';
 import { LocalizationProvider } from './LocalizationContext';
+import { PaywallVisibilityProvider } from './PaywallVisibilityContext';
 
 /**
  * Main provider component for the Paywall module
@@ -60,7 +61,9 @@ export const PaywallProvider: React.FC<PaywallProviderProps> = ({
     <PaywallConfigProvider config={mergedConfig}>
       <PaywallThemeProvider theme={mergedTheme}>
         <LocalizationProvider translations={translations}>
-          {children}
+          <PaywallVisibilityProvider>
+            {children}
+          </PaywallVisibilityProvider>
         </LocalizationProvider>
       </PaywallThemeProvider>
     </PaywallConfigProvider>

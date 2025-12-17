@@ -21,6 +21,7 @@ import { sharePDF, sanitizeFileName } from '../utils/pdfUtils';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import type { PDFDetailScreenProps } from '../types/navigation';
+import i18n from '../i18n';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -43,8 +44,8 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
 
   useEffect(() => {
     if (!pdf) {
-      Alert.alert('Error', 'PDF not found', [
-        { text: 'OK', onPress: () => navigation.goBack() },
+      Alert.alert(i18n.t('common.error'), i18n.t('pdfDetail.alerts.pdfNotFound'), [
+        { text: i18n.t('common.ok'), onPress: () => navigation.goBack() },
       ]);
     }
   }, [pdf, navigation]);
@@ -57,7 +58,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
       await sharePDF(pdf.uri);
     } catch (error) {
       console.error('Error sharing PDF:', error);
-      Alert.alert('Error', 'Failed to share PDF');
+      Alert.alert(i18n.t('common.error'), i18n.t('pdfDetail.alerts.failedToShare'));
     }
     setIsSharing(false);
   };
@@ -66,12 +67,12 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
     if (!pdf) return;
 
     Alert.alert(
-      'Delete PDF',
-      `Are you sure you want to delete "${pdf.name}"?`,
+      i18n.t('pdfDetail.alerts.deletePDF'),
+      i18n.t('pdfDetail.alerts.deleteMessage', { name: pdf.name }),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: i18n.t('common.cancel'), style: 'cancel' },
         {
-          text: 'Delete',
+          text: i18n.t('common.delete'),
           style: 'destructive',
           onPress: async () => {
             setIsDeleting(true);
@@ -128,7 +129,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
 
     // Validate that the name is not empty
     if (!trimmedName) {
-      Alert.alert('Invalid Name', 'Please enter a valid filename.');
+      Alert.alert(i18n.t('pdfDetail.renameModal.invalidName'), i18n.t('pdfDetail.renameModal.invalidNameMessage'));
       return;
     }
 
@@ -196,7 +197,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
               onPress={() => handleMenuOption('rename')}
             >
               <MaterialIcons name="edit" size={RS(20)} color={theme.colors.text} />
-              <Text style={styles.menuItemText}>Rename document</Text>
+              <Text style={styles.menuItemText}>{i18n.t('pdfDetail.menu.rename')}</Text>
             </TouchableOpacity>
             <View style={styles.menuDivider} />
             <TouchableOpacity
@@ -204,7 +205,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
               onPress={() => handleMenuOption('manage')}
             >
               <MaterialIcons name="reorder" size={RS(20)} color={theme.colors.text} />
-              <Text style={styles.menuItemText}>Manage pages</Text>
+              <Text style={styles.menuItemText}>{i18n.t('pdfDetail.menu.managePages')}</Text>
             </TouchableOpacity>
           </View>
         </TouchableOpacity>
@@ -223,12 +224,12 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
         >
           <TouchableOpacity activeOpacity={1} onPress={() => {}}>
             <View style={styles.renameModalContainer}>
-              <Text style={styles.renameModalTitle}>Rename Document</Text>
+              <Text style={styles.renameModalTitle}>{i18n.t('pdfDetail.renameModal.title')}</Text>
               <TextInput
                 style={styles.renameInput}
                 value={newFileName}
                 onChangeText={setNewFileName}
-                placeholder="Enter new name"
+                placeholder={i18n.t('pdfDetail.renameModal.placeholder')}
                 placeholderTextColor={theme.colors.textLight}
                 autoFocus
               />
@@ -237,13 +238,13 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
                   style={[styles.renameButton, styles.cancelButton]}
                   onPress={handleCancelRename}
                 >
-                  <Text style={styles.cancelButtonText}>Cancel</Text>
+                  <Text style={styles.cancelButtonText}>{i18n.t('common.cancel')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={[styles.renameButton, styles.saveButton]}
                   onPress={handleSaveRename}
                 >
-                  <Text style={styles.saveButtonText}>Save</Text>
+                  <Text style={styles.saveButtonText}>{i18n.t('common.save')}</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -303,7 +304,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
       ) : (
         <View style={styles.noPreviewContainer}>
           <MaterialIcons name="picture-as-pdf" size={RS(64)} color={theme.colors.textLight} />
-          <Text style={styles.noPreviewText}>No preview available</Text>
+          <Text style={styles.noPreviewText}>{i18n.t('pdfDetail.noPreview')}</Text>
         </View>
       )}
 
@@ -315,7 +316,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
         >
           <>
             <MaterialIcons name="share" size={RS(20)} color={theme.colors.primary} />
-            <Text style={styles.actionButtonText}>Share</Text>
+            <Text style={styles.actionButtonText}>{i18n.t('common.share')}</Text>
           </>
         </TouchableOpacity>
 
@@ -329,7 +330,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
           ) : (
             <>
               <MaterialIcons name="delete" size={RS(20)} color={theme.colors.danger} />
-              <Text style={[styles.actionButtonText, styles.deleteButtonText]}>Delete</Text>
+              <Text style={[styles.actionButtonText, styles.deleteButtonText]}>{i18n.t('common.delete')}</Text>
             </>
           )}
         </TouchableOpacity>

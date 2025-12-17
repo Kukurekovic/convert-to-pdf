@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Share, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
@@ -8,16 +7,10 @@ import { theme } from '../theme/theme';
 import i18n from '../i18n';
 import type { SettingsScreenProps } from '../types/navigation';
 // @ts-ignore - Paywall module has internal TS errors but works at runtime
-import { usePaywallGate, useRevenueCat, Paywall } from '../paywall-module';
+import { usePaywallVisibility } from '../paywall-module';
 
 export default function SettingsScreen({}: SettingsScreenProps) {
-  const [showPaywallModal, setShowPaywallModal] = useState(false);
-
-  const { isSubscriber, offerings } = usePaywallGate();
-  const { subscribe, restore } = useRevenueCat(
-    (isSubscriber: boolean) => console.log('Subscriber status:', isSubscriber),
-    (show: boolean) => setShowPaywallModal(show)
-  );
+  const { setShowPaywall } = usePaywallVisibility();
 
   const handleOpenURL = async (url: string): Promise<void> => {
     try {
@@ -44,8 +37,9 @@ export default function SettingsScreen({}: SettingsScreenProps) {
 
   const handleShareApp = async (): Promise<void> => {
     try {
+      const message = i18n.t('settings.alerts.shareMessage');
       await Share.share({
-        message: i18n.t('settings.alerts.shareMessage') || 'Check out this amazing PDF converter app!',
+        message: message || 'Check out this PDF converter app!',
       });
     } catch (error) {
       Alert.alert(i18n.t('convert.alerts.errorTitle'), i18n.t('settings.alerts.failedToShare'));
@@ -84,7 +78,7 @@ export default function SettingsScreen({}: SettingsScreenProps) {
             <TouchableOpacity
               style={styles.cardButton}
               activeOpacity={0.7}
-              onPress={() => setShowPaywallModal(true)}
+              onPress={() => setShowPaywall(true)}
             >
               <Ionicons name="ribbon" size={RF(20)} color={theme.colors.warning} />
               <Text style={styles.buttonText}>{i18n.t('settings.premium.title')}</Text>
@@ -171,15 +165,6 @@ export default function SettingsScreen({}: SettingsScreenProps) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-
-      <Paywall
-        visible={showPaywallModal}
-        isSubscriber={isSubscriber}
-        offerings={offerings}
-        onClose={() => setShowPaywallModal(false)}
-        onSubscribe={subscribe}
-        onRestore={restore}
-      />
     </SafeAreaView>
   );
 }

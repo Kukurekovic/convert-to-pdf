@@ -53,6 +53,7 @@ export { useFontFamily } from './hooks/useFontFamily';
 export { usePaywallConfig } from './contexts/PaywallConfigContext';
 export { usePaywallTheme } from './contexts/PaywallThemeContext';
 export { useLocalization } from './contexts/LocalizationContext';
+export { usePaywallVisibility } from './contexts/PaywallVisibilityContext';
 
 // ============================================
 // Configuration & Theme

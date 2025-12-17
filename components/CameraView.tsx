@@ -12,6 +12,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import type { ImageAsset } from '../types/document';
+import i18n from '../i18n';
 
 interface CameraViewProps {
   onCapture: (image: ImageAsset) => void;
@@ -44,7 +45,7 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose }) => {
       }
     } catch (error) {
       console.error('Error checking permissions:', error);
-      Alert.alert('Error', 'Failed to check camera permissions');
+      Alert.alert(i18n.t('common.error'), i18n.t('components.cameraView.alerts.permissionError'));
     }
     setIsLoading(false);
   };
@@ -62,7 +63,7 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose }) => {
       onCapture({ uri, width: photo.width, height: photo.height });
     } catch (error) {
       console.error('Error taking photo:', error);
-      Alert.alert('Error', 'Failed to capture photo');
+      Alert.alert(i18n.t('common.error'), i18n.t('components.cameraView.alerts.captureError'));
     }
     setIsTakingPhoto(false);
   };
@@ -72,7 +73,7 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose }) => {
       <SafeAreaView style={styles.container}>
         <View style={styles.loadingContainer}>
           <ActivityIndicator size="large" color={theme.colors.primary} />
-          <Text style={styles.loadingText}>Loading camera...</Text>
+          <Text style={styles.loadingText}>{i18n.t('components.cameraView.loading')}</Text>
         </View>
       </SafeAreaView>
     );
@@ -83,13 +84,13 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose }) => {
       <SafeAreaView style={styles.container}>
         <View style={styles.permissionContainer}>
           <Text style={styles.permissionText}>
-            Camera permission is required to scan documents
+            {i18n.t('components.cameraView.permissionMessage')}
           </Text>
           <TouchableOpacity style={styles.permissionButton} onPress={checkPermissions}>
-            <Text style={styles.permissionButtonText}>Grant Permission</Text>
+            <Text style={styles.permissionButtonText}>{i18n.t('components.cameraView.buttons.grantPermission')}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-            <Text style={styles.cancelButtonText}>Cancel</Text>
+            <Text style={styles.cancelButtonText}>{i18n.t('common.cancel')}</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -100,9 +101,9 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose }) => {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.errorContainer}>
-          <Text style={styles.errorText}>No camera device found</Text>
+          <Text style={styles.errorText}>{i18n.t('components.cameraView.noDevice')}</Text>
           <TouchableOpacity style={styles.cancelButton} onPress={onClose}>
-            <Text style={styles.cancelButtonText}>Close</Text>
+            <Text style={styles.cancelButtonText}>{i18n.t('components.cameraView.buttons.close')}</Text>
           </TouchableOpacity>
         </View>
       </SafeAreaView>
@@ -124,7 +125,7 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose }) => {
           <TouchableOpacity onPress={onClose} style={styles.closeButton}>
             <Text style={styles.closeButtonText}>✕</Text>
           </TouchableOpacity>
-          <Text style={styles.headerTitle}>Scan Document</Text>
+          <Text style={styles.headerTitle}>{i18n.t('components.cameraView.title')}</Text>
           <View style={styles.placeholder} />
         </View>
 
@@ -143,7 +144,7 @@ const CameraView: React.FC<CameraViewProps> = ({ onCapture, onClose }) => {
             </TouchableOpacity>
           </View>
           <Text style={styles.instructionText}>
-            Position document within frame and tap to capture
+            {i18n.t('components.cameraView.instruction')}
           </Text>
         </View>
       </SafeAreaView>

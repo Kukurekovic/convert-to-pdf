@@ -19,6 +19,7 @@ import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import type { ImageAsset } from '../types/document';
 import { getImageDimensions } from '../utils/imageUtils';
+import i18n from '../i18n';
 
 interface ImagePreviewPanelProps {
   visible: boolean;
@@ -90,15 +91,15 @@ export default function ImagePreviewPanel({
 
   const handleClose = (): void => {
     Alert.alert(
-      'Discard Scan',
-      'Are you sure you want to discard this scan?',
+      i18n.t('components.imagePreview.alerts.discardScan'),
+      i18n.t('components.imagePreview.alerts.discardScanMessage'),
       [
         {
-          text: 'Cancel',
+          text: i18n.t('common.cancel'),
           style: 'cancel',
         },
         {
-          text: 'Discard',
+          text: i18n.t('components.imagePreview.alerts.discard'),
           style: 'destructive',
           onPress: () => {
             Animated.timing(slideAnim, {
@@ -117,11 +118,11 @@ export default function ImagePreviewPanel({
 
   const handleGeneratePDF = (): void => {
     if (images.length === 0) {
-      Alert.alert('No Images', 'Please add at least one image to generate a PDF');
+      Alert.alert(i18n.t('components.imagePreview.alerts.noImages'), i18n.t('components.imagePreview.alerts.noImagesMessage'));
       return;
     }
     if (!filename.trim()) {
-      Alert.alert('No Filename', 'Please enter a filename for the PDF');
+      Alert.alert(i18n.t('components.imagePreview.alerts.noFilename'), i18n.t('components.imagePreview.alerts.noFilenameMessage'));
       return;
     }
     onGeneratePDF(filename.trim(), selectedQuality);
@@ -154,7 +155,7 @@ export default function ImagePreviewPanel({
     } catch (error: any) {
       console.error('Error scanning document:', error);
       if (error.message !== 'User cancelled') {
-        Alert.alert('Error', 'Failed to scan document');
+        Alert.alert(i18n.t('common.error'), i18n.t('components.imagePreview.alerts.failedToScan'));
       }
     }
   };
@@ -164,7 +165,7 @@ export default function ImagePreviewPanel({
       const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
       if (!permissionResult.granted) {
-        Alert.alert('Permission Required', 'Please grant access to your photo library.');
+        Alert.alert(i18n.t('components.imagePreview.alerts.permissionRequired'), i18n.t('components.imagePreview.alerts.permissionMessage'));
         return;
       }
 
@@ -184,7 +185,7 @@ export default function ImagePreviewPanel({
       }
     } catch (error) {
       console.error('Error picking images:', error);
-      Alert.alert('Error', 'Failed to pick images from gallery');
+      Alert.alert(i18n.t('common.error'), i18n.t('components.imagePreview.alerts.failedToPickImages'));
     }
   };
 
@@ -208,28 +209,28 @@ export default function ImagePreviewPanel({
             {/* Header */}
             <View style={styles.header}>
               <TouchableOpacity onPress={handleClose} style={styles.backButton}>
-                <Text style={styles.backButtonText}>← Back</Text>
+                <Text style={styles.backButtonText}>{i18n.t('components.imagePreview.backButton')}</Text>
               </TouchableOpacity>
-              <Text style={styles.headerTitle}>PDF Preview</Text>
+              <Text style={styles.headerTitle}>{i18n.t('components.imagePreview.title')}</Text>
               <View style={styles.headerSpacer} />
             </View>
 
             <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
               {/* Document Name Input */}
               <View style={styles.section}>
-                <Text style={styles.sectionLabel}>Document Name</Text>
+                <Text style={styles.sectionLabel}>{i18n.t('components.imagePreview.documentName')}</Text>
                 <TextInput
                   style={styles.textInput}
                   value={filename}
                   onChangeText={setFilename}
-                  placeholder="Enter document name"
+                  placeholder={i18n.t('components.imagePreview.documentNamePlaceholder')}
                   placeholderTextColor={theme.colors.textLight}
                 />
               </View>
 
               {/* PDF Quality Selector */}
               <View style={styles.section}>
-                <Text style={styles.sectionLabel}>PDF Quality</Text>
+                <Text style={styles.sectionLabel}>{i18n.t('components.imagePreview.pdfQuality')}</Text>
                 <View style={styles.qualityContainer}>
                   {qualityOptions.map((option) => (
                     <TouchableOpacity
@@ -256,7 +257,7 @@ export default function ImagePreviewPanel({
               {/* Image Preview */}
               <View style={styles.section}>
                 <Text style={styles.sectionLabel}>
-                  {images.length} image{images.length > 1 ? 's' : ''} selected
+                  {i18n.t('components.imagePreview.imageCount', { count: images.length, defaultValue: `${images.length} image` })} {i18n.t('common.selected')}
                 </Text>
                 <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.previewScroll}>
                   {images.map((img, index) => (
@@ -276,7 +277,7 @@ export default function ImagePreviewPanel({
 
               {/* Add More Images */}
               <View style={styles.section}>
-                <Text style={styles.sectionLabel}>Add More Images</Text>
+                <Text style={styles.sectionLabel}>{i18n.t('components.imagePreview.addMoreImages')}</Text>
                 <View style={styles.addImageButtons}>
                   <View style={styles.buttonWrapper}>
                     <TouchableOpacity
@@ -285,7 +286,7 @@ export default function ImagePreviewPanel({
                     >
                       <MaterialIcons name="collections" size={RS(32)} color={theme.colors.primary} />
                     </TouchableOpacity>
-                    <Text style={styles.buttonText}>Gallery</Text>
+                    <Text style={styles.buttonText}>{i18n.t('components.imagePreview.buttons.gallery')}</Text>
                   </View>
 
                   <View style={styles.buttonWrapper}>
@@ -295,7 +296,7 @@ export default function ImagePreviewPanel({
                     >
                       <MaterialIcons name="camera-alt" size={RS(32)} color={theme.colors.primary} />
                     </TouchableOpacity>
-                    <Text style={styles.buttonText}>Camera</Text>
+                    <Text style={styles.buttonText}>{i18n.t('components.imagePreview.buttons.camera')}</Text>
                   </View>
                 </View>
               </View>
@@ -304,7 +305,7 @@ export default function ImagePreviewPanel({
             {/* Generate PDF Button */}
             <View style={styles.footer}>
               <TouchableOpacity style={styles.generateButton} onPress={handleGeneratePDF}>
-                <Text style={styles.generateButtonText}>Generate PDF</Text>
+                <Text style={styles.generateButtonText}>{i18n.t('components.imagePreview.generatePDF')}</Text>
               </TouchableOpacity>
             </View>
           </SafeAreaView>

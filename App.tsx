@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import RootNavigator from './navigation/RootNavigator';
 import { useOnboardingStore } from './store/useOnboardingStore';
 // @ts-ignore - Paywall module has internal TS errors but works at runtime
-import { PaywallProvider } from './paywall-module';
+import { PaywallProvider, usePaywallGate, usePaywallVisibility, useRevenueCat, Paywall } from './paywall-module';
 import i18n from './i18n';
 import './i18n'; // Initialize i18n
 
@@ -50,6 +50,33 @@ const paywallTranslations = {
   en: i18n.translations.en,
 };
 
+// Internal component that uses paywall hooks
+function AppContent() {
+  const { showPaywall, setShowPaywall } = usePaywallVisibility();
+  const { isSubscriber, offerings } = usePaywallGate();
+  const { subscribe, restore } = useRevenueCat(
+    (isSubscriber: boolean) => console.log('Subscriber status:', isSubscriber),
+    (show: boolean) => setShowPaywall(show)
+  );
+
+  return (
+    <>
+      <NavigationContainer>
+        <StatusBar style="dark" />
+        <RootNavigator />
+      </NavigationContainer>
+      <Paywall
+        visible={showPaywall}
+        isSubscriber={isSubscriber}
+        offerings={offerings}
+        onClose={() => setShowPaywall(false)}
+        onSubscribe={subscribe}
+        onRestore={restore}
+      />
+    </>
+  );
+}
+
 export default function App() {
   const [fontsLoaded] = useFonts({
     Urbanist_400Regular,
@@ -78,10 +105,7 @@ export default function App() {
       theme={paywallTheme}
       translations={paywallTranslations}
     >
-      <NavigationContainer>
-        <StatusBar style="dark" />
-        <RootNavigator />
-      </NavigationContainer>
+      <AppContent />
     </PaywallProvider>
   );
 }

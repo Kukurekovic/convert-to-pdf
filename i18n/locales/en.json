@@ -193,11 +193,11 @@
     "done": "Done"
   },
   "paywall": {
-    "title": "Unlock Premium",
+    "title": "Start converting to PDF",
     "features": {
-      "savedRoutines": "Unlock unlimited PDF storage",
-      "unlimitedSessions": "Unlimited conversions",
-      "voiceCues": "Priority support",
+      "savedRoutines": "Unlimited Conversions",
+      "unlimitedSessions": "Multipage PDFs",
+      "voiceCues": "Easy Sharing",
       "removePaywalls": "Remove ads"
     },
     "plans": {
@@ -233,6 +233,86 @@
     "buttons": {
       "learnMore": "Learn More",
       "maybeLater": "Maybe Later"
+    }
+  },
+  "components": {
+    "cameraView": {
+      "title": "Scan Document",
+      "loading": "Loading camera...",
+      "permissionMessage": "Camera permission is required to scan documents",
+      "noDevice": "No camera device found",
+      "instruction": "Position document within frame and tap to capture",
+      "buttons": {
+        "grantPermission": "Grant Permission",
+        "close": "Close"
+      },
+      "alerts": {
+        "permissionError": "Failed to check camera permissions",
+        "captureError": "Failed to capture photo"
+      }
+    },
+    "imagePreview": {
+      "title": "PDF Preview",
+      "backButton": "← Back",
+      "documentName": "Document Name",
+      "documentNamePlaceholder": "Enter document name",
+      "pdfQuality": "PDF Quality",
+      "addMoreImages": "Add More Images",
+      "generatePDF": "Generate PDF",
+      "imageCount": "{{count}} image",
+      "imageCount_plural": "{{count}} images",
+      "buttons": {
+        "gallery": "Gallery",
+        "camera": "Camera"
+      },
+      "alerts": {
+        "discardScan": "Discard Scan",
+        "discardScanMessage": "Are you sure you want to discard this scan?",
+        "noImages": "No Images",
+        "noImagesMessage": "Please add at least one image to generate a PDF",
+        "noFilename": "No Filename",
+        "noFilenameMessage": "Please enter a filename for the PDF",
+        "failedToScan": "Failed to scan document",
+        "permissionRequired": "Permission Required",
+        "permissionMessage": "Please grant access to your photo library.",
+        "failedToPickImages": "Failed to pick images from gallery"
+      }
+    },
+    "pdfPreview": {
+      "title": "PDF Preview",
+      "pageCount": "{{count}} page",
+      "pageCount_plural": "{{count}} pages",
+      "buttons": {
+        "savePDF": "Save PDF",
+        "saveAndShare": "Save & Share",
+        "remove": "Remove"
+      },
+      "alerts": {
+        "success": "Success",
+        "successMessage": "PDF saved successfully!",
+        "removePage": "Remove Page",
+        "removePageMessage": "Are you sure you want to remove this page?",
+        "error": "Error",
+        "saveError": "Failed to save PDF. Please try again.",
+        "shareError": "Failed to save and share PDF. Please try again."
+      }
+    },
+    "imageEditor": {
+      "title": "Edit Image",
+      "rotateFlip": "Rotate & Flip",
+      "filters": "Filters",
+      "buttons": {
+        "rotateLeft": "↺ 90°",
+        "rotateRight": "↻ 90°",
+        "flipH": "⇄ Flip H",
+        "flipV": "⇅ Flip V"
+      },
+      "filterNames": {
+        "original": "Original",
+        "grayscale": "Grayscale",
+        "enhance": "Enhance",
+        "bw": "B&W"
+      }
     }
   }
 }

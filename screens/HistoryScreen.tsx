@@ -156,9 +156,10 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
           onPress={() => handlePDFPress(item)}
           activeOpacity={0.7}
         >
-        {item.thumbnail ? (
+        {/* Temporarily disabled thumbnail display */}
+        {false && item.thumbnail ? (
           <Image
-            source={{ uri: item.thumbnail }}
+            source={{ uri: item.thumbnail! }}
             style={styles.pdfThumbnail}
             resizeMode="cover"
             onError={(error) => {

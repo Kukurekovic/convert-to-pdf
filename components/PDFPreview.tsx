@@ -18,6 +18,7 @@ import useDocumentStore from '../store/useDocumentStore';
 import type { ImageAsset } from '../types/document';
 import type { NavigationProp } from '@react-navigation/native';
 import type { RootTabParamList } from '../types/navigation';
+import i18n from '../i18n';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const THUMBNAIL_WIDTH = (SCREEN_WIDTH - RS(48)) / 3;
@@ -59,10 +60,10 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
       clearImages();
 
       Alert.alert(
-        'Success',
-        'PDF saved successfully!',
+        i18n.t('components.pdfPreview.alerts.success'),
+        i18n.t('components.pdfPreview.alerts.successMessage'),
         [{
-          text: 'OK',
+          text: i18n.t('common.ok'),
           onPress: () => {
             onClose();
             if (navigation) {
@@ -73,7 +74,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
       );
     } catch (error) {
       console.error('Error saving PDF:', error);
-      Alert.alert('Error', 'Failed to save PDF. Please try again.');
+      Alert.alert(i18n.t('components.pdfPreview.alerts.error'), i18n.t('components.pdfPreview.alerts.saveError'));
     }
     setIsSaving(false);
   };
@@ -96,19 +97,19 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
       }
     } catch (error) {
       console.error('Error saving and sharing PDF:', error);
-      Alert.alert('Error', 'Failed to save and share PDF. Please try again.');
+      Alert.alert(i18n.t('components.pdfPreview.alerts.error'), i18n.t('components.pdfPreview.alerts.shareError'));
     }
     setIsSharing(false);
   };
 
   const handleRemoveImage = (index: number): void => {
     Alert.alert(
-      'Remove Page',
-      'Are you sure you want to remove this page?',
+      i18n.t('components.pdfPreview.alerts.removePage'),
+      i18n.t('components.pdfPreview.alerts.removePageMessage'),
       [
-        { text: 'Cancel', style: 'cancel' },
+        { text: i18n.t('common.cancel'), style: 'cancel' },
         {
-          text: 'Remove',
+          text: i18n.t('components.pdfPreview.buttons.remove'),
           style: 'destructive',
           onPress: () => {
             const removeImage = useDocumentStore.getState().removeImage;
@@ -126,15 +127,15 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
     <SafeAreaView style={styles.container} edges={['bottom']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={onClose} style={styles.headerButton}>
-          <Text style={styles.headerButtonText}>Cancel</Text>
+          <Text style={styles.headerButtonText}>{i18n.t('common.cancel')}</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>PDF Preview</Text>
+        <Text style={styles.headerTitle}>{i18n.t('components.pdfPreview.title')}</Text>
         <View style={styles.placeholder} />
       </View>
 
       <View style={styles.info}>
         <Text style={styles.infoText}>
-          {images.length} page{images.length > 1 ? 's' : ''}
+          {i18n.t('components.pdfPreview.pageCount', { count: images.length, defaultValue: `${images.length} page` })}
         </Text>
       </View>
 
@@ -178,7 +179,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
           {isSaving ? (
             <ActivityIndicator color={theme.colors.white} />
           ) : (
-            <Text style={styles.saveButtonText}>Save PDF</Text>
+            <Text style={styles.saveButtonText}>{i18n.t('components.pdfPreview.buttons.savePDF')}</Text>
           )}
         </TouchableOpacity>
 
@@ -190,7 +191,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
           {isSharing ? (
             <ActivityIndicator color={theme.colors.white} />
           ) : (
-            <Text style={styles.saveButtonText}>Save & Share</Text>
+            <Text style={styles.saveButtonText}>{i18n.t('components.pdfPreview.buttons.saveAndShare')}</Text>
           )}
         </TouchableOpacity>
       </View>

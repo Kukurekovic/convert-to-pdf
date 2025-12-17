@@ -3,6 +3,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 import Purchases from 'react-native-purchases';
 import { usePaywallConfig } from '../contexts/PaywallConfigContext';
+import { usePaywallVisibility } from '../contexts/PaywallVisibilityContext';
 import { UsePaywallGate } from '../types';
 
 /**
@@ -22,10 +23,10 @@ import { UsePaywallGate } from '../types';
  */
 export function usePaywallGate(setShowTrialLimitModal?: (v: boolean) => void): UsePaywallGate {
   const config = usePaywallConfig();
+  const { showPaywall, setShowPaywall } = usePaywallVisibility();
 
   const [isAppBootLoading, setIsAppBootLoading] = useState(true);
   const [isOnboardingComplete, setIsOnboardingComplete] = useState(false);
-  const [showPaywall, setShowPaywall] = useState(false);
   const [isSubscriber, setIsSubscriber] = useState(false);
   const [offerings, setOfferings] = useState<any>(null);
   const [revenueCatConfigured, setRevenueCatConfigured] = useState(false);

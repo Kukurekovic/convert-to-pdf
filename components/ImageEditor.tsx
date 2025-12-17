@@ -14,6 +14,7 @@ import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import { rotateImage, flipImage, applyFilter } from '../utils/imageUtils';
 import type { ImageAsset, FilterType, FlipDirection } from '../types/document';
+import i18n from '../i18n';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -70,12 +71,12 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ image, onSave, onCancel }) =>
     <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={onCancel} style={styles.headerButton}>
-          <Text style={styles.headerButtonText}>Cancel</Text>
+          <Text style={styles.headerButtonText}>{i18n.t('common.cancel')}</Text>
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>Edit Image</Text>
+        <Text style={styles.headerTitle}>{i18n.t('components.imageEditor.title')}</Text>
         <TouchableOpacity onPress={handleSave} style={styles.headerButton}>
           <Text style={[styles.headerButtonText, { color: theme.colors.primary }]}>
-            Save
+            {i18n.t('common.save')}
           </Text>
         </TouchableOpacity>
       </View>
@@ -94,7 +95,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ image, onSave, onCancel }) =>
       </View>
 
       <View style={styles.controls}>
-        <Text style={styles.sectionTitle}>Rotate & Flip</Text>
+        <Text style={styles.sectionTitle}>{i18n.t('components.imageEditor.rotateFlip')}</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -105,32 +106,32 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ image, onSave, onCancel }) =>
             onPress={() => handleRotate(-90)}
             disabled={isProcessing}
           >
-            <Text style={styles.controlButtonText}>↺ 90°</Text>
+            <Text style={styles.controlButtonText}>{i18n.t('components.imageEditor.buttons.rotateLeft')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.controlButton}
             onPress={() => handleRotate(90)}
             disabled={isProcessing}
           >
-            <Text style={styles.controlButtonText}>↻ 90°</Text>
+            <Text style={styles.controlButtonText}>{i18n.t('components.imageEditor.buttons.rotateRight')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.controlButton}
             onPress={() => handleFlip('horizontal')}
             disabled={isProcessing}
           >
-            <Text style={styles.controlButtonText}>⇄ Flip H</Text>
+            <Text style={styles.controlButtonText}>{i18n.t('components.imageEditor.buttons.flipH')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.controlButton}
             onPress={() => handleFlip('vertical')}
             disabled={isProcessing}
           >
-            <Text style={styles.controlButtonText}>⇅ Flip V</Text>
+            <Text style={styles.controlButtonText}>{i18n.t('components.imageEditor.buttons.flipV')}</Text>
           </TouchableOpacity>
         </ScrollView>
 
-        <Text style={[styles.sectionTitle, { marginTop: RS(16) }]}>Filters</Text>
+        <Text style={[styles.sectionTitle, { marginTop: RS(16) }]}>{i18n.t('components.imageEditor.filters')}</Text>
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -147,7 +148,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ image, onSave, onCancel }) =>
             }}
             disabled={isProcessing}
           >
-            <Text style={styles.controlButtonText}>Original</Text>
+            <Text style={styles.controlButtonText}>{i18n.t('components.imageEditor.filterNames.original')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -157,7 +158,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ image, onSave, onCancel }) =>
             onPress={() => handleFilter('grayscale')}
             disabled={isProcessing}
           >
-            <Text style={styles.controlButtonText}>Grayscale</Text>
+            <Text style={styles.controlButtonText}>{i18n.t('components.imageEditor.filterNames.grayscale')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -167,7 +168,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ image, onSave, onCancel }) =>
             onPress={() => handleFilter('enhance')}
             disabled={isProcessing}
           >
-            <Text style={styles.controlButtonText}>Enhance</Text>
+            <Text style={styles.controlButtonText}>{i18n.t('components.imageEditor.filterNames.enhance')}</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -177,7 +178,7 @@ const ImageEditor: React.FC<ImageEditorProps> = ({ image, onSave, onCancel }) =>
             onPress={() => handleFilter('blackwhite')}
             disabled={isProcessing}
           >
-            <Text style={styles.controlButtonText}>B&W</Text>
+            <Text style={styles.controlButtonText}>{i18n.t('components.imageEditor.filterNames.bw')}</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
