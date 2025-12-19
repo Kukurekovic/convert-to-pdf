@@ -5,6 +5,7 @@
     "version": "1.0.1",
     "orientation": "portrait",
     "userInterfaceStyle": "light",
+    "icon": "./assets/images/icon1024.png",
     "splash": {
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
@@ -12,14 +13,20 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.converttopdf.app",
+      "icon": "./assets/images/icon1024.png",
       "infoPlist": {
         "NSCameraUsageDescription": "This app needs camera access to scan documents and convert them to PDF.",
         "NSPhotoLibraryUsageDescription": "This app needs access to your photos to convert images to PDF.",
-        "NSPhotoLibraryAddUsageDescription": "This app needs permission to save PDFs to your photo library."
+        "NSPhotoLibraryAddUsageDescription": "This app needs permission to save PDFs to your photo library.",
+        "NSLocationWhenInUseUsageDescription": "This app does not use your location."
       }
     },
     "android": {
       "package": "com.converttopdf.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/icon1024.png",
+        "backgroundColor": "#5B9FED"
+      },
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.READ_EXTERNAL_STORAGE",

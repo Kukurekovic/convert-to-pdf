@@ -1,8 +1,0 @@
-ninja: Entering directory `/Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/android/app/.cxx/Debug/352486n1/armeabi-v7a'
-[0/2] Re-checking globbed directories...
-[1/2] Re-running CMake...
--- Configuring incomplete, errors occurred!
-See also "/Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/android/app/.cxx/Debug/352486n1/armeabi-v7a/CMakeFiles/CMakeOutput.log".
-See also "/Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/android/app/.cxx/Debug/352486n1/armeabi-v7a/CMakeFiles/CMakeError.log".
-FAILED: build.ninja 
-/Users/markokukurekovic/Library/Android/sdk/cmake/3.22.1/bin/cmake --regenerate-during-build -S/Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/node_modules/react-native/ReactAndroid/cmake-utils/default-app-setup -B/Users/markokukurekovic/Documents/1_Projects/8_Convert_to_pdf/android/app/.cxx/Debug/352486n1/armeabi-v7a

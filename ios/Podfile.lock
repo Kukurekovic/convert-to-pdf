@@ -2277,7 +2277,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - ReactNativeDependencies
     - Yoga
-  - SDWebImage/Core (5.21.4)
+  - SDWebImage/Core (5.21.5)
   - SDWebImageWebPCoder (0.15.0):
     - libwebp (~> 1.0)
     - SDWebImage/Core (~> 5.17)
@@ -2705,7 +2705,7 @@ SPEC CHECKSUMS:
   RNScreens: d8d6f1792f6e7ac12b0190d33d8d390efc0c1845
   RNSVG: 99ab6158011aece12019b236f168faa7a1e41af6
   RNWorklets: 54d8dffb7f645873a58484658ddfd4bd1a9a0bc1
-  SDWebImage: d0184764be51240d49c761c37f53dd017e1ccaaf
+  SDWebImage: e9c98383c7572d713c1a0d7dd2783b10599b9838
   SDWebImageWebPCoder: 0e06e365080397465cc73a7a9b472d8a3bd0f377
   VisionCamera: 7187b3dac1ff3071234ead959ce311875748e14f
   Yoga: 5934998fbeaef7845dbf698f698518695ab4cd1a
