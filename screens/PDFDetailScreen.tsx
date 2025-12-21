@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
+import Toast from 'react-native-toast-message';
 import useDocumentStore from '../store/useDocumentStore';
 import { sharePDF, sanitizeFileName } from '../utils/pdfUtils';
 import { RF, RS } from '../utils/responsive';
@@ -36,6 +37,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
   const [showRenameModal, setShowRenameModal] = useState<boolean>(false);
   const [newFileName, setNewFileName] = useState<string>('');
   const flatListRef = useRef<FlatList>(null);
+  const isDeletingRef = useRef<boolean>(false);
   const savedPDFs = useDocumentStore((state) => state.savedPDFs);
   const removePDF = useDocumentStore((state) => state.removePDF);
   const renamePDF = useDocumentStore((state) => state.renamePDF);
@@ -49,7 +51,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
   const totalPages = pageThumbnails.length;
 
   useEffect(() => {
-    if (!pdf) {
+    if (!pdf && !isDeletingRef.current) {
       Alert.alert(i18n.t('common.error'), i18n.t('pdfDetail.alerts.pdfNotFound'), [
         { text: i18n.t('common.ok'), onPress: () => navigation.goBack() },
       ]);
@@ -87,8 +89,18 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
           text: i18n.t('common.delete'),
           style: 'destructive',
           onPress: async () => {
+            isDeletingRef.current = true;
             setIsDeleting(true);
             await removePDF(pdf.id);
+
+            // Show toast notification
+            Toast.show({
+              type: 'pdfDeleted',
+              text1: 'PDF deleted',
+              visibilityTime: 2000,
+              autoHide: true,
+            });
+
             navigation.goBack();
           },
         },

@@ -16,6 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import ReanimatedSwipeable from 'react-native-gesture-handler/ReanimatedSwipeable';
+import Toast from 'react-native-toast-message';
 import useDocumentStore from '../store/useDocumentStore';
 import { formatFileSize, formatDate, sharePDF } from '../utils/pdfUtils';
 import { RF, RS } from '../utils/responsive';
@@ -130,6 +131,14 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
           style: 'destructive',
           onPress: async () => {
             await removePDF(pdf.id);
+
+            // Show toast notification
+            Toast.show({
+              type: 'pdfDeleted',
+              text1: 'PDF deleted',
+              visibilityTime: 2000,
+              autoHide: true,
+            });
           },
         },
       ]
@@ -313,6 +322,7 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
             contentContainerStyle={[
               styles.listContent,
               filteredPDFs.length === 0 && styles.listContentEmpty,
+              filteredPDFs.length > 0 && styles.listContentWithPadding,
             ]}
             ListEmptyComponent={renderEmptyState}
           />
@@ -349,6 +359,9 @@ const styles = StyleSheet.create({
   },
   listContentEmpty: {
     flex: 1,
+  },
+  listContentWithPadding: {
+    paddingBottom: RS(96),
   },
   swipeableWrapper: {
     marginBottom: RS(12),

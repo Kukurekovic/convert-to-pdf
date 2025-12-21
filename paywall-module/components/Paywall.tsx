@@ -567,7 +567,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                   style={[
                     getFontFamily('semiBold'),
                     {
-                      fontSize: isTablet ? 20 : (isAndroidSmall ? Math.round(18 * 0.8) : (isSmallScreen ? 16 : 18)),
+                      fontSize: isTablet ? 18 : (isAndroidSmall ? Math.round(16 * 0.8) : (isSmallScreen ? 14 : 16)),
                       color: '#111827',
                     },
                   ]}

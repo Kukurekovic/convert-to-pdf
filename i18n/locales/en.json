@@ -204,9 +204,9 @@
       "removePaywalls": "Remove ads"
     },
     "plans": {
-      "yearly": "Yearly Plan",
+      "yearly": "Lifetime",
       "yearlyPrice": "{{price}} per year",
-      "trial": "Monthly Plan",
+      "trial": "7-Day Trial",
       "trialPrice": "{{price}} per month",
       "bestValue": "BEST VALUE",
       "freeTrial": "MOST POPULAR"

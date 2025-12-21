@@ -75,6 +75,23 @@ const toastConfig = {
       </Text>
     </View>
   ),
+  pdfDeleted: ({ text1 }: { text1?: string }) => (
+    <View style={{
+      backgroundColor: theme.colors.textLight,
+      paddingVertical: RS(12),
+      paddingHorizontal: RS(24),
+      borderRadius: theme.radius.md,
+      alignSelf: 'center',
+    }}>
+      <Text style={{
+        color: theme.colors.white,
+        fontSize: RF(14),
+        fontFamily: 'Urbanist_600SemiBold',
+      }}>
+        {text1 || 'PDF deleted'}
+      </Text>
+    </View>
+  ),
 };
 
 // Internal component that uses paywall hooks

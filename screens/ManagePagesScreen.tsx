@@ -367,7 +367,7 @@ const styles = StyleSheet.create({
   reorderButton: {
     padding: RS(8),
     borderRadius: RS(18),
-    backgroundColor: theme.colors.surface,
+    backgroundColor: theme.colors.background,
   },
   reorderButtonDisabled: {
     opacity: 0.3,
