@@ -20,7 +20,7 @@ const theme: Theme = {
 
     background: '#e1e5f2',
     surface: '#FFFFFF',
-    card: '#FFFFFF',
+    card: '#F5F5F5',
     border: '#ADADA6',
 
     text: '#000000',

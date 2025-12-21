@@ -23,6 +23,8 @@ import { theme } from '../theme/theme';
 import i18n from '../i18n';
 import type { HistoryListScreenProps } from '../types/navigation';
 import type { PDFDocument } from '../types/document';
+// @ts-ignore - Paywall module has internal TS errors but works at runtime
+import { usePaywallGate, usePaywallVisibility } from '../paywall-module';
 
 type SortOption = 'name-asc' | 'name-desc' | 'date-oldest' | 'date-newest' | 'size-smallest' | 'size-largest';
 
@@ -34,6 +36,10 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
   const savedPDFs = useDocumentStore((state) => state.savedPDFs);
   const loadPDFs = useDocumentStore((state) => state.loadPDFs);
   const removePDF = useDocumentStore((state) => state.removePDF);
+
+  // Paywall hooks
+  const { isSubscriber } = usePaywallGate();
+  const { setShowPaywall } = usePaywallVisibility();
 
   useEffect(() => {
     loadPDFsFromStorage();
@@ -99,6 +105,12 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
   };
 
   const handleShare = async (pdf: PDFDocument): Promise<void> => {
+    // Check subscription before sharing
+    if (!isSubscriber) {
+      setShowPaywall(true);
+      return;
+    }
+
     try {
       await sharePDF(pdf.uri);
     } catch (error) {

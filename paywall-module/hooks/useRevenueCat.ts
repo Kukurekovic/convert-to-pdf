@@ -1,4 +1,5 @@
 import Purchases from 'react-native-purchases';
+import { Platform } from 'react-native';
 import { usePaywallConfig } from '../contexts/PaywallConfigContext';
 import { UseRevenueCat } from '../types';
 
@@ -18,6 +19,18 @@ export function useRevenueCat(
 ): UseRevenueCat {
   const config = usePaywallConfig();
   const ENTITLEMENT_ID = config.revenueCat.entitlementId;
+
+  // Log sandbox account reminder in development mode
+  if (__DEV__ && Platform.OS === 'ios') {
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('📱 DEVELOPMENT MODE: iOS Sandbox Testing');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('⚠️  When testing purchases, you may see "Sign in to Apple Account"');
+    console.log('✅ This is EXPECTED behavior in development builds');
+    console.log('📝 Sign in with your SANDBOX TEST ACCOUNT (not your primary Apple ID)');
+    console.log('🔧 For easier testing, use TestFlight instead of development builds');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+  }
 
   const subscribe = async (pkg: any) => {
     try {
@@ -75,8 +88,23 @@ export function useRevenueCat(
         console.warn('[PaywallModule] ⚠️ Purchase completed but premium entitlement not active');
         setIsSubscriber(active);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('[PaywallModule] ❌ Purchase failed:', error);
+
+      // Provide helpful error messages for common sandbox issues
+      if (error.code === 'INVALID_CREDENTIALS_ERROR' || error.message?.includes('Sign in')) {
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        console.log('💡 SANDBOX SIGN-IN REQUIRED');
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+        console.log('This error occurs in development builds when:');
+        console.log('1. You\'re not signed in to a sandbox account');
+        console.log('2. You\'re signed in with a production Apple ID');
+        console.log('\nHow to fix:');
+        console.log('1. Settings → App Store → Sandbox Account → Sign Out');
+        console.log('2. Try purchase again → Sign in with sandbox test account');
+        console.log('3. OR build for TestFlight for easier testing');
+        console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n');
+      }
     }
   };
 

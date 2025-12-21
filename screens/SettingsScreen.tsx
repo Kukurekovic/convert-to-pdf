@@ -204,7 +204,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.card,
     padding: RS(16),
     borderRadius: theme.radius.lg,
     marginBottom: RS(12),

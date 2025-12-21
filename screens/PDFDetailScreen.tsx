@@ -22,6 +22,8 @@ import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
 import type { PDFDetailScreenProps } from '../types/navigation';
 import i18n from '../i18n';
+// @ts-ignore - Paywall module has internal TS errors but works at runtime
+import { usePaywallGate, usePaywallVisibility } from '../paywall-module';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -38,6 +40,10 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
   const removePDF = useDocumentStore((state) => state.removePDF);
   const renamePDF = useDocumentStore((state) => state.renamePDF);
 
+  // Paywall hooks
+  const { isSubscriber } = usePaywallGate();
+  const { setShowPaywall } = usePaywallVisibility();
+
   const pdf = savedPDFs.find((p) => p.id === pdfId);
   const pageThumbnails = pdf?.pageThumbnails ?? (pdf?.thumbnail ? [pdf.thumbnail] : []);
   const totalPages = pageThumbnails.length;
@@ -52,6 +58,12 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
 
   const handleShare = async (): Promise<void> => {
     if (!pdf) return;
+
+    // Check subscription before sharing
+    if (!isSubscriber) {
+      setShowPaywall(true);
+      return;
+    }
 
     setIsSharing(true);
     try {

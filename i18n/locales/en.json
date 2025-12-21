@@ -194,6 +194,9 @@
   },
   "paywall": {
     "title": "Start converting to PDF",
+    "premiumFeature": "Premium Feature",
+    "shareBlocked": "Sharing PDFs is a premium feature. Upgrade to share your documents.",
+    "upgrade": "Upgrade",
     "features": {
       "savedRoutines": "Unlimited Conversions",
       "unlimitedSessions": "Multipage PDFs",

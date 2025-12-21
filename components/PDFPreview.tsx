@@ -11,14 +11,18 @@ import {
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
-import { generatePDF, sharePDF } from '../utils/pdfUtils';
+import { generatePDF } from '../utils/pdfUtils';
 import useDocumentStore from '../store/useDocumentStore';
 import type { ImageAsset } from '../types/document';
 import type { NavigationProp } from '@react-navigation/native';
 import type { RootTabParamList } from '../types/navigation';
 import i18n from '../i18n';
+// @ts-ignore - Paywall module has internal TS errors but works at runtime
+import { usePaywallGate, usePaywallVisibility } from '../paywall-module';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const THUMBNAIL_WIDTH = (SCREEN_WIDTH - RS(48)) / 3;
@@ -34,9 +38,11 @@ interface PDFPreviewProps {
 
 const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filename, quality = 0.6, navigation }) => {
   const [isSaving, setIsSaving] = useState<boolean>(false);
-  const [isSharing, setIsSharing] = useState<boolean>(false);
   const addPDF = useDocumentStore((state) => state.addPDF);
   const clearImages = useDocumentStore((state) => state.clearImages);
+
+  // Paywall hooks
+  const { isSubscriber, ensureGateBeforeStart } = usePaywallGate();
 
   // Map numeric quality to PDFQuality type
   const getQualityString = (numericQuality: number): 'low' | 'medium' | 'high' | 'best' => {
@@ -48,7 +54,38 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
 
   const pdfQuality = getQualityString(quality);
 
+  // Helper function to increment PDF conversion count for trial users
+  const incrementPDFCount = async (): Promise<void> => {
+    if (isSubscriber) return; // Subscribers don't need counting
+
+    try {
+      const countStr = await AsyncStorage.getItem('pdfConversionsCount');
+      const timestampStr = await AsyncStorage.getItem('firstPdfConversionTime');
+      const count = countStr ? parseInt(countStr, 10) : 0;
+
+      // Set first conversion timestamp if not exists
+      if (!timestampStr) {
+        await AsyncStorage.setItem('firstPdfConversionTime', String(Date.now()));
+      }
+
+      // Increment counter
+      await AsyncStorage.setItem('pdfConversionsCount', String(count + 1));
+
+      console.log(`[PDF Counter] Total PDFs created: ${count + 1}/5 in trial`);
+    } catch (error) {
+      console.error('Failed to increment PDF count:', error);
+    }
+  };
+
   const handleSave = async (): Promise<void> => {
+    // Check subscription/trial status before saving
+    const canProceed = await ensureGateBeforeStart();
+
+    if (!canProceed) {
+      // Trial limit reached - paywall is already shown by ensureGateBeforeStart
+      return;
+    }
+
     setIsSaving(true);
     try {
       const pdf = await generatePDF(images, {
@@ -59,47 +96,27 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
       addPDF(pdf);
       clearImages();
 
-      Alert.alert(
-        i18n.t('components.pdfPreview.alerts.success'),
-        i18n.t('components.pdfPreview.alerts.successMessage'),
-        [{
-          text: i18n.t('common.ok'),
-          onPress: () => {
-            onClose();
-            if (navigation) {
-              navigation.navigate('HistoryStack');
-            }
-          }
-        }]
-      );
-    } catch (error) {
-      console.error('Error saving PDF:', error);
-      Alert.alert(i18n.t('components.pdfPreview.alerts.error'), i18n.t('components.pdfPreview.alerts.saveError'));
-    }
-    setIsSaving(false);
-  };
+      // Increment PDF counter for trial users
+      await incrementPDFCount();
 
-  const handleSaveAndShare = async (): Promise<void> => {
-    setIsSharing(true);
-    try {
-      const pdf = await generatePDF(images, {
-        fileName: filename,
-        quality: pdfQuality,
+      // Show toast notification
+      Toast.show({
+        type: 'pdfSaved',
+        text1: 'PDF saved',
+        visibilityTime: 2000,
+        autoHide: true,
       });
 
-      addPDF(pdf);
-      clearImages();
-
-      await sharePDF(pdf.uri);
+      // Navigate immediately
       onClose();
       if (navigation) {
         navigation.navigate('HistoryStack');
       }
     } catch (error) {
-      console.error('Error saving and sharing PDF:', error);
-      Alert.alert(i18n.t('components.pdfPreview.alerts.error'), i18n.t('components.pdfPreview.alerts.shareError'));
+      console.error('Error saving PDF:', error);
+      Alert.alert(i18n.t('components.pdfPreview.alerts.error'), i18n.t('components.pdfPreview.alerts.saveError'));
     }
-    setIsSharing(false);
+    setIsSaving(false);
   };
 
   const handleRemoveImage = (index: number): void => {
@@ -172,26 +189,14 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, onClose, onEdit, filena
 
       <View style={styles.footer}>
         <TouchableOpacity
-          style={[styles.saveButton, styles.saveOnlyButton]}
+          style={styles.saveButton}
           onPress={handleSave}
-          disabled={isSaving || isSharing}
+          disabled={isSaving}
         >
           {isSaving ? (
             <ActivityIndicator color={theme.colors.white} />
           ) : (
             <Text style={styles.saveButtonText}>{i18n.t('components.pdfPreview.buttons.savePDF')}</Text>
-          )}
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={styles.saveButton}
-          onPress={handleSaveAndShare}
-          disabled={isSaving || isSharing}
-        >
-          {isSharing ? (
-            <ActivityIndicator color={theme.colors.white} />
-          ) : (
-            <Text style={styles.saveButtonText}>{i18n.t('components.pdfPreview.buttons.saveAndShare')}</Text>
           )}
         </TouchableOpacity>
       </View>
@@ -320,9 +325,6 @@ const styles = StyleSheet.create({
     borderRadius: theme.radius.md,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  saveOnlyButton: {
-    backgroundColor: theme.colors.secondary,
   },
   saveButtonText: {
     fontSize: RF(16),
