@@ -204,17 +204,17 @@
       "removePaywalls": "Remove ads"
     },
     "plans": {
-      "yearly": "Lifetime",
-      "yearlyPrice": "{{price}} per year",
-      "trial": "7-Day Trial",
-      "trialPrice": "{{price}} per month",
+      "yearly": "Lifetime Pass",
+      "yearlyPrice": "One-time {{price}}",
+      "trial": "Monthly Pass",
+      "trialPrice": "7 days free, then {{price}} per month",
       "bestValue": "BEST VALUE",
-      "freeTrial": "MOST POPULAR"
+      "freeTrial": ""
     },
     "freeTrialEnabled": "Free Trial Enabled",
     "buttons": {
       "unlockNow": "Unlock Now",
-      "tryFree": "Subscribe Now",
+      "tryFree": "Try for free",
       "restore": "Restore Purchases"
     },
     "links": {
