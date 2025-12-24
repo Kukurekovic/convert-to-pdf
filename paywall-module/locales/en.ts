@@ -51,4 +51,22 @@ export default {
       maybeLater: 'Maybe Later',
     },
   },
+
+  alreadySubscribed: {
+    title: "You're Already Premium!",
+    subtitle: 'Thanks for being a subscriber',
+    memberSince: 'Member since {{date}}',
+    purchaseType: {
+      lifetime: 'Lifetime Access',
+      yearly: 'Annual Subscription',
+      monthly: 'Monthly Subscription',
+    },
+    features: {
+      title: 'Your Premium Features:',
+    },
+    buttons: {
+      continue: 'Continue',
+      manageSubscription: 'Manage Subscription',
+    },
+  },
 };

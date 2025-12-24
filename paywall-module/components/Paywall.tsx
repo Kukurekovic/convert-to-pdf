@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, ImageBackground, Switch, Linking, Platform, ScrollView, Dimensions } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, ImageBackground, Switch, Linking, Platform, ScrollView, Dimensions, StatusBar } from 'react-native';
+import Purchases from 'react-native-purchases';
 import { Feather } from '@expo/vector-icons';
 import { useResponsive, responsiveDimensions } from '../hooks/useResponsive';
 import { useLocalization } from '../contexts/LocalizationContext';
@@ -7,6 +8,254 @@ import { useFontFamily } from '../hooks/useFontFamily';
 import { usePaywallTheme } from '../contexts/PaywallThemeContext';
 import { usePaywallConfig } from '../contexts/PaywallConfigContext';
 import { PaywallProps } from '../types';
+
+/**
+ * Already Subscribed View Component
+ *
+ * Shows a confirmation screen for users who already have an active subscription.
+ * Displays purchase info, active features, and provides a manage subscription link.
+ */
+const AlreadySubscribedView: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const { t } = useLocalization();
+  const getFontFamily = useFontFamily();
+  const theme = usePaywallTheme();
+  const config = usePaywallConfig();
+  const { scaleSpacing, scaleFont, isTablet, isAndroidSmall, scaleAndroidExtraCondensed } = useResponsive();
+
+  const [customerInfo, setCustomerInfo] = useState<any>(null);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const info = await Purchases.getCustomerInfo();
+        setCustomerInfo(info);
+        console.log('[PaywallModule] Customer info loaded for Already Subscribed view');
+      } catch (error) {
+        console.warn('[PaywallModule] Failed to fetch customer info:', error);
+      }
+    })();
+  }, []);
+
+  const handleManageSubscription = () => {
+    const url = Platform.OS === 'ios'
+      ? 'https://apps.apple.com/account/subscriptions'
+      : 'https://play.google.com/store/account/subscriptions';
+    Linking.openURL(url);
+  };
+
+  const renderFeatureItem = (iconName: string, text: string) => (
+    <View style={{
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: scaleSpacing(12),
+    }}>
+      <Feather
+        name={iconName as any}
+        size={scaleFont(20)}
+        color={theme.colors.primary}
+        style={{ marginRight: scaleSpacing(12) }}
+      />
+      <Text style={[
+        getFontFamily('regular'),
+        { fontSize: scaleFont(14), color: theme.colors.text.primary, flex: 1 }
+      ]}>
+        {text}
+      </Text>
+    </View>
+  );
+
+  const renderPurchaseInfo = () => {
+    if (!customerInfo) return null;
+
+    const entitlement = customerInfo.entitlements?.active?.[config.revenueCat.entitlementId];
+    if (!entitlement) return null;
+
+    const purchaseDate = entitlement.purchaseDate
+      ? new Date(entitlement.purchaseDate).toLocaleDateString(undefined, { month: 'long', year: 'numeric' })
+      : null;
+
+    const isLifetime = !entitlement.expirationDate;
+    const purchaseType = isLifetime
+      ? t('alreadySubscribed.purchaseType.lifetime')
+      : entitlement.productIdentifier?.includes('annual')
+        ? t('alreadySubscribed.purchaseType.yearly')
+        : t('alreadySubscribed.purchaseType.monthly');
+
+    return (
+      <View style={{
+        backgroundColor: `${theme.colors.primary}15`,
+        padding: scaleSpacing(16),
+        borderRadius: 12,
+        marginBottom: scaleSpacing(32),
+        borderWidth: 1,
+        borderColor: `${theme.colors.primary}30`,
+      }}>
+        <Text style={[
+          getFontFamily('semiBold'),
+          { fontSize: scaleFont(14), color: theme.colors.primary, marginBottom: scaleSpacing(4) }
+        ]}>
+          {purchaseType}
+        </Text>
+        {purchaseDate && (
+          <Text style={[
+            getFontFamily('regular'),
+            { fontSize: scaleFont(12), color: theme.colors.text.secondary }
+          ]}>
+            {t('alreadySubscribed.memberSince', { date: purchaseDate })}
+          </Text>
+        )}
+      </View>
+    );
+  };
+
+  // Calculate safe area top inset for close button
+  const statusBarHeight = StatusBar.currentHeight || 0;
+  const safeAreaTopInset = Platform.OS === 'ios'
+    ? (Dimensions.get('window').height >= 812 ? 44 : 20)
+    : statusBarHeight;
+
+  return (
+    <View style={{
+      flex: 1,
+      zIndex: 1000,
+      elevation: Platform.OS === 'android' ? 1000 : undefined,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: theme.colors.background,
+    }}>
+      {/* Close Button */}
+      <TouchableOpacity
+        onPress={onClose}
+        activeOpacity={0.7}
+        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        style={{
+          position: 'absolute',
+          top: safeAreaTopInset + (isTablet ? scaleSpacing(12) : (isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(16))),
+          left: isTablet ? scaleSpacing(20) : (isAndroidSmall ? scaleAndroidExtraCondensed(16) : scaleSpacing(16)),
+          width: isAndroidSmall ? scaleAndroidExtraCondensed(40) : scaleSpacing(44),
+          height: isAndroidSmall ? scaleAndroidExtraCondensed(40) : scaleSpacing(44),
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1001,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          borderRadius: isAndroidSmall ? scaleAndroidExtraCondensed(22) : scaleSpacing(22),
+        }}
+      >
+        <Feather name="x" size={scaleFont(24)} color="#FFFFFF" />
+      </TouchableOpacity>
+
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'center',
+          paddingHorizontal: scaleSpacing(24),
+          paddingTop: scaleSpacing(80),
+          paddingBottom: scaleSpacing(40),
+        }}
+        showsVerticalScrollIndicator={false}
+      >
+        {/* Success Icon */}
+        <View style={{ alignItems: 'center', marginBottom: scaleSpacing(24) }}>
+          <Feather
+            name="check-circle"
+            size={scaleFont(80)}
+            color={theme.colors.primary}
+          />
+        </View>
+
+        {/* Title */}
+        <Text style={[
+          getFontFamily('bold'),
+          {
+            fontSize: scaleFont(28),
+            color: theme.colors.text.primary,
+            textAlign: 'center',
+            marginBottom: scaleSpacing(8)
+          }
+        ]}>
+          {t('alreadySubscribed.title')}
+        </Text>
+
+        {/* Subtitle */}
+        <Text style={[
+          getFontFamily('regular'),
+          {
+            fontSize: scaleFont(16),
+            color: theme.colors.text.secondary,
+            textAlign: 'center',
+            marginBottom: scaleSpacing(32)
+          }
+        ]}>
+          {t('alreadySubscribed.subtitle')}
+        </Text>
+
+        {/* Purchase Info */}
+        {renderPurchaseInfo()}
+
+        {/* Feature List */}
+        <View style={{ marginBottom: scaleSpacing(32) }}>
+          <Text style={[
+            getFontFamily('semiBold'),
+            {
+              fontSize: scaleFont(18),
+              color: theme.colors.text.primary,
+              marginBottom: scaleSpacing(16),
+              textAlign: 'center',
+            }
+          ]}>
+            {t('alreadySubscribed.features.title')}
+          </Text>
+
+          <View style={{ maxWidth: 400, alignSelf: 'center', width: '100%' }}>
+            {renderFeatureItem('file-text', t('paywall.features.savedRoutines'))}
+            {renderFeatureItem('copy', t('paywall.features.unlimitedSessions'))}
+            {renderFeatureItem('share-2', t('paywall.features.voiceCues'))}
+          </View>
+        </View>
+
+        {/* Continue Button */}
+        <TouchableOpacity
+          onPress={onClose}
+          style={{
+            backgroundColor: theme.colors.primary,
+            paddingVertical: scaleSpacing(16),
+            borderRadius: 12,
+            alignItems: 'center',
+            marginBottom: scaleSpacing(16),
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}
+        >
+          <Text style={[
+            getFontFamily('semiBold'),
+            { fontSize: scaleFont(18), color: theme.colors.primaryText, marginRight: scaleSpacing(8) }
+          ]}>
+            {t('alreadySubscribed.buttons.continue')}
+          </Text>
+          <Feather name="chevron-right" size={scaleFont(24)} color={theme.colors.primaryText} />
+        </TouchableOpacity>
+
+        {/* Manage Subscription Link */}
+        <TouchableOpacity onPress={handleManageSubscription}>
+          <Text style={[
+            getFontFamily('regular'),
+            {
+              fontSize: scaleFont(14),
+              color: theme.colors.text.muted,
+              textAlign: 'center',
+              textDecorationLine: 'underline'
+            }
+          ]}>
+            {t('alreadySubscribed.buttons.manageSubscription')}
+          </Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </View>
+  );
+};
 
 /**
  * Main Paywall Component
@@ -36,6 +285,14 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
   const isLargeScreen = minDimension >= 768;
   const isSmallScreen = minDimension < 376;
 
+  // Calculate safe area top inset manually
+  // iOS: Add statusBar height + extra for notch devices
+  // Android: Use StatusBar height
+  const statusBarHeight = StatusBar.currentHeight || 0;
+  const safeAreaTopInset = Platform.OS === 'ios'
+    ? (height >= 812 ? 44 : 20) // iPhone X and newer vs older iPhones
+    : statusBarHeight;
+
   const [selectedPlan, setSelectedPlan] = useState<'yearly' | 'trial'>('trial');
   const [freeTrialEnabled, setFreeTrialEnabled] = useState(true);
 
@@ -55,7 +312,12 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
     }
   }, [visible, offerings]);
 
-  if (!visible || isSubscriber) return null;
+  if (!visible) return null;
+
+  // Show "Already Premium" confirmation screen for existing subscribers
+  if (isSubscriber) {
+    return <AlreadySubscribedView onClose={onClose} />;
+  }
 
   const offering = offerings?.current;
   const firstPackage = offering?.availablePackages?.[0];
@@ -106,11 +368,38 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
         bottom: 0,
         backgroundColor: theme.colors.background,
       }}
+      pointerEvents="box-none"
     >
+      {/* Close Button - Positioned outside ScrollView for reliable touch handling */}
+      <TouchableOpacity
+        onPress={onClose}
+        activeOpacity={0.7}
+        hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        style={{
+          position: 'absolute',
+          top: safeAreaTopInset + (isLargeScreen ? scaleSpacing(12) : (isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(16))),
+          left: isLargeScreen ? scaleSpacing(20) : (isAndroidSmall ? scaleAndroidExtraCondensed(16) : scaleSpacing(16)),
+          width: isAndroidSmall ? scaleAndroidExtraCondensed(40) : scaleSpacing(44),
+          height: isAndroidSmall ? scaleAndroidExtraCondensed(40) : scaleSpacing(44),
+          justifyContent: 'center',
+          alignItems: 'center',
+          zIndex: 1001,
+          backgroundColor: 'rgba(0, 0, 0, 0.5)',
+          borderRadius: isAndroidSmall ? scaleAndroidExtraCondensed(22) : scaleSpacing(22),
+        }}
+      >
+        <Feather
+          name="x"
+          size={isTablet ? responsiveDimensions.iconSize.large.tablet : (isAndroidSmall ? scaleAndroidExtraCondensed(responsiveDimensions.iconSize.large.phone) : responsiveDimensions.iconSize.large.phone)}
+          color="#FFFFFF"
+        />
+      </TouchableOpacity>
+
       <ScrollView
         contentContainerStyle={{ paddingBottom: isAndroidMediumOrSmall ? (isAndroidSmall ? scaleAndroidExtraCondensed(32) : scaleAndroidCondensed(32)) : scaleSpacing(32) }}
         style={{ flex: 1 }}
         showsVerticalScrollIndicator={false}
+        pointerEvents="auto"
       >
         {/* Top Section - Full-Width Background Banner with Title */}
         <ImageBackground
@@ -123,28 +412,6 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
               : (isTablet ? scaleSpacing(530) : scaleSpacing(460)),
           }}
         >
-          {/* Close Button */}
-          <TouchableOpacity
-            onPress={onClose}
-            style={{
-              position: 'absolute',
-              top: isLargeScreen ? scaleSpacing(16) : (isAndroidSmall ? scaleAndroidExtraCondensed(16) : scaleSpacing(24)),
-              left: isLargeScreen ? scaleSpacing(24) : (isAndroidSmall ? scaleAndroidExtraCondensed(16) : scaleSpacing(20)),
-              width: isAndroidSmall ? scaleAndroidExtraCondensed(32) : scaleSpacing(36),
-              height: isAndroidSmall ? scaleAndroidExtraCondensed(32) : scaleSpacing(36),
-              justifyContent: 'center',
-              alignItems: 'center',
-              zIndex: 20,
-              backgroundColor: 'rgba(0, 0, 0, 0.3)',
-              borderRadius: isAndroidSmall ? scaleAndroidExtraCondensed(18) : scaleSpacing(18),
-            }}
-          >
-            <Feather
-              name="x"
-              size={isTablet ? responsiveDimensions.iconSize.large.tablet : (isAndroidSmall ? scaleAndroidExtraCondensed(responsiveDimensions.iconSize.large.phone) : responsiveDimensions.iconSize.large.phone)}
-              color="#FFFFFF"
-            />
-          </TouchableOpacity>
 
           {/* Dark overlay for text readability */}
           <View style={{

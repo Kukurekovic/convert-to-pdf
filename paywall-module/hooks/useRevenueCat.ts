@@ -89,6 +89,15 @@ export function useRevenueCat(
         setIsSubscriber(active);
       }
     } catch (error: any) {
+      // Silent handling for user cancellation - this is expected behavior, not an error
+      if (error.userCancelled === true) {
+        if (__DEV__) {
+          console.log('[PaywallModule] ℹ️ Purchase cancelled by user');
+        }
+        return;
+      }
+
+      // Log actual errors
       console.error('[PaywallModule] ❌ Purchase failed:', error);
 
       // Provide helpful error messages for common sandbox issues
