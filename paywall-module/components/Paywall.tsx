@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, ImageBackground, Switch, Linking, Platform, ScrollView, Dimensions } from 'react-native';
-import { Feather, FontAwesome5 } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
 import { useResponsive, responsiveDimensions } from '../hooks/useResponsive';
 import { useLocalization } from '../contexts/LocalizationContext';
 import { useFontFamily } from '../hooks/useFontFamily';
@@ -119,8 +119,8 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
           style={{
             width: '100%',
             height: Platform.OS === 'android'
-              ? (isTablet ? scaleSpacing(390) : (isAndroidSmall ? scaleAndroidExtraCondensed(330) : scaleAndroidCondensed(360)))
-              : (isTablet ? scaleSpacing(400) : scaleSpacing(340)),
+              ? (isTablet ? scaleSpacing(520) : (isAndroidSmall ? scaleAndroidExtraCondensed(450) : scaleAndroidCondensed(480)))
+              : (isTablet ? scaleSpacing(530) : scaleSpacing(460)),
           }}
         >
           {/* Close Button */}
@@ -149,7 +149,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
           {/* Dark overlay for text readability */}
           <View style={{
             flex: 1,
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
             justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: isLargeScreen ? scaleSpacing(48) : (isAndroidMediumOrSmall ? (isAndroidSmall ? scaleAndroidExtraCondensed(24) : scaleAndroidCondensed(24)) : scaleSpacing(24)),
@@ -172,55 +172,34 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
             >
               {t('paywall.title')}
             </Text>
-          </View>
-        </ImageBackground>
 
-        {/* Content Section with Padding */}
-        <View
-          style={{
-            paddingHorizontal: isLargeScreen ? scaleSpacing(48) : (isAndroidMediumOrSmall ? (isAndroidSmall ? scaleAndroidExtraCondensed(24) : scaleAndroidCondensed(24)) : scaleSpacing(24)),
-            alignSelf: 'center',
-            width: '100%',
-          }}
-        >
-
-          {/* Middle Section - Features and Plans */}
-          <View
-            style={{
-              paddingHorizontal: 0,
-              marginBottom: isAndroidMediumOrSmall ? (isAndroidSmall ? scaleAndroidExtraCondensed(24) : scaleAndroidCondensed(24)) : scaleSpacing(24),
-              width: '100%',
-            }}
-          >
             {/* Feature List */}
             <View
               style={{
-                width: isLargeScreen ? '80%' : '90%',
+                width: isLargeScreen ? '85%' : '92%',
                 alignSelf: 'center',
-                marginTop: scaleSpacing(22),
-                marginLeft: scaleSpacing(60),
+                marginTop: isAndroidSmall ? scaleAndroidExtraCondensed(16) : scaleSpacing(20),
               }}
             >
               {/* Feature: Saved Routines */}
               <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(12),
+                marginBottom: isAndroidSmall ? scaleAndroidExtraCondensed(10) : scaleSpacing(12),
               }}>
                 <View style={{
-                  width: isAndroidSmall ? scaleAndroidExtraCondensed(40) : scaleSpacing(40),
                   alignItems: 'center',
                   justifyContent: 'center',
+                  marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(12),
                 }}>
-                  <FontAwesome5
-                    name="dumbbell"
+                  <Feather
+                    name="file-text"
                     size={isTablet ? responsiveDimensions.iconSize.medium.tablet : (isAndroidSmall ? scaleAndroidExtraCondensed(responsiveDimensions.iconSize.medium.phone) : responsiveDimensions.iconSize.medium.phone)}
-                    color={theme.colors.feature.icon}
+                    color="#FFFFFF"
                   />
                 </View>
                 <View style={{
-                  flex: 1,
-                  paddingLeft: isAndroidSmall ? scaleAndroidExtraCondensed(-15) : scaleSpacing(-15),
+                  alignItems: 'center',
                   justifyContent: 'center',
                 }}>
                   <Text
@@ -228,8 +207,11 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                       getFontFamily('regular'),
                       {
                         fontSize: isTablet ? 20 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.base.phone * 0.8) : (isSmallScreen ? 16 : responsiveDimensions.fontSize.base.phone)),
-                        color: theme.colors.text.primary,
+                        color: '#FFFFFF',
                         textAlign: 'left',
+                        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                        textShadowOffset: { width: 0, height: 1 },
+                        textShadowRadius: 2,
                       },
                     ]}
                   >
@@ -242,22 +224,21 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
               <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(12),
+                marginBottom: isAndroidSmall ? scaleAndroidExtraCondensed(10) : scaleSpacing(12),
               }}>
                 <View style={{
-                  width: isAndroidSmall ? scaleAndroidExtraCondensed(40) : scaleSpacing(40),
                   alignItems: 'center',
                   justifyContent: 'center',
+                  marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(12),
                 }}>
-                  <FontAwesome5
-                    name="infinity"
+                  <Feather
+                    name="copy"
                     size={isTablet ? responsiveDimensions.iconSize.medium.tablet : (isAndroidSmall ? scaleAndroidExtraCondensed(responsiveDimensions.iconSize.medium.phone) : responsiveDimensions.iconSize.medium.phone)}
-                    color={theme.colors.feature.icon}
+                    color="#FFFFFF"
                   />
                 </View>
                 <View style={{
-                  flex: 1,
-                  paddingLeft: isAndroidSmall ? scaleAndroidExtraCondensed(-15) : scaleSpacing(-15),
+                  alignItems: 'center',
                   justifyContent: 'center',
                 }}>
                   <Text
@@ -265,8 +246,11 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                       getFontFamily('regular'),
                       {
                         fontSize: isTablet ? 20 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.base.phone * 0.8) : (isSmallScreen ? 16 : responsiveDimensions.fontSize.base.phone)),
-                        color: theme.colors.text.primary,
+                        color: '#FFFFFF',
                         textAlign: 'left',
+                        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                        textShadowOffset: { width: 0, height: 1 },
+                        textShadowRadius: 2,
                       },
                     ]}
                   >
@@ -279,22 +263,20 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
               <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                marginBottom: isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(12),
               }}>
                 <View style={{
-                  width: isAndroidSmall ? scaleAndroidExtraCondensed(40) : scaleSpacing(40),
                   alignItems: 'center',
                   justifyContent: 'center',
+                  marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(12),
                 }}>
-                  <FontAwesome5
-                    name="volume-up"
+                  <Feather
+                    name="share-2"
                     size={isTablet ? responsiveDimensions.iconSize.medium.tablet : (isAndroidSmall ? scaleAndroidExtraCondensed(responsiveDimensions.iconSize.medium.phone) : responsiveDimensions.iconSize.medium.phone)}
-                    color={theme.colors.feature.icon}
+                    color="#FFFFFF"
                   />
                 </View>
                 <View style={{
-                  flex: 1,
-                  paddingLeft: isAndroidSmall ? scaleAndroidExtraCondensed(-15) : scaleSpacing(-15),
+                  alignItems: 'center',
                   justifyContent: 'center',
                 }}>
                   <Text
@@ -302,8 +284,11 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                       getFontFamily('regular'),
                       {
                         fontSize: isTablet ? 20 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.base.phone * 0.8) : (isSmallScreen ? 16 : responsiveDimensions.fontSize.base.phone)),
-                        color: theme.colors.text.primary,
+                        color: '#FFFFFF',
                         textAlign: 'left',
+                        textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                        textShadowOffset: { width: 0, height: 1 },
+                        textShadowRadius: 2,
                       },
                     ]}
                   >
@@ -311,45 +296,31 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                   </Text>
                 </View>
               </View>
-
-              {/* Feature: Remove Paywalls */}
-              <View style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                marginBottom: isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(12),
-              }}>
-                <View style={{
-                  width: isAndroidSmall ? scaleAndroidExtraCondensed(40) : scaleSpacing(40),
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}>
-                  <FontAwesome5
-                    name="unlock"
-                    size={isTablet ? responsiveDimensions.iconSize.medium.tablet : (isAndroidSmall ? scaleAndroidExtraCondensed(responsiveDimensions.iconSize.medium.phone) : responsiveDimensions.iconSize.medium.phone)}
-                    color={theme.colors.feature.icon}
-                  />
-                </View>
-                <View style={{
-                  flex: 1,
-                  paddingLeft: isAndroidSmall ? scaleAndroidExtraCondensed(-15) : scaleSpacing(-15),
-                  justifyContent: 'center',
-                }}>
-                  <Text
-                    style={[
-                      getFontFamily('regular'),
-                      {
-                        fontSize: isTablet ? 20 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.base.phone * 0.8) : (isSmallScreen ? 16 : responsiveDimensions.fontSize.base.phone)),
-                        color: theme.colors.text.primary,
-                        textAlign: 'left',
-                      },
-                    ]}
-                  >
-                    {t('paywall.features.removePaywalls')}
-                  </Text>
-                </View>
-              </View>
             </View>
+          </View>
+        </ImageBackground>
 
+        {/* Content Section with Padding */}
+        <View
+          style={{
+            paddingHorizontal: isLargeScreen ? scaleSpacing(48) : (isAndroidMediumOrSmall ? (isAndroidSmall ? scaleAndroidExtraCondensed(24) : scaleAndroidCondensed(24)) : scaleSpacing(24)),
+            alignSelf: 'center',
+            width: '100%',
+            backgroundColor: theme.colors.background,
+            borderTopLeftRadius: scaleSpacing(24),
+            borderTopRightRadius: scaleSpacing(24),
+            marginTop: -scaleSpacing(24),
+          }}
+        >
+
+          {/* Middle Section - Plans */}
+          <View
+            style={{
+              paddingHorizontal: 0,
+              marginBottom: isAndroidMediumOrSmall ? (isAndroidSmall ? scaleAndroidExtraCondensed(24) : scaleAndroidCondensed(24)) : scaleSpacing(24),
+              width: '100%',
+            }}
+          >
             {/* Plan Selection Buttons */}
             <View style={{ width: '100%', marginTop: isLargeScreen ? scaleSpacing(14) : scaleSpacing(22) }}>
               {/* Trial Plan */}

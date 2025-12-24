@@ -25,7 +25,7 @@ const paywallConfig = {
     iosApiKey: 'appl_aeSbqpyzDvGrrcnIvpibpZdXnIF',
     androidApiKey: 'goog_csmvEfCPQTMcScYsLEwiggsojbp',
     entitlementId: 'Convert to PDF Premium',
-    logLevel: 'INFO' as const,
+    logLevel: 'DEBUG' as const, // Changed to DEBUG for better error visibility during testing
   },
   trial: {
     enabled: true,
