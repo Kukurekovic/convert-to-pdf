@@ -24,7 +24,7 @@ import { theme } from '../theme/theme';
 import type { PDFDetailScreenProps } from '../types/navigation';
 import i18n from '../i18n';
 // @ts-ignore - Paywall module has internal TS errors but works at runtime
-import { usePaywallGate, usePaywallVisibility } from '../paywall-module';
+import { usePaywallGate, usePaywallTrigger } from '../paywall-module';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
@@ -44,7 +44,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
 
   // Paywall hooks
   const { isSubscriber } = usePaywallGate();
-  const { setShowPaywall } = usePaywallVisibility();
+  const { tryShowPaywall } = usePaywallTrigger();
 
   const pdf = savedPDFs.find((p) => p.id === pdfId);
   const pageThumbnails = pdf?.pageThumbnails ?? (pdf?.thumbnail ? [pdf.thumbnail] : []);
@@ -63,7 +63,7 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
 
     // Check subscription before sharing
     if (!isSubscriber) {
-      setShowPaywall(true);
+      tryShowPaywall();
       return;
     }
 

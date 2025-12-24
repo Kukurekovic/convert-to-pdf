@@ -92,6 +92,24 @@ const toastConfig = {
       </Text>
     </View>
   ),
+  alreadySubscribed: ({ text1 }: { text1?: string }) => (
+    <View style={{
+      backgroundColor: theme.colors.textLight,
+      paddingVertical: RS(12),
+      paddingHorizontal: RS(20),
+      borderRadius: RS(8),
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <Text style={{
+        color: '#FFFFFF',
+        fontSize: RF(14),
+        fontFamily: 'Urbanist_600SemiBold',
+      }}>
+        {text1}
+      </Text>
+    </View>
+  ),
 };
 
 // Internal component that uses paywall hooks

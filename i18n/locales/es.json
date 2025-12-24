@@ -187,5 +187,8 @@
     "title": "Editar imagen",
     "reset": "Restablecer",
     "done": "Hecho"
+  },
+  "alreadySubscribed": {
+    "message": "¡Ya estás suscrito!"
   }
 }

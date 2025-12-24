@@ -187,5 +187,8 @@
     "title": "Modifier l'image",
     "reset": "Réinitialiser",
     "done": "Terminé"
+  },
+  "alreadySubscribed": {
+    "message": "Vous êtes déjà abonné !"
   }
 }

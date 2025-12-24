@@ -187,5 +187,8 @@
     "title": "Bild bearbeiten",
     "reset": "Zurücksetzen",
     "done": "Fertig"
+  },
+  "alreadySubscribed": {
+    "message": "Sie sind bereits abonniert!"
   }
 }

@@ -187,5 +187,8 @@
     "title": "Edit Gambar",
     "reset": "Reset",
     "done": "Selesai"
+  },
+  "alreadySubscribed": {
+    "message": "Anda sudah berlangganan!"
   }
 }

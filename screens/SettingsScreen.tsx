@@ -7,10 +7,10 @@ import { theme } from '../theme/theme';
 import i18n from '../i18n';
 import type { SettingsScreenProps } from '../types/navigation';
 // @ts-ignore - Paywall module has internal TS errors but works at runtime
-import { usePaywallVisibility } from '../paywall-module';
+import { usePaywallTrigger } from '../paywall-module';
 
 export default function SettingsScreen({}: SettingsScreenProps) {
-  const { setShowPaywall } = usePaywallVisibility();
+  const { tryShowPaywall } = usePaywallTrigger();
 
   const handleOpenURL = async (url: string): Promise<void> => {
     try {
@@ -78,7 +78,7 @@ export default function SettingsScreen({}: SettingsScreenProps) {
             <TouchableOpacity
               style={styles.cardButton}
               activeOpacity={0.7}
-              onPress={() => setShowPaywall(true)}
+              onPress={tryShowPaywall}
             >
               <Ionicons name="ribbon" size={RF(20)} color={theme.colors.warning} />
               <Text style={styles.buttonText}>{i18n.t('settings.premium.title')}</Text>

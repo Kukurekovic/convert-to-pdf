@@ -48,6 +48,7 @@ export { usePaywallGate } from './hooks/usePaywallGate';
 export { useRevenueCat } from './hooks/useRevenueCat';
 export { useResponsive } from './hooks/useResponsive';
 export { useFontFamily } from './hooks/useFontFamily';
+export { usePaywallTrigger } from './hooks/usePaywallTrigger';
 
 // Context hooks (if consumers need them)
 export { usePaywallConfig } from './contexts/PaywallConfigContext';
