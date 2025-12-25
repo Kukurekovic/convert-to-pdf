@@ -9,6 +9,7 @@
     "error": "Error",
     "success": "Success",
     "next": "Next",
+    "continue": "Continue",
     "download": "Download",
     "page": "Page",
     "pages": "pages",
@@ -78,7 +79,7 @@
       "sizeLargest": "Size (Largest)"
     },
     "empty": {
-      "title": "No PDFs Yet",
+      "title": "No documents here",
       "message": "Convert images to PDF to see them here"
     },
     "alerts": {
