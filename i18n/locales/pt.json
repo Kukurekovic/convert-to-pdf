@@ -22,7 +22,15 @@
   "onboarding": {
     "screen1": {
       "title": "Converta arquivos para PDF",
-      "subtitle": "Converta facilmente imagens, documentos e muito mais em PDFs profissionais"
+      "subtitle": "Converta facilmente imagens, documentos e muito mais em PDFs profissionais",
+      "reviews": {
+        "heading": "Principais Avaliações",
+        "items": [
+          "Digitalização sem esforço em movimento! Este aplicativo transforma meu telefone em um scanner portátil. Rápido, preciso e fácil de usar. Altamente recomendado!",
+          "Melhor que outros scanners de PDF. Simples para digitalizar imagens e salvá-las como PDFs, além de compartilhar é muito fácil.",
+          "Rápido e preciso! Posso digitalizar várias páginas e convertê-las em PDFs em segundos. Verdadeiramente impressionante!"
+        ]
+      }
     },
     "screen2": {
       "title": "Gerencie seus PDFs",

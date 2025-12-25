@@ -23,7 +23,15 @@
   "onboarding": {
     "screen1": {
       "title": "Convert Files to PDF",
-      "subtitle": "Easily convert images, documents, and more into professional PDFs"
+      "subtitle": "Easily convert images, documents, and more into professional PDFs",
+      "reviews": {
+        "heading": "Top User Reviews",
+        "items": [
+          "Effortless scanning on the go! This app turns my phone into a portable scanner. Fast, accurate, and easy to use. Highly recommended!",
+          "Better than other PDF scanners. Simple to scan images and save them as PDFs, plus sharing is a breeze.",
+          "Fast and accurate! I can scan multiple pages and convert them into PDFs within seconds. Truly impressive!"
+        ]
+      }
     },
     "screen2": {
       "title": "Manage Your PDFs",

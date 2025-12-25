@@ -22,7 +22,15 @@
   "onboarding": {
     "screen1": {
       "title": "Konversi File ke PDF",
-      "subtitle": "Ubah gambar, dokumen, dan lainnya menjadi PDF profesional dengan mudah"
+      "subtitle": "Ubah gambar, dokumen, dan lainnya menjadi PDF profesional dengan mudah",
+      "reviews": {
+        "heading": "Ulasan Pengguna Teratas",
+        "items": [
+          "Pemindaian mudah saat bepergian! Aplikasi ini mengubah ponsel saya menjadi pemindai portabel. Cepat, akurat, dan mudah digunakan. Sangat direkomendasikan!",
+          "Lebih baik dari pemindai PDF lainnya. Mudah untuk memindai gambar dan menyimpannya sebagai PDF, ditambah berbagi sangat mudah.",
+          "Cepat dan akurat! Saya dapat memindai beberapa halaman dan mengonversinya menjadi PDF dalam hitungan detik. Benar-benar mengesankan!"
+        ]
+      }
     },
     "screen2": {
       "title": "Kelola PDF Anda",

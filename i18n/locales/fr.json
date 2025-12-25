@@ -22,7 +22,15 @@
   "onboarding": {
     "screen1": {
       "title": "Convertir des fichiers en PDF",
-      "subtitle": "Convertissez facilement des images, des documents et plus encore en PDF professionnels"
+      "subtitle": "Convertissez facilement des images, des documents et plus encore en PDF professionnels",
+      "reviews": {
+        "heading": "Meilleurs Avis Utilisateurs",
+        "items": [
+          "Numérisation sans effort en déplacement ! Cette application transforme mon téléphone en scanner portable. Rapide, précis et facile à utiliser. Fortement recommandé !",
+          "Meilleur que d'autres scanners PDF. Simple pour numériser des images et les enregistrer en PDF, en plus le partage est un jeu d'enfant.",
+          "Rapide et précis ! Je peux numériser plusieurs pages et les convertir en PDF en quelques secondes. Vraiment impressionnant !"
+        ]
+      }
     },
     "screen2": {
       "title": "Gérez vos PDF",

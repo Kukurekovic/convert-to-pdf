@@ -7,6 +7,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { RF, RS } from '../../utils/responsive';
 import i18n from '../../i18n';
 import type { Onboarding1ScreenProps } from '../../types/navigation';
+import UserReviewsCarousel from '../../components/UserReviewsCarousel';
 
 export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps) {
   // Handle Android back button - exit app on first onboarding screen
@@ -42,12 +43,11 @@ export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps
 
         <View style={styles.contentContainer}>
           <Text style={styles.title}>{i18n.t('onboarding.screen1.title')}</Text>
-          <Text style={styles.subtitle}>
-            {i18n.t('onboarding.screen1.subtitle')}
-          </Text>
         </View>
 
-        <View style={styles.bottomSpacer} />
+        <View style={styles.reviewsContainer}>
+          <UserReviewsCarousel />
+        </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Urbanist_700Bold',
     color: '#000000',
     textAlign: 'center',
-    marginBottom: RS(16),
+    marginBottom: RS(8),
   },
   subtitle: {
     fontSize: RF(18),
@@ -115,8 +115,10 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     opacity: 0.9,
   },
-  bottomSpacer: {
+  reviewsContainer: {
     flex: 1,
+    justifyContent: 'center',
+    paddingHorizontal: RS(16),
   },
   buttonContainer: {
     paddingHorizontal: RS(24),

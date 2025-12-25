@@ -22,7 +22,15 @@
   "onboarding": {
     "screen1": {
       "title": "Dateien in PDF konvertieren",
-      "subtitle": "Konvertieren Sie Bilder, Dokumente und mehr ganz einfach in professionelle PDFs"
+      "subtitle": "Konvertieren Sie Bilder, Dokumente und mehr ganz einfach in professionelle PDFs",
+      "reviews": {
+        "heading": "Top-Nutzerbewertungen",
+        "items": [
+          "Müheloses Scannen unterwegs! Diese App verwandelt mein Handy in einen tragbaren Scanner. Schnell, genau und einfach zu bedienen. Sehr empfehlenswert!",
+          "Besser als andere PDF-Scanner. Einfaches Scannen von Bildern und Speichern als PDFs, plus das Teilen ist ein Kinderspiel.",
+          "Schnell und genau! Ich kann mehrere Seiten scannen und sie in Sekunden in PDFs umwandeln. Wirklich beeindruckend!"
+        ]
+      }
     },
     "screen2": {
       "title": "Verwalten Sie Ihre PDFs",

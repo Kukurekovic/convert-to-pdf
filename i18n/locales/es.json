@@ -22,7 +22,15 @@
   "onboarding": {
     "screen1": {
       "title": "Convierte archivos a PDF",
-      "subtitle": "Convierte fácilmente imágenes, documentos y más en PDFs profesionales"
+      "subtitle": "Convierte fácilmente imágenes, documentos y más en PDFs profesionales",
+      "reviews": {
+        "heading": "Opiniones de Usuarios",
+        "items": [
+          "¡Escaneo sin esfuerzo sobre la marcha! Esta aplicación convierte mi teléfono en un escáner portátil. Rápido, preciso y fácil de usar. ¡Muy recomendado!",
+          "Mejor que otros escáneres de PDF. Simple para escanear imágenes y guardarlas como PDFs, además compartir es muy fácil.",
+          "¡Rápido y preciso! Puedo escanear múltiples páginas y convertirlas en PDFs en segundos. ¡Verdaderamente impresionante!"
+        ]
+      }
     },
     "screen2": {
       "title": "Gestiona tus PDFs",
