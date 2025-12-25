@@ -79,8 +79,7 @@
       "sizeLargest": "Size (Largest)"
     },
     "empty": {
-      "title": "No documents here",
-      "message": "Convert images to PDF to see them here"
+      "title": "No documents here"
     },
     "alerts": {
       "deletePDF": "Delete PDF",

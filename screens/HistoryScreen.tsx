@@ -223,9 +223,6 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
     <View style={styles.emptyState}>
       <Text style={styles.emptyIcon}>📄</Text>
       <Text style={styles.emptyTitle}>{i18n.t('history.empty.title')}</Text>
-      <Text style={styles.emptyText}>
-        {i18n.t('history.empty.message')}
-      </Text>
     </View>
   );
 
@@ -436,12 +433,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Urbanist_700Bold',
     color: theme.colors.text,
     marginBottom: RS(8),
-  },
-  emptyText: {
-    fontSize: RF(16),
-    fontFamily: 'Urbanist_400Regular',
-    color: theme.colors.textLight,
-    textAlign: 'center',
   },
   swipeActionsContainer: {
     flexDirection: 'row',

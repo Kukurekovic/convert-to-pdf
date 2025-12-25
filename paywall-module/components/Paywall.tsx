@@ -181,6 +181,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
             justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: isLargeScreen ? scaleSpacing(48) : (isAndroidMediumOrSmall ? (isAndroidSmall ? scaleAndroidExtraCondensed(24) : scaleAndroidCondensed(24)) : scaleSpacing(24)),
+            paddingTop: isAndroidSmall ? scaleAndroidExtraCondensed(40) : scaleSpacing(40),
           }}>
             {/* Title */}
             <Text
@@ -188,8 +189,8 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                 getFontFamily('bold'),
                 {
                   fontSize: Platform.OS === 'android'
-                    ? (isTablet ? 32 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.xl.phone * 0.85) : (isSmallScreen ? 18 : responsiveDimensions.fontSize.xl.phone)))
-                    : (isTablet ? 36 : (isSmallScreen ? 20 : responsiveDimensions.fontSize['2xl'].phone)),
+                    ? (isTablet ? 40 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize['2xl'].phone * 0.9) : (isSmallScreen ? 22 : responsiveDimensions.fontSize['2xl'].phone)))
+                    : (isTablet ? 44 : (isSmallScreen ? 24 : responsiveDimensions.fontSize['3xl'].phone)),
                   color: '#FFFFFF',
                   textAlign: 'center',
                   textShadowColor: 'rgba(0, 0, 0, 0.75)',
@@ -207,6 +208,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                 width: isLargeScreen ? '85%' : '92%',
                 alignSelf: 'center',
                 marginTop: isAndroidSmall ? scaleAndroidExtraCondensed(16) : scaleSpacing(20),
+                paddingLeft: isAndroidSmall ? scaleAndroidExtraCondensed(16) : scaleSpacing(16),
               }}
             >
               {/* Feature: Saved Routines */}
@@ -218,7 +220,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                 <View style={{
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(12),
+                  marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(10) : scaleSpacing(10),
                 }}>
                   <Feather
                     name="file-text"
@@ -232,9 +234,9 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                 }}>
                   <Text
                     style={[
-                      getFontFamily('regular'),
+                      getFontFamily('semiBold'),
                       {
-                        fontSize: isTablet ? 20 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.base.phone * 0.8) : (isSmallScreen ? 16 : responsiveDimensions.fontSize.base.phone)),
+                        fontSize: isTablet ? 24 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.lg.phone * 0.85) : (isSmallScreen ? 18 : responsiveDimensions.fontSize.lg.phone)),
                         color: '#FFFFFF',
                         textAlign: 'left',
                         textShadowColor: 'rgba(0, 0, 0, 0.5)',
@@ -257,7 +259,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                 <View style={{
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(12),
+                  marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(10) : scaleSpacing(10),
                 }}>
                   <Feather
                     name="copy"
@@ -271,9 +273,9 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                 }}>
                   <Text
                     style={[
-                      getFontFamily('regular'),
+                      getFontFamily('semiBold'),
                       {
-                        fontSize: isTablet ? 20 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.base.phone * 0.8) : (isSmallScreen ? 16 : responsiveDimensions.fontSize.base.phone)),
+                        fontSize: isTablet ? 24 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.lg.phone * 0.85) : (isSmallScreen ? 18 : responsiveDimensions.fontSize.lg.phone)),
                         color: '#FFFFFF',
                         textAlign: 'left',
                         textShadowColor: 'rgba(0, 0, 0, 0.5)',
@@ -295,7 +297,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                 <View style={{
                   alignItems: 'center',
                   justifyContent: 'center',
-                  marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(12) : scaleSpacing(12),
+                  marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(10) : scaleSpacing(10),
                 }}>
                   <Feather
                     name="share-2"
@@ -309,9 +311,9 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                 }}>
                   <Text
                     style={[
-                      getFontFamily('regular'),
+                      getFontFamily('semiBold'),
                       {
-                        fontSize: isTablet ? 20 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.base.phone * 0.8) : (isSmallScreen ? 16 : responsiveDimensions.fontSize.base.phone)),
+                        fontSize: isTablet ? 24 : (isAndroidSmall ? Math.round(responsiveDimensions.fontSize.lg.phone * 0.85) : (isSmallScreen ? 18 : responsiveDimensions.fontSize.lg.phone)),
                         color: '#FFFFFF',
                         textAlign: 'left',
                         textShadowColor: 'rgba(0, 0, 0, 0.5)',
@@ -546,8 +548,8 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
             {/* Subscribe Button */}
             <TouchableOpacity
               style={{
-                paddingVertical: isAndroidSmall ? scaleAndroidExtraCondensed(16) : 16,
-                marginBottom: isAndroidSmall ? scaleAndroidExtraCondensed(24) : 24,
+                paddingVertical: isAndroidSmall ? scaleAndroidExtraCondensed(24) : 24,
+                marginBottom: isAndroidSmall ? scaleAndroidExtraCondensed(16) : 16,
                 backgroundColor: theme.colors.primary,
                 borderRadius: 12,
                 width: '100%',
@@ -561,19 +563,25 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                 style={[
                   getFontFamily('semiBold'),
                   {
-                    fontSize: isAndroidSmall ? Math.round(18 * 0.9) : (isSmallScreen ? 18 : 18),
-                    marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(8) : 8,
+                    fontSize: isAndroidSmall ? Math.round(16 * 0.9) : (isSmallScreen ? 16 : 16),
                     color: theme.colors.primaryText,
                   },
                 ]}
               >
                 {selectedPlan === 'yearly' ? t('paywall.buttons.unlockNow') : t('paywall.buttons.tryFree')}
               </Text>
-              <Feather
-                name="chevron-right"
-                size={isAndroidSmall ? scaleAndroidExtraCondensed(26) : (isSmallScreen ? 22 : 26)}
-                color={theme.colors.primaryText}
-              />
+              <View
+                style={{
+                  position: 'absolute',
+                  right: isAndroidSmall ? scaleAndroidExtraCondensed(16) : 16,
+                }}
+              >
+                <Feather
+                  name="arrow-right"
+                  size={isAndroidSmall ? scaleAndroidExtraCondensed(22) : (isSmallScreen ? 20 : 22)}
+                  color={theme.colors.primaryText}
+                />
+              </View>
             </TouchableOpacity>
 
             {/* Links */}
