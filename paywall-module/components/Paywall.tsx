@@ -362,7 +362,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                   backgroundColor: selectedPlan === 'trial' ? `${theme.colors.primary}10` : theme.colors.background,
                   borderRadius: 12,
                   padding: 8,
-                  marginBottom: 12,
+                  marginBottom: 8,
                   flexDirection: 'row',
                   alignItems: 'center',
                 }}
@@ -505,10 +505,10 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
               <TouchableOpacity
                 style={{
                   width: isLargeScreen ? 'auto' : '100%',
-                  marginTop: isAndroidSmall ? scaleAndroidExtraCondensed(16) : 16,
+                  marginTop: 8,
                   paddingHorizontal: isAndroidSmall ? scaleAndroidExtraCondensed(16) : 16,
                   paddingVertical: isAndroidSmall ? scaleAndroidExtraCondensed(8) : 12,
-                  backgroundColor: '#F3F4F6',
+                  backgroundColor: 'transparent',
                   borderRadius: 12,
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -520,7 +520,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                     getFontFamily('semiBold'),
                     {
                       fontSize: isTablet ? 18 : (isAndroidSmall ? Math.round(16 * 0.8) : (isSmallScreen ? 14 : 16)),
-                      color: '#111827',
+                      color: theme.colors.text.primary,
                     },
                   ]}
                 >
@@ -548,7 +548,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
             {/* Subscribe Button */}
             <TouchableOpacity
               style={{
-                paddingVertical: isAndroidSmall ? scaleAndroidExtraCondensed(24) : 24,
+                paddingVertical: isAndroidSmall ? scaleAndroidExtraCondensed(32) : 32,
                 marginBottom: isAndroidSmall ? scaleAndroidExtraCondensed(16) : 16,
                 backgroundColor: theme.colors.primary,
                 borderRadius: 12,
@@ -578,7 +578,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
               >
                 <Feather
                   name="arrow-right"
-                  size={isAndroidSmall ? scaleAndroidExtraCondensed(22) : (isSmallScreen ? 20 : 22)}
+                  size={isAndroidSmall ? scaleAndroidExtraCondensed(16) : 16}
                   color={theme.colors.primaryText}
                 />
               </View>
@@ -591,7 +591,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                   style={[
                     getFontFamily('regular'),
                     {
-                      fontSize: isAndroidSmall ? Math.round(14 * 0.8) : (isSmallScreen ? 12 : 14),
+                      fontSize: isAndroidSmall ? Math.round(12 * 0.8) : 12,
                       color: theme.colors.text.muted,
                       textDecorationLine: 'underline',
                     },
@@ -605,7 +605,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                   style={[
                     getFontFamily('regular'),
                     {
-                      fontSize: isAndroidSmall ? Math.round(14 * 0.8) : (isSmallScreen ? 12 : 14),
+                      fontSize: isAndroidSmall ? Math.round(12 * 0.8) : 12,
                       color: theme.colors.text.muted,
                       textDecorationLine: 'underline',
                     },

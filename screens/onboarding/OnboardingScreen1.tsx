@@ -61,7 +61,7 @@ export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps
               <Text style={styles.buttonText}>{i18n.t('common.continue')}</Text>
               <MaterialIcons
                 name="arrow-forward"
-                size={RS(20)}
+                size={RS(16)}
                 color="#FFFFFF"
                 style={styles.arrowIcon}
               />
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     marginBottom: RS(24),
   },
   buttonText: {
-    fontSize: RF(18),
+    fontSize: RF(16),
     fontFamily: 'Urbanist_700Bold',
     color: '#FFFFFF',
   },
