@@ -23,13 +23,12 @@ interface ReviewItem {
 }
 
 export default function UserReviewsCarousel({
-  autoScrollInterval = 3000,
+  autoScrollInterval = 5000,
 }: UserReviewsCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef<FlatList>(null);
 
-  const CARD_WIDTH = Dimensions.get('window').width - RS(48);
-  const CARD_SPACING = RS(16);
+  const CARD_WIDTH = Dimensions.get('window').width;
 
   const reviews: ReviewItem[] = [
     { id: '1', text: i18n.t('onboarding.screen1.reviews.items.0') },
@@ -57,13 +56,15 @@ export default function UserReviewsCarousel({
   // Handle manual swipe
   const handleScrollEnd = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
     const contentOffsetX = event.nativeEvent.contentOffset.x;
-    const index = Math.round(contentOffsetX / (CARD_WIDTH + CARD_SPACING));
+    const index = Math.round(contentOffsetX / CARD_WIDTH);
     setCurrentIndex(index);
   };
 
   const renderReview: ListRenderItem<ReviewItem> = ({ item }) => (
-    <View style={styles.reviewCard}>
-      <Text style={styles.reviewText}>{item.text}</Text>
+    <View style={styles.reviewCardContainer}>
+      <View style={styles.reviewCard}>
+        <Text style={styles.reviewText}>{item.text}</Text>
+      </View>
     </View>
   );
 
@@ -86,19 +87,18 @@ export default function UserReviewsCarousel({
         renderItem={renderReview}
         keyExtractor={(item) => item.id}
         horizontal
-        snapToInterval={CARD_WIDTH + CARD_SPACING}
-        snapToAlignment="start"
+        snapToInterval={CARD_WIDTH}
+        snapToAlignment="center"
         decelerationRate="fast"
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={16}
         onMomentumScrollEnd={handleScrollEnd}
         getItemLayout={(data, index) => ({
           length: CARD_WIDTH,
-          offset: (CARD_WIDTH + CARD_SPACING) * index,
+          offset: CARD_WIDTH * index,
           index,
         })}
         contentContainerStyle={styles.flatListContent}
-        ItemSeparatorComponent={() => <View style={{ width: CARD_SPACING }} />}
       />
 
       {/* Pagination Dots */}
@@ -130,7 +130,6 @@ const styles = StyleSheet.create({
   },
   starsContainer: {
     alignItems: 'center',
-    marginBottom: RS(6),
   },
   starText: {
     fontSize: RF(20),
@@ -138,19 +137,23 @@ const styles = StyleSheet.create({
     letterSpacing: RS(2),
     fontFamily: 'Urbanist_400Regular',
   },
-  flatListContent: {
-    paddingHorizontal: RS(16),
+  flatListContent: {},
+  reviewCardContainer: {
+    width: Dimensions.get('window').width,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   reviewCard: {
-    width: Dimensions.get('window').width - RS(48),
+    width: Dimensions.get('window').width - RS(26),
     padding: RS(16),
+    backgroundColor: 'transparent',
   },
   reviewText: {
     fontSize: RF(16),
     fontFamily: 'Urbanist_400Regular',
     color: theme.colors.text,
     textAlign: 'center',
-    lineHeight: RF(20),
+    lineHeight: RF(18),
   },
   paginationContainer: {
     flexDirection: 'row',

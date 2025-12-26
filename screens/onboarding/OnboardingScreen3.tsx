@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: RS(16),
   },
   title: {
-    fontSize: RF(32),
+    fontSize: RF(28),
     fontFamily: 'Urbanist_700Bold',
     color: '#000000',
     textAlign: 'center',

@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: RS(16),
   },
   title: {
-    fontSize: RF(32),
+    fontSize: RF(28),
     fontFamily: 'Urbanist_700Bold',
     color: '#000000',
     textAlign: 'center',
@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
   reviewsContainer: {
     flex: 1,
     justifyContent: 'center',
-    paddingHorizontal: RS(16),
   },
   buttonContainer: {
     paddingHorizontal: RS(24),
