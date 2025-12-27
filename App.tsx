@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
@@ -13,11 +13,9 @@ import i18n from './i18n';
 import './i18n'; // Initialize i18n
 import { theme } from './theme/theme';
 import { RF, RS } from './utils/responsive';
+import LoadingScreen from './components/LoadingScreen';
 
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-
-// Prevent splash screen from auto-hiding
-SplashScreen.preventAutoHideAsync();
 
 // Paywall configuration
 const paywallConfig = {
@@ -151,18 +149,17 @@ export default function App() {
   });
 
   const isLoading = useOnboardingStore((state) => state.isLoading);
+  const [showCustomLoading, setShowCustomLoading] = useState(true);
 
   // Combined loading state - wait for both fonts and onboarding state
-  const isReady = fontsLoaded && !isLoading;
+  const resourcesReady = fontsLoaded && !isLoading;
 
-  useEffect(() => {
-    if (isReady) {
-      SplashScreen.hideAsync();
-    }
-  }, [isReady]);
+  const handleLoadingComplete = useCallback(() => {
+    setShowCustomLoading(false);
+  }, []);
 
-  if (!isReady) {
-    return null; // Splash screen will still be visible
+  if (!resourcesReady || showCustomLoading) {
+    return <LoadingScreen onLoadingComplete={handleLoadingComplete} />;
   }
 
   return (

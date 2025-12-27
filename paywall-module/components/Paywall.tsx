@@ -177,7 +177,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
           {/* Dark overlay for text readability */}
           <View style={{
             flex: 1,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: 'rgba(0, 0, 0, 0.6)',
             justifyContent: 'center',
             alignItems: 'center',
             paddingHorizontal: isLargeScreen ? scaleSpacing(48) : (isAndroidMediumOrSmall ? (isAndroidSmall ? scaleAndroidExtraCondensed(24) : scaleAndroidCondensed(24)) : scaleSpacing(24)),
@@ -223,7 +223,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                   marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(10) : scaleSpacing(10),
                 }}>
                   <Feather
-                    name="file-text"
+                    name="check"
                     size={isTablet ? responsiveDimensions.iconSize.medium.tablet : (isAndroidSmall ? scaleAndroidExtraCondensed(responsiveDimensions.iconSize.medium.phone) : responsiveDimensions.iconSize.medium.phone)}
                     color="#FFFFFF"
                   />
@@ -262,7 +262,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                   marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(10) : scaleSpacing(10),
                 }}>
                   <Feather
-                    name="copy"
+                    name="check"
                     size={isTablet ? responsiveDimensions.iconSize.medium.tablet : (isAndroidSmall ? scaleAndroidExtraCondensed(responsiveDimensions.iconSize.medium.phone) : responsiveDimensions.iconSize.medium.phone)}
                     color="#FFFFFF"
                   />
@@ -300,7 +300,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                   marginRight: isAndroidSmall ? scaleAndroidExtraCondensed(10) : scaleSpacing(10),
                 }}>
                   <Feather
-                    name="share-2"
+                    name="check"
                     size={isTablet ? responsiveDimensions.iconSize.medium.tablet : (isAndroidSmall ? scaleAndroidExtraCondensed(responsiveDimensions.iconSize.medium.phone) : responsiveDimensions.iconSize.medium.phone)}
                     color="#FFFFFF"
                   />
@@ -473,7 +473,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                     {t('paywall.plans.yearlyPrice', { price: annualPackage?.product?.priceString || '$19.99' })}
                   </Text>
                 </View>
-                <View style={{ backgroundColor: theme.colors.accent, padding: 8, borderRadius: 6, marginRight: 12 }}>
+                <View style={{ backgroundColor: theme.colors.primary, padding: 8, borderRadius: 6, marginRight: 12 }}>
                   <Text
                     style={[
                       getFontFamily('semiBold'),
@@ -508,7 +508,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                   marginTop: 8,
                   paddingHorizontal: isAndroidSmall ? scaleAndroidExtraCondensed(16) : 16,
                   paddingVertical: isAndroidSmall ? scaleAndroidExtraCondensed(8) : 12,
-                  backgroundColor: 'transparent',
+                  backgroundColor: '#F5F5F5',
                   borderRadius: 12,
                   flexDirection: 'row',
                   alignItems: 'center',
@@ -536,7 +536,7 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                       setSelectedPlan('yearly');
                     }
                   }}
-                  trackColor={{ false: '#E5E7EB', true: theme.colors.primary }}
+                  trackColor={{ false: '#E5E7EB', true: '#46D367' }}
                   thumbColor={freeTrialEnabled ? '#FFFFFF' : '#F3F4F6'}
                 />
               </TouchableOpacity>

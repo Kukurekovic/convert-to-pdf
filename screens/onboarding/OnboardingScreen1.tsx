@@ -4,6 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { runOnJS } from 'react-native-reanimated';
 import { RF, RS } from '../../utils/responsive';
 import i18n from '../../i18n';
 import type { Onboarding1ScreenProps } from '../../types/navigation';
@@ -24,8 +26,25 @@ export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps
     }, [])
   );
 
+  const navigateToScreen2 = () => {
+    navigation.navigate('Onboarding2');
+  };
+
+  const swipeGesture = Gesture.Pan()
+    .activeOffsetX([-15, 15])
+    .failOffsetY([-10, 10])
+    .onEnd((event) => {
+      'worklet';
+      if (event.translationX < -30 || event.velocityX < -200) {
+        // Swipe left - go to Screen2
+        runOnJS(navigateToScreen2)();
+      }
+      // No swipe right - this is the first screen
+    });
+
   return (
-    <View style={styles.background}>
+    <GestureDetector gesture={swipeGesture}>
+      <View style={styles.background}>
       <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
         <View style={styles.imageContainer}>
           <Image
@@ -70,6 +89,7 @@ export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps
         </View>
       </SafeAreaView>
     </View>
+    </GestureDetector>
   );
 }
 

@@ -3,12 +3,14 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import { runOnJS } from 'react-native-reanimated';
 import { RF, RS } from '../../utils/responsive';
 import { useOnboardingStore } from '../../store/useOnboardingStore';
 import i18n from '../../i18n';
 import type { Onboarding3ScreenProps } from '../../types/navigation';
 
-export default function OnboardingScreen3({}: Onboarding3ScreenProps) {
+export default function OnboardingScreen3({ navigation }: Onboarding3ScreenProps) {
   const setCompleted = useOnboardingStore((state) => state.setCompleted);
 
   const handleGetStarted = () => {
@@ -16,8 +18,31 @@ export default function OnboardingScreen3({}: Onboarding3ScreenProps) {
     // Navigation will automatically update via App.tsx watching the store
   };
 
+  const completeOnboarding = () => {
+    setCompleted(true);
+  };
+
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  const swipeGesture = Gesture.Pan()
+    .activeOffsetX([-15, 15])
+    .failOffsetY([-10, 10])
+    .onEnd((event) => {
+      'worklet';
+      if (event.translationX < -30 || event.velocityX < -200) {
+        // Swipe left - complete onboarding (same as Continue button)
+        runOnJS(completeOnboarding)();
+      } else if (event.translationX > 30 || event.velocityX > 200) {
+        // Swipe right - go back to Screen2
+        runOnJS(goBack)();
+      }
+    });
+
   return (
-    <View style={styles.background}>
+    <GestureDetector gesture={swipeGesture}>
+      <View style={styles.background}>
       <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
         <View style={styles.imageContainer}>
           <Image
@@ -63,6 +88,7 @@ export default function OnboardingScreen3({}: Onboarding3ScreenProps) {
         </View>
       </SafeAreaView>
     </View>
+    </GestureDetector>
   );
 }
 
