@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -26,6 +26,17 @@ export default function OnboardingScreen3({ navigation }: Onboarding3ScreenProps
     navigation.goBack();
   };
 
+  // Fade-in animation to smooth layout shifts
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
   const swipeGesture = Gesture.Pan()
     .activeOffsetX([-15, 15])
     .failOffsetY([-10, 10])
@@ -41,7 +52,8 @@ export default function OnboardingScreen3({ navigation }: Onboarding3ScreenProps
     });
 
   return (
-    <GestureDetector gesture={swipeGesture}>
+    <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+      <GestureDetector gesture={swipeGesture}>
       <View style={styles.background}>
       <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
         <View style={styles.imageContainer}>
@@ -51,7 +63,13 @@ export default function OnboardingScreen3({ navigation }: Onboarding3ScreenProps
             resizeMode="cover"
           />
           <LinearGradient
-            colors={['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)']}
+            colors={[
+              'rgba(255, 255, 255, 0)',
+              'rgba(255, 255, 255, 0.3)',
+              'rgba(255, 255, 255, 0.7)',
+              'rgba(255, 255, 255, 1)',
+            ]}
+            locations={[0, 0.3, 0.7, 1]}
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
             style={styles.gradient}
@@ -89,6 +107,7 @@ export default function OnboardingScreen3({ navigation }: Onboarding3ScreenProps
       </SafeAreaView>
     </View>
     </GestureDetector>
+    </Animated.View>
   );
 }
 
@@ -101,7 +120,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   imageContainer: {
-    flex: 2.5,
+    flex: 3.5,
     width: '100%',
     overflow: 'hidden',
   },
@@ -114,7 +133,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: RS(100),
+    height: RS(150),
   },
   contentContainer: {
     alignItems: 'center',
@@ -135,7 +154,7 @@ const styles = StyleSheet.create({
     opacity: 0.9,
   },
   bottomSpacer: {
-    flex: 1,
+    flex: 0.5,
   },
   buttonContainer: {
     paddingHorizontal: RS(24),

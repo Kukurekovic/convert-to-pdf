@@ -519,7 +519,9 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                   style={[
                     getFontFamily('semiBold'),
                     {
-                      fontSize: isTablet ? 18 : (isAndroidSmall ? Math.round(16 * 0.8) : (isSmallScreen ? 14 : 16)),
+                      fontSize: Platform.OS === 'android'
+                        ? (isTablet ? 20 : (isSmallScreen ? 14 : 16))
+                        : (isTablet ? 24 : (isSmallScreen ? 16 : 18)),
                       color: theme.colors.text.primary,
                     },
                   ]}
@@ -563,7 +565,9 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
                 style={[
                   getFontFamily('semiBold'),
                   {
-                    fontSize: isAndroidSmall ? Math.round(16 * 0.9) : (isSmallScreen ? 16 : 16),
+                    fontSize: Platform.OS === 'android'
+                      ? (isTablet ? 22 : (isSmallScreen ? 16 : 18))
+                      : (isTablet ? 26 : (isSmallScreen ? 18 : 20)),
                     color: theme.colors.primaryText,
                   },
                 ]}
@@ -578,7 +582,9 @@ const Paywall: React.FC<PaywallProps> = ({ visible, isSubscriber, offerings, onC
               >
                 <Feather
                   name="arrow-right"
-                  size={isAndroidSmall ? scaleAndroidExtraCondensed(16) : 16}
+                  size={Platform.OS === 'android'
+                    ? (isTablet ? 20 : (isSmallScreen ? 16 : 18))
+                    : (isTablet ? 24 : (isSmallScreen ? 18 : 20))}
                   color={theme.colors.primaryText}
                 />
               </View>

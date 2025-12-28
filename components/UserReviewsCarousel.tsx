@@ -63,7 +63,7 @@ export default function UserReviewsCarousel({
   const renderReview: ListRenderItem<ReviewItem> = ({ item }) => (
     <View style={styles.reviewCardContainer}>
       <View style={styles.reviewCard}>
-        <Text style={styles.reviewText}>{item.text}</Text>
+        <Text style={styles.reviewText}>"{item.text}"</Text>
       </View>
     </View>
   );
@@ -150,7 +150,7 @@ const styles = StyleSheet.create({
   },
   reviewText: {
     fontSize: RF(16),
-    fontFamily: 'Urbanist_400Regular',
+    fontFamily: 'Urbanist_400Regular_Italic',
     color: theme.colors.text,
     textAlign: 'center',
     lineHeight: RF(18),

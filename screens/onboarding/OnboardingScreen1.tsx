@@ -1,5 +1,5 @@
-import React, { useCallback } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, BackHandler, Image } from 'react-native';
+import React, { useCallback, useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, BackHandler, Image, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useFocusEffect } from '@react-navigation/native';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -30,6 +30,17 @@ export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps
     navigation.navigate('Onboarding2');
   };
 
+  // Fade-in animation to smooth layout shifts
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
+
   const swipeGesture = Gesture.Pan()
     .activeOffsetX([-15, 15])
     .failOffsetY([-10, 10])
@@ -43,7 +54,8 @@ export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps
     });
 
   return (
-    <GestureDetector gesture={swipeGesture}>
+    <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+      <GestureDetector gesture={swipeGesture}>
       <View style={styles.background}>
       <SafeAreaView style={styles.container} edges={['left', 'right', 'bottom']}>
         <View style={styles.imageContainer}>
@@ -53,7 +65,13 @@ export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps
             resizeMode="cover"
           />
           <LinearGradient
-            colors={['rgba(255, 255, 255, 0)', 'rgba(255, 255, 255, 1)']}
+            colors={[
+              'rgba(255, 255, 255, 0)',
+              'rgba(255, 255, 255, 0.3)',
+              'rgba(255, 255, 255, 0.7)',
+              'rgba(255, 255, 255, 1)',
+            ]}
+            locations={[0, 0.3, 0.7, 1]}
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
             style={styles.gradient}
@@ -90,6 +108,7 @@ export default function OnboardingScreen1({ navigation }: Onboarding1ScreenProps
       </SafeAreaView>
     </View>
     </GestureDetector>
+    </Animated.View>
   );
 }
 
@@ -115,7 +134,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
-    height: RS(100),
+    height: RS(150),
   },
   contentContainer: {
     alignItems: 'center',

@@ -43,15 +43,6 @@ export default {
     },
   },
 
-  trialLimit: {
-    title: 'Upgrade to Premium',
-    message: 'Please upgrade to Premium Features. The free version is limited to 7 workouts every 7 days. A workout only counts once you finish at least one exercise interval - so no worries about false starts or accidental taps.',
-    buttons: {
-      learnMore: 'Learn More',
-      maybeLater: 'Maybe Later',
-    },
-  },
-
   alreadySubscribed: {
     title: "You're Already Premium!",
     subtitle: 'Thanks for being a subscriber',

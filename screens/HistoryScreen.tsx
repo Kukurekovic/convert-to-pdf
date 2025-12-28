@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   Image,
   TextInput,
   Modal,
+  Animated,
   type ListRenderItem,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -41,6 +42,17 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
   // Paywall hooks
   const { isSubscriber } = usePaywallGate();
   const { tryShowPaywall } = usePaywallTrigger();
+
+  // Fade-in animation to smooth layout shifts
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   useEffect(() => {
     loadPDFsFromStorage();
@@ -227,7 +239,8 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
   );
 
   return (
-    <GestureHandlerRootView style={styles.container}>
+    <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+      <GestureHandlerRootView style={styles.container}>
       <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
         <View style={styles.header}>
           <Text style={styles.title}>{i18n.t('history.title')}</Text>
@@ -325,7 +338,8 @@ export default function HistoryScreen({ navigation }: HistoryListScreenProps) {
           />
         )}
       </SafeAreaView>
-    </GestureHandlerRootView>
+      </GestureHandlerRootView>
+    </Animated.View>
   );
 }
 

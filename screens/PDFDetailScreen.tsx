@@ -13,6 +13,7 @@ import {
   NativeSyntheticEvent,
   Modal,
   TextInput,
+  Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -45,6 +46,17 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
   // Paywall hooks
   const { isSubscriber } = usePaywallGate();
   const { tryShowPaywall } = usePaywallTrigger();
+
+  // Fade-in animation to smooth layout shifts
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   const pdf = savedPDFs.find((p) => p.id === pdfId);
   const pageThumbnails = pdf?.pageThumbnails ?? (pdf?.thumbnail ? [pdf.thumbnail] : []);
@@ -168,16 +180,19 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
 
   if (!pdf) {
     return (
-      <SafeAreaView style={styles.container}>
-        <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={theme.colors.primary} />
-        </View>
-      </SafeAreaView>
+      <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+        <SafeAreaView style={styles.container}>
+          <View style={styles.loadingContainer}>
+            <ActivityIndicator size="large" color={theme.colors.primary} />
+          </View>
+        </SafeAreaView>
+      </Animated.View>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+      <SafeAreaView style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -359,7 +374,8 @@ export default function PDFDetailScreen({ route, navigation }: PDFDetailScreenPr
           )}
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Animated.View>
   );
 }
 

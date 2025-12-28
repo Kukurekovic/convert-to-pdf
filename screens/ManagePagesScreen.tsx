@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -8,6 +8,7 @@ import {
   Image,
   Alert,
   Switch,
+  Animated,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -32,6 +33,17 @@ export default function ManagePagesScreen({ route, navigation }: ManagePagesScre
 
   const pdf = savedPDFs.find((p) => p.id === pdfId);
   const pageThumbnails = pdf?.pageThumbnails ?? (pdf?.thumbnail ? [pdf.thumbnail] : []);
+
+  // Fade-in animation to smooth layout shifts
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   const [pages, setPages] = useState<PageItem[]>(
     pageThumbnails.map((uri, index) => ({
@@ -207,7 +219,8 @@ export default function ManagePagesScreen({ route, navigation }: ManagePagesScre
   const selectedCount = pages.filter((p) => p.selected).length;
 
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+    <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+      <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <MaterialIcons name="arrow-back" size={RS(24)} color={theme.colors.text} />
@@ -249,7 +262,8 @@ export default function ManagePagesScreen({ route, navigation }: ManagePagesScre
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
       />
-    </SafeAreaView>
+      </SafeAreaView>
+    </Animated.View>
   );
 }
 

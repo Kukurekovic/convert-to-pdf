@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Share, Alert } from 'react-native';
+import { useEffect, useRef } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Share, Alert, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -11,6 +12,17 @@ import { usePaywallTrigger } from '../paywall-module';
 
 export default function SettingsScreen({}: SettingsScreenProps) {
   const { tryShowPaywall } = usePaywallTrigger();
+
+  // Fade-in animation to smooth layout shifts
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   const handleOpenURL = async (url: string): Promise<void> => {
     try {
@@ -67,7 +79,8 @@ export default function SettingsScreen({}: SettingsScreenProps) {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+    <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+      <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
         <Text style={styles.title}>{i18n.t('settings.title')}</Text>
       </View>
@@ -165,7 +178,8 @@ export default function SettingsScreen({}: SettingsScreenProps) {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Animated.View>
   );
 }
 

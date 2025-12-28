@@ -39,7 +39,6 @@ export { PaywallProvider } from './contexts/PaywallProvider';
 // ============================================
 export { default as Paywall } from './components/Paywall';
 export { default as UpgradeModal } from './components/UpgradeModal';
-export { default as TrialLimitModal } from './components/TrialLimitModal';
 
 // ============================================
 // Hooks
@@ -79,7 +78,6 @@ export type {
   UseResponsiveValues,
   PaywallProps,
   UpgradeModalProps,
-  TrialLimitModalProps,
   PaywallProviderProps,
   LocalizationContextType,
   LocalizationProviderProps,

@@ -11,7 +11,7 @@ const theme: Theme = {
     primaryDark: '#ffffff',
     primaryLight: '#e6f5fa',
 
-    secondary: '#0f2260',
+    secondary: '#23AEE0',
     secondaryDark: '#CC653F',
 
     success: '#4CAF50',

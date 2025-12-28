@@ -1,9 +1,8 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { View, Text, Dimensions } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import { useFonts, Urbanist_400Regular, Urbanist_600SemiBold, Urbanist_700Bold } from '@expo-google-fonts/urbanist';
-import * as SplashScreen from 'expo-splash-screen';
+import { useFonts, Urbanist_400Regular, Urbanist_400Regular_Italic, Urbanist_600SemiBold, Urbanist_700Bold } from '@expo-google-fonts/urbanist';
 import Toast from 'react-native-toast-message';
 import RootNavigator from './navigation/RootNavigator';
 import { useOnboardingStore } from './store/useOnboardingStore';
@@ -27,7 +26,7 @@ const paywallConfig = {
   },
   trial: {
     enabled: true,
-    workoutLimit: 5,
+    workoutLimit: 999999, // Unlimited conversions during trial
     durationDays: 7,
   },
   links: {
@@ -38,6 +37,9 @@ const paywallConfig = {
 const paywallTheme = {
   colors: {
     primary: '#2350E0',
+    border: {
+      selected: '#2350E0',
+    },
     feature: {
       icon: '#2350E0',
     },
@@ -144,15 +146,29 @@ function AppContent() {
 export default function App() {
   const [fontsLoaded] = useFonts({
     Urbanist_400Regular,
+    Urbanist_400Regular_Italic,
     Urbanist_600SemiBold,
     Urbanist_700Bold,
   });
 
   const isLoading = useOnboardingStore((state) => state.isLoading);
   const [showCustomLoading, setShowCustomLoading] = useState(true);
+  const [fontsReady, setFontsReady] = useState(false);
 
-  // Combined loading state - wait for both fonts and onboarding state
-  const resourcesReady = fontsLoaded && !isLoading;
+  // Ensure fonts are fully applied before rendering main content
+  useEffect(() => {
+    if (fontsLoaded && !isLoading) {
+      // Small delay to ensure fonts are fully applied to prevent layout shift
+      const timer = setTimeout(() => {
+        setFontsReady(true);
+      }, 100);
+      return () => clearTimeout(timer);
+    }
+    return undefined;
+  }, [fontsLoaded, isLoading]);
+
+  // Combined loading state - wait for fonts to be ready
+  const resourcesReady = fontsReady;
 
   const handleLoadingComplete = useCallback(() => {
     setShowCustomLoading(false);

@@ -136,12 +136,6 @@ export interface UpgradeModalProps {
   onRestore: () => void;
 }
 
-export interface TrialLimitModalProps {
-  visible: boolean;
-  onClose: () => void;
-  onLearnMore: () => void;
-}
-
 // ============================================
 // Provider Props
 // ============================================

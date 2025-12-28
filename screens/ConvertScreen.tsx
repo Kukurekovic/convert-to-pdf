@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert, TextInput } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Modal, Alert, TextInput, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
@@ -30,6 +30,17 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
   const images = useDocumentStore((state) => state.images);
   const addImage = useDocumentStore((state) => state.addImage);
   const updateImage = useDocumentStore((state) => state.updateImage);
+
+  // Fade-in animation to smooth any remaining layout shifts
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   const handleFilesPress = async (): Promise<void> => {
     try {
@@ -206,8 +217,9 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
   };
 
   return (
-    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
-      <View style={styles.content}>
+    <Animated.View style={{ flex: 1, opacity: fadeAnim }}>
+      <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
+        <View style={styles.content}>
         <View style={styles.titleContainer}>
           <Text style={styles.title}>{i18n.t('convert.title')}</Text>
         </View>
@@ -338,7 +350,8 @@ export default function ConvertScreen({ navigation }: ConvertScreenProps) {
           </View>
         </View>
       </Modal>
-    </SafeAreaView>
+      </SafeAreaView>
+    </Animated.View>
   );
 }
 
