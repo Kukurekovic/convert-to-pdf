@@ -21,7 +21,7 @@
   },
   "onboarding": {
     "screen1": {
-      "title": "Konversi File ke PDF",
+      "title": "Selamat datang di PDF maker",
       "subtitle": "Ubah gambar, dokumen, dan lainnya menjadi PDF profesional dengan mudah",
       "reviews": {
         "heading": "Ulasan Pengguna Teratas",
@@ -33,12 +33,12 @@
       }
     },
     "screen2": {
-      "title": "Kelola PDF Anda",
-      "subtitle": "Edit, ubah nama, atur ulang halaman, dan kelola dokumen Anda dengan mudah"
+      "title": "Konversi Gambar ke PDF",
+      "subtitle": "Konversi cepat dari galeri, kamera, file, atau URL"
     },
     "screen3": {
-      "title": "Siap untuk Memulai?",
-      "subtitle": "Buat PDF pertama Anda dalam hitungan detik",
+      "title": "Simpan & Bagikan Di Mana Saja",
+      "subtitle": "Simpan PDF Anda dengan aman dan bagikan dalam hitungan detik",
       "button": "Mulai"
     }
   },

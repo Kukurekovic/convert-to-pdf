@@ -21,7 +21,7 @@
   },
   "onboarding": {
     "screen1": {
-      "title": "Converti file in PDF",
+      "title": "Benvenuto in PDF maker",
       "subtitle": "Converti facilmente immagini, documenti e altro in PDF professionali",
       "reviews": {
         "heading": "Recensioni Migliori",
@@ -33,12 +33,12 @@
       }
     },
     "screen2": {
-      "title": "Gestisci i tuoi PDF",
-      "subtitle": "Modifica, rinomina, riordina le pagine e organizza i tuoi documenti senza sforzo"
+      "title": "Converti immagini in PDF",
+      "subtitle": "Conversione rapida da galleria, fotocamera, file o URL"
     },
     "screen3": {
-      "title": "Pronto per iniziare?",
-      "subtitle": "Crea il tuo primo PDF in pochi secondi",
+      "title": "Salva e condividi ovunque",
+      "subtitle": "Archivia i tuoi PDF in modo sicuro e condividili in pochi secondi",
       "button": "Inizia"
     }
   },

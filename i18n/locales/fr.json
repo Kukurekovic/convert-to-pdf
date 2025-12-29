@@ -21,7 +21,7 @@
   },
   "onboarding": {
     "screen1": {
-      "title": "Convertir des fichiers en PDF",
+      "title": "Bienvenue sur PDF maker",
       "subtitle": "Convertissez facilement des images, des documents et plus encore en PDF professionnels",
       "reviews": {
         "heading": "Meilleurs Avis Utilisateurs",
@@ -33,12 +33,12 @@
       }
     },
     "screen2": {
-      "title": "Gérez vos PDF",
-      "subtitle": "Modifiez, renommez, réorganisez les pages et organisez vos documents sans effort"
+      "title": "Convertir des images en PDF",
+      "subtitle": "Conversion rapide depuis la galerie, l'appareil photo, les fichiers ou une URL"
     },
     "screen3": {
-      "title": "Prêt à commencer ?",
-      "subtitle": "Créez votre premier PDF en quelques secondes",
+      "title": "Enregistrer et partager n'importe où",
+      "subtitle": "Stockez vos PDFs en toute sécurité et partagez-les en quelques secondes",
       "button": "Commencer"
     }
   },

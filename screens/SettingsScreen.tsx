@@ -154,14 +154,17 @@ export default function SettingsScreen({}: SettingsScreenProps) {
               <Ionicons name="chevron-forward" size={RF(20)} color={theme.colors.textLight} />
             </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.cardButton}
-              onPress={handleRateUs}
-            >
-              <Ionicons name="star-outline" size={RF(20)} color={theme.colors.primary} />
-              <Text style={styles.buttonText}>{i18n.t('settings.support.rate')}</Text>
-              <Ionicons name="chevron-forward" size={RF(20)} color={theme.colors.textLight} />
-            </TouchableOpacity>
+            {/* Temporarily hidden - Rate Us button */}
+            {false && (
+              <TouchableOpacity
+                style={styles.cardButton}
+                onPress={handleRateUs}
+              >
+                <Ionicons name="star-outline" size={RF(20)} color={theme.colors.primary} />
+                <Text style={styles.buttonText}>{i18n.t('settings.support.rate')}</Text>
+                <Ionicons name="chevron-forward" size={RF(20)} color={theme.colors.textLight} />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
 
