@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Linking, Share, Alert, Animated } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome5 } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { RF, RS } from '../utils/responsive';
 import { theme } from '../theme/theme';
@@ -93,7 +93,7 @@ export default function SettingsScreen({}: SettingsScreenProps) {
               activeOpacity={0.7}
               onPress={tryShowPaywall}
             >
-              <Ionicons name="ribbon" size={RF(20)} color={theme.colors.warning} />
+              <FontAwesome5 name="crown" size={RF(15)} color="#FFD700" />
               <Text style={styles.buttonText}>{i18n.t('settings.premium.title')}</Text>
             </TouchableOpacity>
           </View>
