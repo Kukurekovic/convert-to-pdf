@@ -9,6 +9,7 @@
     "error": "Erreur",
     "success": "Succès",
     "next": "Suivant",
+    "continue": "Continuer",
     "download": "Télécharger",
     "page": "Page",
     "pages": "pages",
@@ -132,6 +133,10 @@
   },
   "settings": {
     "title": "Paramètres",
+    "premium": {
+      "title": "Essayer Premium",
+      "description": "Débloquez toutes les fonctionnalités"
+    },
     "info": {
       "title": "Informations",
       "faq": "FAQ & Aide",
@@ -196,7 +201,133 @@
     "reset": "Réinitialiser",
     "done": "Terminé"
   },
+  "paywall": {
+    "title": "Commencez à convertir en PDF",
+    "premiumFeature": "Fonctionnalité Premium",
+    "shareBlocked": "Le partage de PDF est une fonctionnalité premium. Passez à la version supérieure pour partager vos documents.",
+    "upgrade": "Mettre à niveau",
+    "features": {
+      "savedRoutines": "Conversions illimitées",
+      "unlimitedSessions": "PDF multipages",
+      "voiceCues": "Partage facile",
+      "removePaywalls": "Supprimer les publicités"
+    },
+    "plans": {
+      "yearly": "Pass à vie",
+      "yearlyPrice": "Paiement unique {{price}}",
+      "trial": "Pass mensuel",
+      "trialPrice": "7 jours gratuits, puis {{price}} par mois",
+      "bestValue": "MEILLEURE OFFRE",
+      "freeTrial": ""
+    },
+    "freeTrialEnabled": "Essai gratuit activé",
+    "buttons": {
+      "unlockNow": "Débloquer maintenant",
+      "tryFree": "Essayer gratuitement",
+      "restore": "Restaurer les achats"
+    },
+    "links": {
+      "privacy": "Politique de confidentialité"
+    }
+  },
+  "upgrade": {
+    "title": "Passer à Premium",
+    "message": "Débloquez toutes les fonctionnalités avec Premium !",
+    "buttons": {
+      "learnMore": "En savoir plus",
+      "alreadyPaid": "Restaurer les achats",
+      "noThanks": "Pas maintenant"
+    }
+  },
+  "trialLimit": {
+    "title": "Passer à Premium",
+    "message": "Vous avez atteint la limite. Passez à la version supérieure pour continuer !",
+    "buttons": {
+      "learnMore": "En savoir plus",
+      "maybeLater": "Peut-être plus tard"
+    }
+  },
   "alreadySubscribed": {
     "message": "Vous êtes déjà abonné !"
+  },
+  "components": {
+    "cameraView": {
+      "title": "Numériser le document",
+      "loading": "Chargement de l'appareil photo...",
+      "permissionMessage": "L'autorisation de la caméra est requise pour numériser les documents",
+      "noDevice": "Aucun appareil photo trouvé",
+      "instruction": "Positionnez le document dans le cadre et appuyez pour capturer",
+      "buttons": {
+        "grantPermission": "Accorder l'autorisation",
+        "close": "Fermer"
+      },
+      "alerts": {
+        "permissionError": "Échec de la vérification des autorisations de la caméra",
+        "captureError": "Échec de la capture de la photo"
+      }
+    },
+    "imagePreview": {
+      "title": "Aperçu du PDF",
+      "backButton": "← Retour",
+      "documentName": "Nom du document",
+      "documentNamePlaceholder": "Entrez le nom du document",
+      "pdfQuality": "Qualité du PDF",
+      "addMoreImages": "Ajouter plus d'images",
+      "generatePDF": "Générer le PDF",
+      "imageCount": "{{count}} image",
+      "imageCount_plural": "{{count}} images",
+      "buttons": {
+        "gallery": "Galerie",
+        "camera": "Appareil photo"
+      },
+      "alerts": {
+        "discardScan": "Abandonner la numérisation",
+        "discardScanMessage": "Êtes-vous sûr de vouloir abandonner cette numérisation ?",
+        "noImages": "Aucune image",
+        "noImagesMessage": "Veuillez ajouter au moins une image pour générer un PDF",
+        "noFilename": "Aucun nom de fichier",
+        "noFilenameMessage": "Veuillez entrer un nom de fichier pour le PDF",
+        "failedToScan": "Échec de la numérisation du document",
+        "permissionRequired": "Autorisation requise",
+        "permissionMessage": "Veuillez accorder l'accès à votre photothèque.",
+        "failedToPickImages": "Échec de la sélection des images de la galerie"
+      }
+    },
+    "pdfPreview": {
+      "title": "Aperçu du PDF",
+      "pageCount": "{{count}} page",
+      "pageCount_plural": "{{count}} pages",
+      "buttons": {
+        "savePDF": "Enregistrer le PDF",
+        "saveAndShare": "Enregistrer et partager",
+        "remove": "Supprimer"
+      },
+      "alerts": {
+        "success": "Succès",
+        "successMessage": "PDF enregistré avec succès !",
+        "removePage": "Supprimer la page",
+        "removePageMessage": "Êtes-vous sûr de vouloir supprimer cette page ?",
+        "error": "Erreur",
+        "saveError": "Échec de l'enregistrement du PDF. Veuillez réessayer.",
+        "shareError": "Échec de l'enregistrement et du partage du PDF. Veuillez réessayer."
+      }
+    },
+    "imageEditor": {
+      "title": "Modifier l'image",
+      "rotateFlip": "Rotation et retournement",
+      "filters": "Filtres",
+      "buttons": {
+        "rotateLeft": "↺ 90°",
+        "rotateRight": "↻ 90°",
+        "flipH": "⇄ Retourner H",
+        "flipV": "⇅ Retourner V"
+      },
+      "filterNames": {
+        "original": "Original",
+        "grayscale": "Niveaux de gris",
+        "enhance": "Améliorer",
+        "bw": "N&B"
+      }
+    }
   }
 }

@@ -9,6 +9,7 @@
     "error": "Ошибка",
     "success": "Успешно",
     "next": "Далее",
+    "continue": "Продолжить",
     "download": "Скачать",
     "page": "Страница",
     "pages": "страниц",
@@ -132,6 +133,10 @@
   },
   "settings": {
     "title": "Настройки",
+    "premium": {
+      "title": "Попробуйте Premium",
+      "description": "Разблокируйте все функции"
+    },
     "info": {
       "title": "Информация",
       "faq": "FAQ и помощь",
@@ -196,7 +201,133 @@
     "reset": "Сбросить",
     "done": "Готово"
   },
+  "paywall": {
+    "title": "Начните конвертировать в PDF",
+    "premiumFeature": "Премиум функция",
+    "shareBlocked": "Обмен PDF-файлами — это премиум-функция. Обновитесь, чтобы делиться документами.",
+    "upgrade": "Обновить",
+    "features": {
+      "savedRoutines": "Неограниченные конвертации",
+      "unlimitedSessions": "Многостраничные PDF",
+      "voiceCues": "Легкий обмен",
+      "removePaywalls": "Убрать рекламу"
+    },
+    "plans": {
+      "yearly": "Пожизненный доступ",
+      "yearlyPrice": "Разовый платёж {{price}}",
+      "trial": "Месячный доступ",
+      "trialPrice": "7 дней бесплатно, затем {{price}} в месяц",
+      "bestValue": "ЛУЧШЕЕ ПРЕДЛОЖЕНИЕ",
+      "freeTrial": ""
+    },
+    "freeTrialEnabled": "Бесплатная пробная версия активирована",
+    "buttons": {
+      "unlockNow": "Разблокировать сейчас",
+      "tryFree": "Попробовать бесплатно",
+      "restore": "Восстановить покупки"
+    },
+    "links": {
+      "privacy": "Политика конфиденциальности"
+    }
+  },
+  "upgrade": {
+    "title": "Обновить до Premium",
+    "message": "Разблокируйте все функции с Premium!",
+    "buttons": {
+      "learnMore": "Узнать больше",
+      "alreadyPaid": "Восстановить покупки",
+      "noThanks": "Не сейчас"
+    }
+  },
+  "trialLimit": {
+    "title": "Обновить до Premium",
+    "message": "Вы достигли лимита. Обновитесь, чтобы продолжить!",
+    "buttons": {
+      "learnMore": "Узнать больше",
+      "maybeLater": "Может быть, позже"
+    }
+  },
   "alreadySubscribed": {
     "message": "Вы уже подписаны!"
+  },
+  "components": {
+    "cameraView": {
+      "title": "Сканировать документ",
+      "loading": "Загрузка камеры...",
+      "permissionMessage": "Для сканирования документов требуется разрешение на использование камеры",
+      "noDevice": "Камера не найдена",
+      "instruction": "Разместите документ в рамке и коснитесь для захвата",
+      "buttons": {
+        "grantPermission": "Предоставить разрешение",
+        "close": "Закрыть"
+      },
+      "alerts": {
+        "permissionError": "Не удалось проверить разрешения камеры",
+        "captureError": "Не удалось сделать снимок"
+      }
+    },
+    "imagePreview": {
+      "title": "Предпросмотр PDF",
+      "backButton": "← Назад",
+      "documentName": "Имя документа",
+      "documentNamePlaceholder": "Введите имя документа",
+      "pdfQuality": "Качество PDF",
+      "addMoreImages": "Добавить больше изображений",
+      "generatePDF": "Создать PDF",
+      "imageCount": "{{count}} изображение",
+      "imageCount_plural": "{{count}} изображений",
+      "buttons": {
+        "gallery": "Галерея",
+        "camera": "Камера"
+      },
+      "alerts": {
+        "discardScan": "Отменить сканирование",
+        "discardScanMessage": "Вы уверены, что хотите отменить это сканирование?",
+        "noImages": "Нет изображений",
+        "noImagesMessage": "Пожалуйста, добавьте хотя бы одно изображение для создания PDF",
+        "noFilename": "Нет имени файла",
+        "noFilenameMessage": "Пожалуйста, введите имя файла для PDF",
+        "failedToScan": "Не удалось отсканировать документ",
+        "permissionRequired": "Требуется разрешение",
+        "permissionMessage": "Пожалуйста, предоставьте доступ к вашей фотогалерее.",
+        "failedToPickImages": "Не удалось выбрать изображения из галереи"
+      }
+    },
+    "pdfPreview": {
+      "title": "Предпросмотр PDF",
+      "pageCount": "{{count}} страница",
+      "pageCount_plural": "{{count}} страниц",
+      "buttons": {
+        "savePDF": "Сохранить PDF",
+        "saveAndShare": "Сохранить и поделиться",
+        "remove": "Удалить"
+      },
+      "alerts": {
+        "success": "Успешно",
+        "successMessage": "PDF успешно сохранен!",
+        "removePage": "Удалить страницу",
+        "removePageMessage": "Вы уверены, что хотите удалить эту страницу?",
+        "error": "Ошибка",
+        "saveError": "Не удалось сохранить PDF. Пожалуйста, попробуйте снова.",
+        "shareError": "Не удалось сохранить и поделиться PDF. Пожалуйста, попробуйте снова."
+      }
+    },
+    "imageEditor": {
+      "title": "Редактировать изображение",
+      "rotateFlip": "Повернуть и отразить",
+      "filters": "Фильтры",
+      "buttons": {
+        "rotateLeft": "↺ 90°",
+        "rotateRight": "↻ 90°",
+        "flipH": "⇄ Отразить Г",
+        "flipV": "⇅ Отразить В"
+      },
+      "filterNames": {
+        "original": "Оригинал",
+        "grayscale": "Оттенки серого",
+        "enhance": "Улучшить",
+        "bw": "Ч/Б"
+      }
+    }
   }
 }

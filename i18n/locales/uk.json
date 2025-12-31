@@ -9,6 +9,7 @@
     "error": "Помилка",
     "success": "Успішно",
     "next": "Далі",
+    "continue": "Продовжити",
     "download": "Завантажити",
     "page": "Сторінка",
     "pages": "сторінок",
@@ -132,6 +133,10 @@
   },
   "settings": {
     "title": "Налаштування",
+    "premium": {
+      "title": "Спробуйте Преміум",
+      "description": "Розблокуйте всі функції"
+    },
     "info": {
       "title": "Інформація",
       "faq": "Поширені питання та допомога",
@@ -196,7 +201,133 @@
     "reset": "Скинути",
     "done": "Готово"
   },
+  "paywall": {
+    "title": "Почніть конвертувати в PDF",
+    "premiumFeature": "Преміум-функція",
+    "shareBlocked": "Поділитися PDF - це преміум-функція. Оновіться, щоб ділитися вашими документами.",
+    "upgrade": "Оновити",
+    "features": {
+      "savedRoutines": "Необмежені конвертації",
+      "unlimitedSessions": "Багатосторінкові PDF",
+      "voiceCues": "Легкий обмін",
+      "removePaywalls": "Видалити рекламу"
+    },
+    "plans": {
+      "yearly": "Довічний пропуск",
+      "yearlyPrice": "Одноразова оплата {{price}}",
+      "trial": "Місячний пропуск",
+      "trialPrice": "7 днів безкоштовно, потім {{price}} на місяць",
+      "bestValue": "КРАЩА ЦІНА",
+      "freeTrial": ""
+    },
+    "freeTrialEnabled": "Безкоштовна пробна версія активована",
+    "buttons": {
+      "unlockNow": "Розблокувати зараз",
+      "tryFree": "Спробувати безкоштовно",
+      "restore": "Відновити покупки"
+    },
+    "links": {
+      "privacy": "Політика конфіденційності"
+    }
+  },
+  "upgrade": {
+    "title": "Оновлення до Преміум",
+    "message": "Розблокуйте всі функції з Преміум!",
+    "buttons": {
+      "learnMore": "Дізнатися більше",
+      "alreadyPaid": "Відновити покупки",
+      "noThanks": "Не зараз"
+    }
+  },
+  "trialLimit": {
+    "title": "Оновлення до Преміум",
+    "message": "Ви досягли ліміту. Оновіться, щоб продовжити!",
+    "buttons": {
+      "learnMore": "Дізнатися більше",
+      "maybeLater": "Можливо пізніше"
+    }
+  },
   "alreadySubscribed": {
     "message": "Ви вже підписані!"
+  },
+  "components": {
+    "cameraView": {
+      "title": "Сканувати документ",
+      "loading": "Завантаження камери...",
+      "permissionMessage": "Для сканування документів потрібен дозвіл камери",
+      "noDevice": "Камеру не знайдено",
+      "instruction": "Розташуйте документ у рамці та торкніться для захоплення",
+      "buttons": {
+        "grantPermission": "Надати дозвіл",
+        "close": "Закрити"
+      },
+      "alerts": {
+        "permissionError": "Не вдалося перевірити дозволи камери",
+        "captureError": "Не вдалося зробити фото"
+      }
+    },
+    "imagePreview": {
+      "title": "Попередній перегляд PDF",
+      "backButton": "← Назад",
+      "documentName": "Назва документа",
+      "documentNamePlaceholder": "Введіть назву документа",
+      "pdfQuality": "Якість PDF",
+      "addMoreImages": "Додати більше зображень",
+      "generatePDF": "Створити PDF",
+      "imageCount": "{{count}} зображення",
+      "imageCount_plural": "{{count}} зображень",
+      "buttons": {
+        "gallery": "Галерея",
+        "camera": "Камера"
+      },
+      "alerts": {
+        "discardScan": "Відхилити сканування",
+        "discardScanMessage": "Ви впевнені, що хочете відхилити це сканування?",
+        "noImages": "Немає зображень",
+        "noImagesMessage": "Будь ласка, додайте принаймні одне зображення для створення PDF",
+        "noFilename": "Немає назви файлу",
+        "noFilenameMessage": "Будь ласка, введіть назву файлу для PDF",
+        "failedToScan": "Не вдалося відсканувати документ",
+        "permissionRequired": "Потрібен дозвіл",
+        "permissionMessage": "Будь ласка, надайте доступ до вашої фотогалереї.",
+        "failedToPickImages": "Не вдалося вибрати зображення з галереї"
+      }
+    },
+    "pdfPreview": {
+      "title": "Попередній перегляд PDF",
+      "pageCount": "{{count}} сторінка",
+      "pageCount_plural": "{{count}} сторінок",
+      "buttons": {
+        "savePDF": "Зберегти PDF",
+        "saveAndShare": "Зберегти і поділитися",
+        "remove": "Видалити"
+      },
+      "alerts": {
+        "success": "Успішно",
+        "successMessage": "PDF успішно збережено!",
+        "removePage": "Видалити сторінку",
+        "removePageMessage": "Ви впевнені, що хочете видалити цю сторінку?",
+        "error": "Помилка",
+        "saveError": "Не вдалося зберегти PDF. Спробуйте ще раз.",
+        "shareError": "Не вдалося зберегти та поділитися PDF. Спробуйте ще раз."
+      }
+    },
+    "imageEditor": {
+      "title": "Редагувати зображення",
+      "rotateFlip": "Повернути та відобразити",
+      "filters": "Фільтри",
+      "buttons": {
+        "rotateLeft": "↺ 90°",
+        "rotateRight": "↻ 90°",
+        "flipH": "⇄ Відобразити Г",
+        "flipV": "⇅ Відобразити В"
+      },
+      "filterNames": {
+        "original": "Оригінал",
+        "grayscale": "Градації сірого",
+        "enhance": "Покращити",
+        "bw": "Ч&Б"
+      }
+    }
   }
 }

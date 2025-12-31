@@ -9,6 +9,7 @@
     "error": "Fehler",
     "success": "Erfolg",
     "next": "Weiter",
+    "continue": "Fortfahren",
     "download": "Herunterladen",
     "page": "Seite",
     "pages": "Seiten",
@@ -132,6 +133,10 @@
   },
   "settings": {
     "title": "Einstellungen",
+    "premium": {
+      "title": "Premium testen",
+      "description": "Alle Funktionen freischalten"
+    },
     "info": {
       "title": "Info",
       "faq": "FAQ & Hilfe",
@@ -196,7 +201,133 @@
     "reset": "Zurücksetzen",
     "done": "Fertig"
   },
+  "paywall": {
+    "title": "Mit PDF-Konvertierung beginnen",
+    "premiumFeature": "Premium-Funktion",
+    "shareBlocked": "Das Teilen von PDFs ist eine Premium-Funktion. Upgraden Sie, um Ihre Dokumente zu teilen.",
+    "upgrade": "Upgraden",
+    "features": {
+      "savedRoutines": "Unbegrenzte Konvertierungen",
+      "unlimitedSessions": "Mehrseitige PDFs",
+      "voiceCues": "Einfaches Teilen",
+      "removePaywalls": "Werbung entfernen"
+    },
+    "plans": {
+      "yearly": "Lifetime-Pass",
+      "yearlyPrice": "Einmalig {{price}}",
+      "trial": "Monats-Pass",
+      "trialPrice": "7 Tage kostenlos, dann {{price}} pro Monat",
+      "bestValue": "BESTER WERT",
+      "freeTrial": ""
+    },
+    "freeTrialEnabled": "Kostenlose Testversion aktiviert",
+    "buttons": {
+      "unlockNow": "Jetzt freischalten",
+      "tryFree": "Kostenlos testen",
+      "restore": "Käufe wiederherstellen"
+    },
+    "links": {
+      "privacy": "Datenschutzrichtlinie"
+    }
+  },
+  "upgrade": {
+    "title": "Auf Premium upgraden",
+    "message": "Schalten Sie alle Funktionen mit Premium frei!",
+    "buttons": {
+      "learnMore": "Mehr erfahren",
+      "alreadyPaid": "Käufe wiederherstellen",
+      "noThanks": "Nicht jetzt"
+    }
+  },
+  "trialLimit": {
+    "title": "Auf Premium upgraden",
+    "message": "Sie haben das Limit erreicht. Upgraden Sie, um fortzufahren!",
+    "buttons": {
+      "learnMore": "Mehr erfahren",
+      "maybeLater": "Vielleicht später"
+    }
+  },
   "alreadySubscribed": {
     "message": "Sie sind bereits abonniert!"
+  },
+  "components": {
+    "cameraView": {
+      "title": "Dokument scannen",
+      "loading": "Kamera wird geladen...",
+      "permissionMessage": "Kameraberechtigung ist zum Scannen von Dokumenten erforderlich",
+      "noDevice": "Kein Kameragerät gefunden",
+      "instruction": "Positionieren Sie das Dokument im Rahmen und tippen Sie zum Erfassen",
+      "buttons": {
+        "grantPermission": "Berechtigung erteilen",
+        "close": "Schließen"
+      },
+      "alerts": {
+        "permissionError": "Fehler beim Überprüfen der Kameraberechtigungen",
+        "captureError": "Fehler beim Aufnehmen des Fotos"
+      }
+    },
+    "imagePreview": {
+      "title": "PDF-Vorschau",
+      "backButton": "← Zurück",
+      "documentName": "Dokumentname",
+      "documentNamePlaceholder": "Dokumentnamen eingeben",
+      "pdfQuality": "PDF-Qualität",
+      "addMoreImages": "Weitere Bilder hinzufügen",
+      "generatePDF": "PDF erstellen",
+      "imageCount": "{{count}} Bild",
+      "imageCount_plural": "{{count}} Bilder",
+      "buttons": {
+        "gallery": "Galerie",
+        "camera": "Kamera"
+      },
+      "alerts": {
+        "discardScan": "Scan verwerfen",
+        "discardScanMessage": "Sind Sie sicher, dass Sie diesen Scan verwerfen möchten?",
+        "noImages": "Keine Bilder",
+        "noImagesMessage": "Bitte fügen Sie mindestens ein Bild hinzu, um ein PDF zu erstellen",
+        "noFilename": "Kein Dateiname",
+        "noFilenameMessage": "Bitte geben Sie einen Dateinamen für das PDF ein",
+        "failedToScan": "Fehler beim Scannen des Dokuments",
+        "permissionRequired": "Berechtigung erforderlich",
+        "permissionMessage": "Bitte gewähren Sie Zugriff auf Ihre Fotobibliothek.",
+        "failedToPickImages": "Fehler beim Auswählen von Bildern aus der Galerie"
+      }
+    },
+    "pdfPreview": {
+      "title": "PDF-Vorschau",
+      "pageCount": "{{count}} Seite",
+      "pageCount_plural": "{{count}} Seiten",
+      "buttons": {
+        "savePDF": "PDF speichern",
+        "saveAndShare": "Speichern und teilen",
+        "remove": "Entfernen"
+      },
+      "alerts": {
+        "success": "Erfolg",
+        "successMessage": "PDF erfolgreich gespeichert!",
+        "removePage": "Seite entfernen",
+        "removePageMessage": "Sind Sie sicher, dass Sie diese Seite entfernen möchten?",
+        "error": "Fehler",
+        "saveError": "Fehler beim Speichern der PDF. Bitte versuchen Sie es erneut.",
+        "shareError": "Fehler beim Speichern und Teilen der PDF. Bitte versuchen Sie es erneut."
+      }
+    },
+    "imageEditor": {
+      "title": "Bild bearbeiten",
+      "rotateFlip": "Drehen & Spiegeln",
+      "filters": "Filter",
+      "buttons": {
+        "rotateLeft": "↺ 90°",
+        "rotateRight": "↻ 90°",
+        "flipH": "⇄ Horizontal spiegeln",
+        "flipV": "⇅ Vertikal spiegeln"
+      },
+      "filterNames": {
+        "original": "Original",
+        "grayscale": "Graustufen",
+        "enhance": "Verbessern",
+        "bw": "S&W"
+      }
+    }
   }
 }

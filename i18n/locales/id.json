@@ -9,6 +9,7 @@
     "error": "Kesalahan",
     "success": "Berhasil",
     "next": "Berikutnya",
+    "continue": "Lanjutkan",
     "download": "Unduh",
     "page": "Halaman",
     "pages": "halaman",
@@ -132,6 +133,10 @@
   },
   "settings": {
     "title": "Pengaturan",
+    "premium": {
+      "title": "Coba Premium",
+      "description": "Buka semua fitur"
+    },
     "info": {
       "title": "Info",
       "faq": "FAQ & Bantuan",
@@ -196,7 +201,133 @@
     "reset": "Reset",
     "done": "Selesai"
   },
+  "paywall": {
+    "title": "Mulai mengonversi ke PDF",
+    "premiumFeature": "Fitur Premium",
+    "shareBlocked": "Membagikan PDF adalah fitur premium. Upgrade untuk membagikan dokumen Anda.",
+    "upgrade": "Upgrade",
+    "features": {
+      "savedRoutines": "Konversi Tanpa Batas",
+      "unlimitedSessions": "PDF Multi-halaman",
+      "voiceCues": "Berbagi Mudah",
+      "removePaywalls": "Hapus iklan"
+    },
+    "plans": {
+      "yearly": "Akses Seumur Hidup",
+      "yearlyPrice": "Sekali bayar {{price}}",
+      "trial": "Akses Bulanan",
+      "trialPrice": "7 hari gratis, lalu {{price}} per bulan",
+      "bestValue": "NILAI TERBAIK",
+      "freeTrial": ""
+    },
+    "freeTrialEnabled": "Uji Coba Gratis Diaktifkan",
+    "buttons": {
+      "unlockNow": "Buka Sekarang",
+      "tryFree": "Coba gratis",
+      "restore": "Pulihkan Pembelian"
+    },
+    "links": {
+      "privacy": "Kebijakan Privasi"
+    }
+  },
+  "upgrade": {
+    "title": "Upgrade ke Premium",
+    "message": "Buka semua fitur dengan Premium!",
+    "buttons": {
+      "learnMore": "Pelajari Lebih Lanjut",
+      "alreadyPaid": "Pulihkan Pembelian",
+      "noThanks": "Tidak Sekarang"
+    }
+  },
+  "trialLimit": {
+    "title": "Upgrade ke Premium",
+    "message": "Anda telah mencapai batas. Upgrade untuk melanjutkan!",
+    "buttons": {
+      "learnMore": "Pelajari Lebih Lanjut",
+      "maybeLater": "Mungkin Nanti"
+    }
+  },
   "alreadySubscribed": {
     "message": "Anda sudah berlangganan!"
+  },
+  "components": {
+    "cameraView": {
+      "title": "Pindai Dokumen",
+      "loading": "Memuat kamera...",
+      "permissionMessage": "Izin kamera diperlukan untuk memindai dokumen",
+      "noDevice": "Tidak ada perangkat kamera ditemukan",
+      "instruction": "Posisikan dokumen dalam bingkai dan ketuk untuk mengambil gambar",
+      "buttons": {
+        "grantPermission": "Berikan Izin",
+        "close": "Tutup"
+      },
+      "alerts": {
+        "permissionError": "Gagal memeriksa izin kamera",
+        "captureError": "Gagal mengambil foto"
+      }
+    },
+    "imagePreview": {
+      "title": "Pratinjau PDF",
+      "backButton": "← Kembali",
+      "documentName": "Nama Dokumen",
+      "documentNamePlaceholder": "Masukkan nama dokumen",
+      "pdfQuality": "Kualitas PDF",
+      "addMoreImages": "Tambah Gambar Lagi",
+      "generatePDF": "Buat PDF",
+      "imageCount": "{{count}} gambar",
+      "imageCount_plural": "{{count}} gambar",
+      "buttons": {
+        "gallery": "Galeri",
+        "camera": "Kamera"
+      },
+      "alerts": {
+        "discardScan": "Buang Scan",
+        "discardScanMessage": "Apakah Anda yakin ingin membuang scan ini?",
+        "noImages": "Tidak Ada Gambar",
+        "noImagesMessage": "Harap tambahkan setidaknya satu gambar untuk membuat PDF",
+        "noFilename": "Tidak Ada Nama File",
+        "noFilenameMessage": "Harap masukkan nama file untuk PDF",
+        "failedToScan": "Gagal memindai dokumen",
+        "permissionRequired": "Izin Diperlukan",
+        "permissionMessage": "Harap berikan akses ke galeri foto Anda.",
+        "failedToPickImages": "Gagal memilih gambar dari galeri"
+      }
+    },
+    "pdfPreview": {
+      "title": "Pratinjau PDF",
+      "pageCount": "{{count}} halaman",
+      "pageCount_plural": "{{count}} halaman",
+      "buttons": {
+        "savePDF": "Simpan PDF",
+        "saveAndShare": "Simpan & Bagikan",
+        "remove": "Hapus"
+      },
+      "alerts": {
+        "success": "Berhasil",
+        "successMessage": "PDF berhasil disimpan!",
+        "removePage": "Hapus Halaman",
+        "removePageMessage": "Apakah Anda yakin ingin menghapus halaman ini?",
+        "error": "Kesalahan",
+        "saveError": "Gagal menyimpan PDF. Harap coba lagi.",
+        "shareError": "Gagal menyimpan dan membagikan PDF. Harap coba lagi."
+      }
+    },
+    "imageEditor": {
+      "title": "Edit Gambar",
+      "rotateFlip": "Putar & Balik",
+      "filters": "Filter",
+      "buttons": {
+        "rotateLeft": "↺ 90°",
+        "rotateRight": "↻ 90°",
+        "flipH": "⇄ Balik H",
+        "flipV": "⇅ Balik V"
+      },
+      "filterNames": {
+        "original": "Asli",
+        "grayscale": "Skala Abu-abu",
+        "enhance": "Tingkatkan",
+        "bw": "H&P"
+      }
+    }
   }
 }

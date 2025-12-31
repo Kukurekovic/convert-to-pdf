@@ -9,6 +9,7 @@
     "error": "त्रुटि",
     "success": "सफलता",
     "next": "आगे",
+    "continue": "जारी रखें",
     "download": "डाउनलोड करें",
     "page": "पृष्ठ",
     "pages": "पृष्ठ",
@@ -132,6 +133,10 @@
   },
   "settings": {
     "title": "सेटिंग्स",
+    "premium": {
+      "title": "प्रीमियम आज़माएं",
+      "description": "सभी सुविधाओं को अनलॉक करें"
+    },
     "info": {
       "title": "जानकारी",
       "faq": "FAQ और सहायता",
@@ -196,7 +201,133 @@
     "reset": "रीसेट करें",
     "done": "पूर्ण"
   },
+  "paywall": {
+    "title": "PDF में कन्वर्ट करना शुरू करें",
+    "premiumFeature": "प्रीमियम सुविधा",
+    "shareBlocked": "PDF साझा करना एक प्रीमियम सुविधा है। अपने दस्तावेज़ साझा करने के लिए अपग्रेड करें।",
+    "upgrade": "अपग्रेड करें",
+    "features": {
+      "savedRoutines": "असीमित रूपांतरण",
+      "unlimitedSessions": "बहु-पृष्ठ PDF",
+      "voiceCues": "आसान साझाकरण",
+      "removePaywalls": "विज्ञापन हटाएं"
+    },
+    "plans": {
+      "yearly": "लाइफटाइम पास",
+      "yearlyPrice": "एकमुश्त {{price}}",
+      "trial": "मासिक पास",
+      "trialPrice": "7 दिन मुफ्त, फिर {{price}} प्रति माह",
+      "bestValue": "सर्वश्रेष्ठ मूल्य",
+      "freeTrial": ""
+    },
+    "freeTrialEnabled": "निःशुल्क परीक्षण सक्षम",
+    "buttons": {
+      "unlockNow": "अभी अनलॉक करें",
+      "tryFree": "मुफ्त में आज़माएं",
+      "restore": "खरीदारी पुनर्स्थापित करें"
+    },
+    "links": {
+      "privacy": "गोपनीयता नीति"
+    }
+  },
+  "upgrade": {
+    "title": "प्रीमियम में अपग्रेड करें",
+    "message": "प्रीमियम के साथ सभी सुविधाओं को अनलॉक करें!",
+    "buttons": {
+      "learnMore": "और जानें",
+      "alreadyPaid": "खरीदारी पुनर्स्थापित करें",
+      "noThanks": "अभी नहीं"
+    }
+  },
+  "trialLimit": {
+    "title": "प्रीमियम में अपग्रेड करें",
+    "message": "आप सीमा तक पहुंच गए हैं। जारी रखने के लिए अपग्रेड करें!",
+    "buttons": {
+      "learnMore": "और जानें",
+      "maybeLater": "शायद बाद में"
+    }
+  },
   "alreadySubscribed": {
     "message": "आप पहले से ही सदस्यता ले चुके हैं!"
+  },
+  "components": {
+    "cameraView": {
+      "title": "दस्तावेज़ स्कैन करें",
+      "loading": "कैमरा लोड हो रहा है...",
+      "permissionMessage": "दस्तावेज़ स्कैन करने के लिए कैमरा अनुमति आवश्यक है",
+      "noDevice": "कोई कैमरा डिवाइस नहीं मिला",
+      "instruction": "दस्तावेज़ को फ्रेम के भीतर रखें और कैप्चर करने के लिए टैप करें",
+      "buttons": {
+        "grantPermission": "अनुमति दें",
+        "close": "बंद करें"
+      },
+      "alerts": {
+        "permissionError": "कैमरा अनुमतियों की जांच करने में विफल",
+        "captureError": "फोटो कैप्चर करने में विफल"
+      }
+    },
+    "imagePreview": {
+      "title": "PDF पूर्वावलोकन",
+      "backButton": "← पीछे",
+      "documentName": "दस्तावेज़ का नाम",
+      "documentNamePlaceholder": "दस्तावेज़ का नाम दर्ज करें",
+      "pdfQuality": "PDF गुणवत्ता",
+      "addMoreImages": "और इमेज जोड़ें",
+      "generatePDF": "PDF बनाएं",
+      "imageCount": "{{count}} इमेज",
+      "imageCount_plural": "{{count}} इमेज",
+      "buttons": {
+        "gallery": "गैलरी",
+        "camera": "कैमरा"
+      },
+      "alerts": {
+        "discardScan": "स्कैन त्यागें",
+        "discardScanMessage": "क्या आप वाकई इस स्कैन को त्यागना चाहते हैं?",
+        "noImages": "कोई इमेज नहीं",
+        "noImagesMessage": "PDF बनाने के लिए कृपया कम से कम एक इमेज जोड़ें",
+        "noFilename": "कोई फ़ाइल नाम नहीं",
+        "noFilenameMessage": "कृपया PDF के लिए एक फ़ाइल नाम दर्ज करें",
+        "failedToScan": "दस्तावेज़ स्कैन करने में विफल",
+        "permissionRequired": "अनुमति आवश्यक है",
+        "permissionMessage": "कृपया अपनी फोटो लाइब्रेरी तक पहुंच की अनुमति दें।",
+        "failedToPickImages": "गैलरी से इमेज चुनने में विफल"
+      }
+    },
+    "pdfPreview": {
+      "title": "PDF पूर्वावलोकन",
+      "pageCount": "{{count}} पृष्ठ",
+      "pageCount_plural": "{{count}} पृष्ठ",
+      "buttons": {
+        "savePDF": "PDF सहेजें",
+        "saveAndShare": "सहेजें और साझा करें",
+        "remove": "हटाएं"
+      },
+      "alerts": {
+        "success": "सफलता",
+        "successMessage": "PDF सफलतापूर्वक सहेजा गया!",
+        "removePage": "पृष्ठ हटाएं",
+        "removePageMessage": "क्या आप वाकई इस पृष्ठ को हटाना चाहते हैं?",
+        "error": "त्रुटि",
+        "saveError": "PDF सहेजने में विफल। कृपया पुनः प्रयास करें।",
+        "shareError": "PDF सहेजने और साझा करने में विफल। कृपया पुनः प्रयास करें।"
+      }
+    },
+    "imageEditor": {
+      "title": "इमेज संपादित करें",
+      "rotateFlip": "घुमाएं और पलटें",
+      "filters": "फिल्टर",
+      "buttons": {
+        "rotateLeft": "↺ 90°",
+        "rotateRight": "↻ 90°",
+        "flipH": "⇄ फ्लिप H",
+        "flipV": "⇅ फ्लिप V"
+      },
+      "filterNames": {
+        "original": "मूल",
+        "grayscale": "ग्रेस्केल",
+        "enhance": "बेहतर बनाएं",
+        "bw": "B&W"
+      }
+    }
   }
 }

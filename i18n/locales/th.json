@@ -9,6 +9,7 @@
     "error": "ข้อผิดพลาด",
     "success": "สำเร็จ",
     "next": "ถัดไป",
+    "continue": "ดำเนินการต่อ",
     "download": "ดาวน์โหลด",
     "page": "หน้า",
     "pages": "หน้า",
@@ -132,6 +133,10 @@
   },
   "settings": {
     "title": "การตั้งค่า",
+    "premium": {
+      "title": "ลองใช้พรีเมียม",
+      "description": "ปลดล็อกฟีเจอร์ทั้งหมด"
+    },
     "info": {
       "title": "ข้อมูล",
       "faq": "คำถามที่พบบ่อยและความช่วยเหลือ",
@@ -196,7 +201,133 @@
     "reset": "รีเซ็ต",
     "done": "เสร็จสิ้น"
   },
+  "paywall": {
+    "title": "เริ่มแปลงเป็น PDF",
+    "premiumFeature": "ฟีเจอร์พรีเมียม",
+    "shareBlocked": "การแชร์ PDF เป็นฟีเจอร์พรีเมียม อัปเกรดเพื่อแชร์เอกสารของคุณ",
+    "upgrade": "อัปเกรด",
+    "features": {
+      "savedRoutines": "แปลงได้ไม่จำกัด",
+      "unlimitedSessions": "PDF หลายหน้า",
+      "voiceCues": "แชร์ได้ง่าย",
+      "removePaywalls": "ลบโฆษณา"
+    },
+    "plans": {
+      "yearly": "แพ็คเกจตลอดชีพ",
+      "yearlyPrice": "ชำระครั้งเดียว {{price}}",
+      "trial": "แพ็คเกจรายเดือน",
+      "trialPrice": "ทดลองฟรี 7 วัน จากนั้น {{price}} ต่อเดือน",
+      "bestValue": "คุ้มที่สุด",
+      "freeTrial": ""
+    },
+    "freeTrialEnabled": "เปิดใช้งานทดลองฟรี",
+    "buttons": {
+      "unlockNow": "ปลดล็อกเลย",
+      "tryFree": "ทดลองฟรี",
+      "restore": "กู้คืนการซื้อ"
+    },
+    "links": {
+      "privacy": "นโยบายความเป็นส่วนตัว"
+    }
+  },
+  "upgrade": {
+    "title": "อัปเกรดเป็นพรีเมียม",
+    "message": "ปลดล็อกฟีเจอร์ทั้งหมดด้วยพรีเมียม!",
+    "buttons": {
+      "learnMore": "เรียนรู้เพิ่มเติม",
+      "alreadyPaid": "กู้คืนการซื้อ",
+      "noThanks": "ไว้ทีหลัง"
+    }
+  },
+  "trialLimit": {
+    "title": "อัปเกรดเป็นพรีเมียม",
+    "message": "คุณถึงขีดจำกัดแล้ว อัปเกรดเพื่อดำเนินการต่อ!",
+    "buttons": {
+      "learnMore": "เรียนรู้เพิ่มเติม",
+      "maybeLater": "ไว้ทีหลัง"
+    }
+  },
   "alreadySubscribed": {
     "message": "คุณสมัครสมาชิกแล้ว!"
+  },
+  "components": {
+    "cameraView": {
+      "title": "สแกนเอกสาร",
+      "loading": "กำลังโหลดกล้อง...",
+      "permissionMessage": "ต้องการสิทธิ์การเข้าถึงกล้องเพื่อสแกนเอกสาร",
+      "noDevice": "ไม่พบอุปกรณ์กล้อง",
+      "instruction": "วางเอกสารภายในกรอบและแตะเพื่อถ่ายภาพ",
+      "buttons": {
+        "grantPermission": "อนุญาตสิทธิ์",
+        "close": "ปิด"
+      },
+      "alerts": {
+        "permissionError": "ไม่สามารถตรวจสอบสิทธิ์การเข้าถึงกล้องได้",
+        "captureError": "ไม่สามารถถ่ายภาพได้"
+      }
+    },
+    "imagePreview": {
+      "title": "ดูตัวอย่าง PDF",
+      "backButton": "← ย้อนกลับ",
+      "documentName": "ชื่อเอกสาร",
+      "documentNamePlaceholder": "ใส่ชื่อเอกสาร",
+      "pdfQuality": "คุณภาพ PDF",
+      "addMoreImages": "เพิ่มรูปภาพเพิ่มเติม",
+      "generatePDF": "สร้าง PDF",
+      "imageCount": "{{count}} รูปภาพ",
+      "imageCount_plural": "{{count}} รูปภาพ",
+      "buttons": {
+        "gallery": "แกลเลอรี",
+        "camera": "กล้อง"
+      },
+      "alerts": {
+        "discardScan": "ยกเลิกการสแกน",
+        "discardScanMessage": "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการสแกนนี้?",
+        "noImages": "ไม่มีรูปภาพ",
+        "noImagesMessage": "กรุณาเพิ่มรูปภาพอย่างน้อยหนึ่งรูปเพื่อสร้าง PDF",
+        "noFilename": "ไม่มีชื่อไฟล์",
+        "noFilenameMessage": "กรุณาใส่ชื่อไฟล์สำหรับ PDF",
+        "failedToScan": "ไม่สามารถสแกนเอกสารได้",
+        "permissionRequired": "ต้องการสิทธิ์การเข้าถึง",
+        "permissionMessage": "กรุณาอนุญาตการเข้าถึงคลังรูปภาพของคุณ",
+        "failedToPickImages": "ไม่สามารถเลือกรูปภาพจากแกลเลอรีได้"
+      }
+    },
+    "pdfPreview": {
+      "title": "ดูตัวอย่าง PDF",
+      "pageCount": "{{count}} หน้า",
+      "pageCount_plural": "{{count}} หน้า",
+      "buttons": {
+        "savePDF": "บันทึก PDF",
+        "saveAndShare": "บันทึกและแชร์",
+        "remove": "ลบออก"
+      },
+      "alerts": {
+        "success": "สำเร็จ",
+        "successMessage": "บันทึก PDF เรียบร้อยแล้ว!",
+        "removePage": "ลบหน้า",
+        "removePageMessage": "คุณแน่ใจหรือไม่ว่าต้องการลบหน้านี้?",
+        "error": "ข้อผิดพลาด",
+        "saveError": "ไม่สามารถบันทึก PDF ได้ กรุณาลองอีกครั้ง",
+        "shareError": "ไม่สามารถบันทึกและแชร์ PDF ได้ กรุณาลองอีกครั้ง"
+      }
+    },
+    "imageEditor": {
+      "title": "แก้ไขรูปภาพ",
+      "rotateFlip": "หมุนและพลิก",
+      "filters": "ฟิลเตอร์",
+      "buttons": {
+        "rotateLeft": "↺ 90°",
+        "rotateRight": "↻ 90°",
+        "flipH": "⇄ พลิกแนวนอน",
+        "flipV": "⇅ พลิกแนวตั้ง"
+      },
+      "filterNames": {
+        "original": "ต้นฉบับ",
+        "grayscale": "โทนสีเทา",
+        "enhance": "ปรับปรุง",
+        "bw": "ขาว-ดำ"
+      }
+    }
   }
 }
